@@ -19,7 +19,7 @@ h1 {
 }
 
 h2, h3, h4, h5, h6 {
-  color: #d3d3d3;
+  color: #fff;
 }
 
 /*
@@ -58,6 +58,14 @@ body {
   margin-left: auto;
 }
 
+.cover-heading {
+  color: #fff!important;
+}
+
+.border-grey {
+  border-color: #fff!important;
+}
+
 /* Padding for spacing */
 .inner {
   padding: 1rem;
@@ -79,8 +87,6 @@ span.line {
 /*
  * List
  */
-
-/* Add JS to allow for fading with hidden li elements */
 
 li {
   display: none;
