@@ -18,9 +18,9 @@ const pkg = require('./package.json');
 
 // Set the banner content
 const banner = ['/*!\n',
-  ' * <%= pkg.title %> v<%= pkg.version %> (<%= pkg.homepage %>)\n',
+  ' * Start Bootstrap - <%= pkg.title %> v<%= pkg.version %> (<%= pkg.homepage %>)\n',
   ' * Copyright 2013-' + (new Date()).getFullYear(), ' <%= pkg.author %>\n',
-  ' * Licensed under <%= pkg.license %>\n',
+  ' * Licensed under <%= pkg.license %> (https://github.com/BlackrockDigital/<%= pkg.name %>/blob/master/LICENSE)\n',
   ' */\n',
   '\n'
 ].join('');
@@ -58,13 +58,24 @@ function modules() {
   // jQuery Easing
   var jqueryEasing = gulp.src('./node_modules/jquery.easing/*.js')
     .pipe(gulp.dest('./vendor/jquery-easing'));
+  // Devicons
+  var devicons = gulp.src([
+      './node_modules/devicons/**/*',
+      '!./node_modules/devicons/*.json',
+      '!./node_modules/devicons/*.md',
+      '!./node_modules/devicons/!PNG',
+      '!./node_modules/devicons/!PNG/**/*',
+      '!./node_modules/devicons/!SVG',
+      '!./node_modules/devicons/!SVG/**/*'
+    ])
+    .pipe(gulp.dest('./vendor/devicons'));
   // jQuery
   var jquery = gulp.src([
       './node_modules/jquery/dist/*',
       '!./node_modules/jquery/dist/core.js'
     ])
     .pipe(gulp.dest('./vendor/jquery'));
-  return merge(bootstrap, fontAwesome, jquery, jqueryEasing);
+  return merge(bootstrap, fontAwesome, jquery, jqueryEasing, devicons);
 }
 
 // CSS task
