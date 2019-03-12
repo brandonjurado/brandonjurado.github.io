@@ -12,3 +12,5 @@ cache:
     - node_modules
 notifications:
   email:       false
+after_success:
+  - firebase deploy --project bjurado-com --token $FIREBASE_TOKEN
