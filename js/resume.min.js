@@ -1,6 +1,6 @@
 /*!
  * Start Bootstrap - Brandon's Resume v2.3.0 (http://bjurado.com/)
- * Copyright 2013-2019 Brandon Jurado
+ * Copyright 2013-2020 Brandon Jurado
  * Licensed under MIT (https://github.com/BlackrockDigital/brandonjurado.github.io/blob/master/LICENSE)
  */
 

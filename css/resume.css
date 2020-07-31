@@ -1,6 +1,6 @@
 /*!
  * Start Bootstrap - Brandon's Resume v2.3.0 (http://bjurado.com/)
- * Copyright 2013-2019 Brandon Jurado
+ * Copyright 2013-2020 Brandon Jurado
  * Licensed under MIT (https://github.com/BlackrockDigital/brandonjurado.github.io/blob/master/LICENSE)
  */
 
@@ -54,7 +54,7 @@ p.lead {
   font-size: 1.5rem;
 }
 
-.social-icons a {
+.social-icons a, .social-icons i {
   display: inline-block;
   height: 3.5rem;
   width: 3.5rem;
@@ -67,11 +67,11 @@ p.lead {
   margin-right: 1rem;
 }
 
-.social-icons a:last-child {
+.social-icons a:last-child, .social-icons i:last-child {
   margin-right: 0;
 }
 
-.social-icons a:hover {
+.social-icons a:hover, .social-icons i:hover {
   background-color: #20c997;
 }
 

@@ -5,7 +5,7 @@ My Personal Website
 
 ### Advanced Usage
 
-After installation, run `npm install` and then run `gulp dev` which will open up a preview in your default browser, watch for changes to core template files, and live reload the browser when changes are saved. You can view the `gulpfile.js` to see which tasks are included with the dev environment.
+After installation, run `npm install` and then run [`npm start` or `gulp watch`] which will open up a preview in your default browser, watch for changes to core template files, and live reload the browser when changes are saved. You can view the `gulpfile.js` to see which tasks are included with the dev environment.
 
 #### Gulp Tasks
 
