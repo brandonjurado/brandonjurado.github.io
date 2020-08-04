@@ -4,8 +4,6 @@ git:
 node_js:
   - "node"
 install:       npm install
-script:
-  - gulp
 cache:
   directories:
     - node_modules
