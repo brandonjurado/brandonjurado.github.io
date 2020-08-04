@@ -1,19 +1,24 @@
 {
-    "homepage": "http://bjurado.com/",
     "title": "Brandon's Resume",
     "name": "brandonjurado.github.io",
-    "version": "2.3.0",
+    "version": "3.0.0",
     "scripts": {
-        "start": "gulp watch"
+        "build": "npm run clean && npm run build:scss && npm run build:scripts && npm run build:assets",
+        "build:assets": "node scripts/build-assets.js",
+        "build:scripts": "node scripts/build-scripts.js",
+        "build:scss": "node scripts/build-scss.js",
+        "clean": "node scripts/clean.js",
+        "start": "npm run build && node scripts/start.js",
+        "start:debug": "npm run build && node scripts/start-debug.js"
     },
     "description": "👨‍💻 My Personal Website",
     "keywords": [
         "css",
         "sass",
         "html",
-        "responsive",
-        "theme"
+        "responsive"
     ],
+    "homepage": "https://bjurado.com/",
     "license": "MIT",
     "author": "Brandon Jurado",
     "repository": {
@@ -21,24 +26,17 @@
         "url": "https://github.com/brandonjurado/brandonjurado.github.io.git"
     },
     "dependencies": {
-        "@fortawesome/fontawesome-free": "5.7.2",
-        "bootstrap": "4.3.1",
-        "jbox": "^1.2.0",
-        "jquery": "3.5.0",
-        "jquery.easing": "^1.4.1"
+        "bootstrap": "4.5.0",
+        "devicon": "^2.2.0"
     },
     "devDependencies": {
-        "browser-sync": "2.26.3",
-        "del": "^3.0.0",
-        "devicons": "^1.8.0",
-        "gulp": "^4.0.0",
-        "gulp-autoprefixer": "6.0.0",
-        "gulp-clean-css": "4.0.0",
-        "gulp-header": "2.0.7",
-        "gulp-plumber": "^1.2.1",
-        "gulp-rename": "1.4.0",
-        "gulp-sass": "4.0.2",
-        "gulp-uglify": "3.0.1",
-        "merge-stream": "^1.0.1"
+        "autoprefixer": "9.8.0",
+        "browser-sync": "2.26.7",
+        "chokidar": "3.4.0",
+        "concurrently": "5.2.0",
+        "postcss": "7.0.32",
+        "prettier": "2.0.5",
+        "sass": "1.26.8",
+        "shelljs": "0.8.4"
     }
 }

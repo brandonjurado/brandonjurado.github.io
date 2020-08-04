@@ -1,0 +1,15 @@
+// Pre-state grayscale colors used in other variables
+
+$gray-800: #343a40;
+
+// Override Bootstrap color system
+
+$teal: #20c997;
+
+// Override Bootstrap default state colors
+
+$primary: $teal;
+
+// Override Bootstrap yiq lightness value
+
+$yiq-contrasted-threshold: 205;
