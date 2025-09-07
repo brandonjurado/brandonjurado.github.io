@@ -28,8 +28,8 @@ yarn-debug.log*
 yarn-error.log*
 
 #user generated content
+build/
 public/profile.json
-public/blogs.json
 
 #intellij
 .idea
