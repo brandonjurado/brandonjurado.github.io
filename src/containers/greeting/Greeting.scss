@@ -1,0 +1,132 @@
+@import "../../_globalColor";
+
+.main {
+  width: 90%;
+  padding: 1vh 5vw;
+  margin: 0 auto;
+  margin-top: 4rem;
+}
+
+.greet-main {
+  width: 90%;
+  padding: 1vh 5vw;
+  margin: 0px auto;
+  margin-top: 2rem;
+}
+
+.greeting-main {
+  display: flex;
+}
+
+.subTitle {
+  color: $subTitle !important;
+}
+
+.greeting-text-subheading {
+  font-family: "Saira Extra Condensed", sans-serif;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  line-height: 1;
+}
+
+.greeting-main {
+  display: flex;
+}
+
+.greeting-main > * {
+  flex: 1;
+  margin-bottom: 10vh;
+}
+
+.button-greeting-div {
+  display: flex;
+  margin-top: 1vh;
+}
+.download-link-button {
+  text-decoration: none;
+}
+
+.greeting-text {
+  margin-top: 0;
+  font-size: 4.5rem;
+  line-height: 1;
+  color: $buttonColor !important;
+  font-family: "Saira Extra Condensed", sans-serif;
+  text-transform: uppercase;
+}
+
+.greeting-text-p {
+  font-size: 1.5rem;
+  line-height: 40px;
+}
+
+.greeting-image-div > img {
+  max-width: 100%;
+  height: auto;
+}
+
+@keyframes wave {
+  0% {
+    transform: rotate(0deg);
+  }
+  10% {
+    transform: rotate(-10deg);
+  }
+  20% {
+    transform: rotate(12deg);
+  }
+  30% {
+    transform: rotate(-10deg);
+  }
+  40% {
+    transform: rotate(9deg);
+  }
+  50% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+/* Media Query */
+@media (max-width: 1380px) {
+  .greeting-text {
+    font-size: 4rem;
+  }
+  .greeting-text-p {
+    font-size: 1.2rem;
+  }
+}
+@media (max-width: 768px) {
+  .button-greeting-div {
+    justify-content: space-around;
+  }
+  .greeting-text {
+    font-size: 3rem;
+    text-align: center;
+  }
+  .greeting-text-subheading {
+    text-align: center;
+    font-size: 1.5rem;
+  }
+  .greeting-text-p {
+    font-size: 1.3rem;
+    line-height: normal;
+    text-align: center;
+  }
+  .greeting-main {
+    display: block;
+  }
+  .greeting-image-div {
+    height: 25rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .main {
+    width: auto;
+  }
+}
