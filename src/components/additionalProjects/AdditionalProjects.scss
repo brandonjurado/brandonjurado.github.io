@@ -1,0 +1,100 @@
+@import "../../_globalColor";
+
+/* Header */
+.additional-header {
+  margin-bottom: 0.75rem;
+}
+.additional-subtitle {
+  margin-top: 0.35rem;
+}
+
+/* Grid */
+.ap-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+}
+
+/* Card */
+.ap-card {
+  background-color: $lightBackground2;
+  border: 1px solid $lightBorder1;
+  border-radius: 10px;
+  box-shadow: $lightBoxShadowDark 0 10px 30px -15px;
+  padding: 0.9rem 1rem;
+  display: grid;
+  gap: 0.6rem;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.dark-mode.ap-card {
+  background-color: $darkBackground;
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: $achievementCertificateCardHoverDark 0 10px 30px -15px;
+}
+
+.ap-card:hover {
+  transform: translateY(-2px);
+  box-shadow: $lightBoxShadowDark 0 20px 30px -12px;
+}
+.dark-mode.ap-card:hover {
+  box-shadow: $achievementCertificateCardHoverDark 0 20px 30px -12px;
+}
+
+/* Text */
+.ap-header {
+  display: grid;
+  gap: 0.25rem;
+}
+.ap-name {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+}
+.ap-desc {
+  margin: 0;
+  font-size: 0.9rem;
+  color: $cardSubtitle;
+  line-height: 1.35rem;
+}
+
+/* Tags */
+.ap-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+.ap-tag {
+  vertical-align: middle;
+  align-items: center;
+  border-radius: 4px;
+  display: inline-flex;
+  font-size: 0.75rem;
+  height: 1.5em;
+  justify-content: center;
+  line-height: 1.5;
+  padding: 0 0.75em;
+  background: rgba(125, 138, 164, 0.18);
+  white-space: nowrap;
+}
+
+/* Links (pill buttons) */
+.ap-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.ap-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.6rem;
+  border-radius: 4px;
+  background: $buttonColor;
+  color: $lightBackground3;
+  font-size: 0.8rem;
+  text-decoration: none;
+  transition: 0.2s ease-in;
+}
+.ap-link:hover {
+  background: $buttonHover;
+}
