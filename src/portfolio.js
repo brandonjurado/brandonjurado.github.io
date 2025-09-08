@@ -3,7 +3,7 @@
 import emoji from "react-easy-emoji";
 import splashAnimation from "./assets/lottie/splashAnimation";
 
-const images = import.meta.glob("./assets/images/*.{png,jpg,jpeg,svg}", {
+const images = import.meta.glob("./assets/images/*.{png,jpg,jpeg,svg,webp}", {
   eager: true,
   query: "?url",
   import: "default"
@@ -169,7 +169,7 @@ const workExperiences = {
     {
       role: "Sr. Software Engineer",
       company: "H-E-B",
-      companylogo: img("hebLogo.jpg"),
+      companylogo: img("hebLogo.webp"),
       date: "July 2023 – Present",
       desc: "Unexpected item in the coding area... As part of H-E-B Digital, I am actively contributing to the rapidly growing organization and building products related to Curbside Delivery.",
       descBullets: [
@@ -228,7 +228,7 @@ const workExperiences = {
     {
       role: "Software Engineer (Intern)",
       company: "UTx @ The University of Texas System",
-      companylogo: img("utSystemLogo.png"),
+      companylogo: img("utSystemLogo.webp"),
       date: "May 2016 – Aug 2016",
       desc: "Developed internal web-based tools on LAMP stacks for tracking development projects, keeping the graphical user interface design in mind with HTML. Generated web services layer in PHP and a JSON message structure for consumption by the message architecture.  Additionally, defined and developed PCI compliant API structures.",
       descBullets: ["Stack: Linux, Apache, MySQL, PHP, JSON"]
@@ -236,7 +236,7 @@ const workExperiences = {
     {
       role: "Full Stack Developer",
       company: "TIAER",
-      companylogo: img("tiaerLogo.png"),
+      companylogo: img("tiaerLogo.webp"),
       date: "Feb 2016 – May 2018",
       desc: "Managed the interchange of data between the server and the users. Focused on the development of all server-side logic and maintenance of the central database &amp servers, while ensuring high performance and responsiveness to requests from the front-end. Created and integrated the front-end elements into web applications and familiarized junior developers with MVC frameworks.",
       descBullets: [
@@ -246,7 +246,7 @@ const workExperiences = {
     {
       role: "QA Engineer (Intern)",
       company: "TIAER",
-      companylogo: img("tiaerLogo.png"),
+      companylogo: img("tiaerLogo.webp"),
       date: "Feb 2015 – Feb 2016",
       desc: "Provided end-to-end solutions to software quality problems by developing and executing exploratory and automated tests to ensure quality of web applications, while also handling front-end programming tasks. Designed and implemented tests, debugged and defined corrective actions. Conducted tests to ensure software ran smoothly and met client needs, while being cost-effective.",
       descBullets: ["Tools: Selenium, RSpec, Cucumber, JavaScript, HTML/CSS"]
@@ -258,7 +258,7 @@ const workExperiences = {
 To know how to get github key look at readme.md */
 
 const openSource = {
-  showGithubProfile: "true", // Set true or false to show Contact profile using Github, defaults to true
+  showGithubProfile: "false", // Set true or false to show Contact profile using Github, defaults to true
   display: false // Set false to hide this section, defaults to true
 };
 
@@ -276,7 +276,7 @@ const achievementSection = {
       description:
         "Built an Alexa skill that answers tax questions by scraping and ranking Intuit support content in real time. Implemented content parsing (BeautifulSoup), lightweight relevance scoring, and a Flask API deployed on AWS. Awarded Intuit’s event challenge winner.",
       image: img("askIntuit.jpg"),
-      imageAlt: "Google Code-In Logo",
+      imageAlt: "Ask Intuit Logo",
       footerLink: [
         {
           name: "DevPost",
@@ -298,7 +298,7 @@ const achievementSection = {
       description:
         "Prototyped a web app that estimates a borrower ‘trust’ score from public social signals. Built Vue.js front end and Python NLP pipeline to extract linguistic features and classify risk bands. Presented live to judges and placed 3rd overall.",
       image: img("socialCredit.jpg"),
-      imageAlt: "Google Assistant Action Logo",
+      imageAlt: "Social Credit Logo",
       footerLink: [
         {
           name: "DevPost",
@@ -316,7 +316,7 @@ const achievementSection = {
       description:
         "Developed an Android app to reduce emissions by coordinating shared rides to common destinations. Integrated Google Maps routing, live ETA, and cost-split UX. Selected as a finalist by judges.",
       image: img("hytchdLogo.png"),
-      imageAlt: "PWA Logo",
+      imageAlt: "Hytchd logo",
       footerLink: [
         {
           name: "Repository",
