@@ -3,14 +3,14 @@
 import emoji from "react-easy-emoji";
 import splashAnimation from "./assets/lottie/splashAnimation";
 
-const images = import.meta.glob('./assets/images/*.{png,jpg,jpeg,svg}', {
+const images = import.meta.glob("./assets/images/*.{png,jpg,jpeg,svg}", {
   eager: true,
-  query: '?url',
-  import: 'default',
+  query: "?url",
+  import: "default"
 });
 
 // Helper to fetch a URL by file name with a clear error if missing
-const img = (file) => {
+const img = file => {
   const key = `./assets/images/${file}`;
   if (!images[key]) {
     throw new Error(`Image not found: ${key}`);

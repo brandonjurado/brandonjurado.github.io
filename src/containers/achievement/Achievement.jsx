@@ -2,7 +2,7 @@ import React, {useContext} from "react";
 import "./Achievement.scss";
 import AchievementCard from "../../components/achievementCard/AchievementCard";
 import {achievementSection} from "../../portfolio";
-import {Fade} from "react-reveal";
+import {motion as m} from "framer-motion";
 import StyleContext from "../../contexts/StyleContext";
 export default function Achievement() {
   const {isDark} = useContext(StyleContext);
@@ -10,7 +10,12 @@ export default function Achievement() {
     return null;
   }
   return (
-    <Fade bottom duration={1000} distance="20px">
+    <m.div
+      initial={{opacity: 0, y: 20}}
+      whileInView={{opacity: 1, y: 0}}
+      transition={{duration: 1}}
+      viewport={{once: true, amount: 0.2}}
+    >
       <div className="main" id="achievements">
         <div className="achievement-main-div">
           <div className="achievement-header">
@@ -51,6 +56,6 @@ export default function Achievement() {
           </div>
         </div>
       </div>
-    </Fade>
+    </m.div>
   );
 }

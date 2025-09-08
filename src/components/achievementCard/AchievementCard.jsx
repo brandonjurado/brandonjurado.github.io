@@ -35,7 +35,10 @@ export default function AchievementCard({cardInfo, isDark}) {
             src={image}
             alt={imageAlt || title || "Card Thumbnail"}
             className="card-image"
+            width="250"
+            height="178"
             loading="lazy"
+            decoding="async"
           />
         )}
       </div>
