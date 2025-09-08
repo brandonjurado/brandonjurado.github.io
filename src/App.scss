@@ -1,5 +1,4 @@
-@import "./globalColor";
-@import url("https://fonts.googleapis.com/css2?family=Roboto&family=Saira+Extra+Condensed&display=swap");
+@use "./globalColor" as *;
 
 .App {
   text-align: center;
