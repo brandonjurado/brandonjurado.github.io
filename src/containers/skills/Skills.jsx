@@ -17,27 +17,26 @@ export default function Skills() {
     <div className={isDark ? "dark-mode main" : "main"} id="skills">
       <div className="skills-main-div">
         <m.div
-          initial={{opacity: 0, x: -20}}
-          whileInView={{opacity: 1, x: 0}}
-          transition={{duration: 1}}
-          viewport={{once: true, amount: 0.2}}
+          initial={{opacity: 0, y: 18}}
+          whileInView={{opacity: 1, y: 0}}
+          transition={{duration: 0.4, ease: "easeOut"}}
+          viewport={{once: true, amount: 0.25}}
+          style={{willChange: "transform,opacity"}}
         >
           <div className="skills-image-div">
             {illustration.animated ? (
               <DisplayLottie animationData={codingPerson} />
             ) : (
-              <img
-                alt="Man Working"
-                src={developerSvg}
-              ></img>
+              <img alt="Man Working" src={developerSvg}></img>
             )}
           </div>
         </m.div>
         <m.div
-          initial={{opacity: 0, x: 20}}
-          whileInView={{opacity: 1, x: 0}}
-          transition={{duration: 1}}
-          viewport={{once: true, amount: 0.2}}
+          initial={{opacity: 0, y: 18}}
+          whileInView={{opacity: 1, y: 0}}
+          transition={{duration: 0.4, ease: "easeOut"}}
+          viewport={{once: true, amount: 0.25}}
+          style={{willChange: "transform,opacity"}}
         >
           <div className="skills-text-div">
             <h1
