@@ -1,4 +1,6 @@
-@import "../../_globalColor";
+@use "../../_globalColor" as *;
+@use "sass:color";
+
 .card-eyebrow {
   font-weight: 600;
   font-size: 0.9rem;
@@ -6,7 +8,7 @@
   color: $cardSubtitle;
 }
 .dark-mode .card-eyebrow {
-  color: lighten($cardSubtitle, 10%);
+  color: color.adjust($cardSubtitle, $lightness: 10%);
 }
 .card-image {
   max-width: 100%;

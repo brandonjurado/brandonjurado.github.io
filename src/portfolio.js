@@ -3,6 +3,21 @@
 import emoji from "react-easy-emoji";
 import splashAnimation from "./assets/lottie/splashAnimation";
 
+const images = import.meta.glob('./assets/images/*.{png,jpg,jpeg,svg}', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+});
+
+// Helper to fetch a URL by file name with a clear error if missing
+const img = (file) => {
+  const key = `./assets/images/${file}`;
+  if (!images[key]) {
+    throw new Error(`Image not found: ${key}`);
+  }
+  return images[key];
+};
+
 // Splash Screen
 
 const splashScreen = {
@@ -133,7 +148,7 @@ const educationInfo = {
   schools: [
     {
       schoolName: "Tarleton University",
-      logo: require("./assets/images/tarletonLogo.jpeg"),
+      logo: img("tarletonLogo.jpeg"),
       subHeader: "Bachelors of Science in Computer Science",
       duration: "August 2014 - May 2018 | Cum Laude",
       desc: "Maintained academic honors while working nearly 40 hours per week throughout undergrad.",
@@ -154,7 +169,7 @@ const workExperiences = {
     {
       role: "Sr. Software Engineer",
       company: "H-E-B",
-      companylogo: require("./assets/images/hebLogo.jpg"),
+      companylogo: img("hebLogo.jpg"),
       date: "July 2023 – Present",
       desc: "Unexpected item in the coding area... As part of H-E-B Digital, I am actively contributing to the rapidly growing organization and building products related to Curbside Delivery.",
       descBullets: [
@@ -169,7 +184,7 @@ const workExperiences = {
     {
       role: "Software Engineer",
       company: "T-Mobile",
-      companylogo: require("./assets/images/tmobileLogo.jpeg"),
+      companylogo: img("tmobileLogo.jpeg"),
       date: "July 2021 – July 2023",
       desc: "Worked extensively with microservices to create an Ad-Hoc invoicing system solution to onboard large business line customers. Using Spring Boot services with a Cassandra persistence layer and AWS S3 storage, all presented to the user with an Angular frontend.",
       descBullets: [
@@ -184,7 +199,7 @@ const workExperiences = {
     {
       role: "Software Engineer",
       company: "USAA",
-      companylogo: require("./assets/images/usaaLogo.jpeg"),
+      companylogo: img("usaaLogo.jpeg"),
       date: "July 2019 – Sep 2021",
       desc: "Created and Deployed several distributed microservices using Kafka, Spring WebFlux and Spring Data to store critical data to be used for analysis.",
       descBullets: [
@@ -199,7 +214,7 @@ const workExperiences = {
     {
       role: "Software Engineer",
       company: "American Airlines",
-      companylogo: require("./assets/images/americanAirlinesLogo.jpeg"),
+      companylogo: img("americanAirlinesLogo.jpeg"),
       date: "May 2018 – July 2019",
       desc: "Delivered quality software iteratively through DevOps pipeline as part of a Scrum team, using Jenkins for automated testing and deployment. Decomposed existing monolothic code base into Spring Boot microservices running in a cloud environment that is used by millions of users based on analytics. If you have ever booked a flight through AA.com you have definitely seen my work. 😄",
       descBullets: [
@@ -213,7 +228,7 @@ const workExperiences = {
     {
       role: "Software Engineer (Intern)",
       company: "UTx @ The University of Texas System",
-      companylogo: require("./assets/images/utSystemLogo.png"),
+      companylogo: img("utSystemLogo.png"),
       date: "May 2016 – Aug 2016",
       desc: "Developed internal web-based tools on LAMP stacks for tracking development projects, keeping the graphical user interface design in mind with HTML. Generated web services layer in PHP and a JSON message structure for consumption by the message architecture.  Additionally, defined and developed PCI compliant API structures.",
       descBullets: ["Stack: Linux, Apache, MySQL, PHP, JSON"]
@@ -221,7 +236,7 @@ const workExperiences = {
     {
       role: "Full Stack Developer",
       company: "TIAER",
-      companylogo: require("./assets/images/tiaerLogo.png"),
+      companylogo: img("tiaerLogo.png"),
       date: "Feb 2016 – May 2018",
       desc: "Managed the interchange of data between the server and the users. Focused on the development of all server-side logic and maintenance of the central database &amp servers, while ensuring high performance and responsiveness to requests from the front-end. Created and integrated the front-end elements into web applications and familiarized junior developers with MVC frameworks.",
       descBullets: [
@@ -231,7 +246,7 @@ const workExperiences = {
     {
       role: "QA Engineer (Intern)",
       company: "TIAER",
-      companylogo: require("./assets/images/tiaerLogo.png"),
+      companylogo: img("tiaerLogo.png"),
       date: "Feb 2015 – Feb 2016",
       desc: "Provided end-to-end solutions to software quality problems by developing and executing exploratory and automated tests to ensure quality of web applications, while also handling front-end programming tasks. Designed and implemented tests, debugged and defined corrective actions. Conducted tests to ensure software ran smoothly and met client needs, while being cost-effective.",
       descBullets: ["Tools: Selenium, RSpec, Cucumber, JavaScript, HTML/CSS"]
@@ -260,7 +275,7 @@ const achievementSection = {
       subtitle: "Earth Hack 2018",
       description:
         "Built an Alexa skill that answers tax questions by scraping and ranking Intuit support content in real time. Implemented content parsing (BeautifulSoup), lightweight relevance scoring, and a Flask API deployed on AWS. Awarded Intuit’s event challenge winner.",
-      image: require("./assets/images/askIntuit.jpg"),
+      image: img("askIntuit.jpg"),
       imageAlt: "Google Code-In Logo",
       footerLink: [
         {
@@ -282,7 +297,7 @@ const achievementSection = {
       subtitle: "Social Credit (NLP + Web)",
       description:
         "Prototyped a web app that estimates a borrower ‘trust’ score from public social signals. Built Vue.js front end and Python NLP pipeline to extract linguistic features and classify risk bands. Presented live to judges and placed 3rd overall.",
-      image: require("./assets/images/socialCredit.jpg"),
+      image: img("socialCredit.jpg"),
       imageAlt: "Google Assistant Action Logo",
       footerLink: [
         {
@@ -300,7 +315,7 @@ const achievementSection = {
       subtitle: "HYTCH’D (Android + Maps)",
       description:
         "Developed an Android app to reduce emissions by coordinating shared rides to common destinations. Integrated Google Maps routing, live ETA, and cost-split UX. Selected as a finalist by judges.",
-      image: require("./assets/images/hytchdLogo.png"),
+      image: img("hytchdLogo.png"),
       imageAlt: "PWA Logo",
       footerLink: [
         {
