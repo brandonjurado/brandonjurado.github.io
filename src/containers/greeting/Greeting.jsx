@@ -1,5 +1,5 @@
 import React, {useContext} from "react";
-import {Fade} from "react-reveal";
+import {motion as m} from "framer-motion";
 import "./Greeting.scss";
 import landingPerson from "../../assets/lottie/landingPerson";
 import DisplayLottie from "../../components/displayLottie/DisplayLottie";
@@ -14,7 +14,12 @@ export default function Greeting() {
     return null;
   }
   return (
-    <Fade bottom duration={1000} distance="40px">
+    <m.div
+      initial={{opacity: 0, y: 40}}
+      whileInView={{opacity: 1, y: 0}}
+      transition={{duration: 1}}
+      viewport={{once: true, amount: 0.2}}
+    >
       <div className="greet-main" id="greeting">
         <div className="greeting-main">
           <div className="greeting-text-div">
@@ -70,6 +75,6 @@ export default function Greeting() {
           </div>
         </div>
       </div>
-    </Fade>
+    </m.div>
   );
 }

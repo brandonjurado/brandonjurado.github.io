@@ -44,6 +44,8 @@ export default function ExperienceCard({cardInfo, isDark}) {
           className="experience-roundedimg"
           src={cardInfo.companylogo}
           alt={cardInfo.company}
+          width="128"
+          height="128"
           onLoad={() => getColorArrays()}
         />
       </div>

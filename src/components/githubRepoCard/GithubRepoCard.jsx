@@ -1,6 +1,6 @@
 import React from "react";
 import "./GithubRepoCard.scss";
-import {Fade} from "react-reveal";
+import {motion as m} from "framer-motion";
 import {formatFileSizeDisplay} from "../../utils";
 
 export default function GithubRepoCard({repo, isDark}) {
@@ -14,7 +14,12 @@ export default function GithubRepoCard({repo, isDark}) {
   }
 
   return (
-    <Fade bottom duration={1000} distance="20px">
+    <m.div
+      initial={{opacity: 0, y: 20}}
+      whileInView={{opacity: 1, y: 0}}
+      transition={{duration: 1}}
+      viewport={{once: true, amount: 0.2}}
+    >
       <div>
         <div
           className={isDark ? "dark-card-mode repo-card-div" : "repo-card-div"}
@@ -90,6 +95,6 @@ export default function GithubRepoCard({repo, isDark}) {
           </div>
         </div>
       </div>
-    </Fade>
+    </m.div>
   );
 }

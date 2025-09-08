@@ -1,15 +1,20 @@
 import React, {useContext} from "react";
 import "./AdditionalProjects.scss";
 import {additionalProjects} from "../../portfolio";
-import {Fade} from "react-reveal";
 import StyleContext from "../../contexts/StyleContext";
+import {motion as m} from "framer-motion";
 
 export default function AdditionalProjects() {
   const {isDark} = useContext(StyleContext);
   if (!additionalProjects?.display) return null;
 
   return (
-    <Fade bottom duration={1000} distance="20px">
+    <m.div
+      initial={{opacity: 0, y: 20}}
+      whileInView={{opacity: 1, y: 0}}
+      transition={{duration: 1}}
+      viewport={{once: true, amount: 0.2}}
+    >
       <section className="main" id="additional-projects">
         <div className="additional-header">
           <h2 className={isDark ? "dark-mode heading" : "heading"}>
@@ -72,6 +77,6 @@ export default function AdditionalProjects() {
           ))}
         </div>
       </section>
-    </Fade>
+    </m.div>
   );
 }
