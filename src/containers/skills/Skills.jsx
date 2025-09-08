@@ -6,6 +6,7 @@ import {motion as m} from "framer-motion";
 import codingPerson from "../../assets/lottie/codingPerson";
 import DisplayLottie from "../../components/displayLottie/DisplayLottie";
 import StyleContext from "../../contexts/StyleContext";
+import developerSvg from "../../assets/images/developerActivity.svg?url";
 
 export default function Skills() {
   const {isDark} = useContext(StyleContext);
@@ -27,7 +28,7 @@ export default function Skills() {
             ) : (
               <img
                 alt="Man Working"
-                src={require("../../assets/images/developerActivity.svg")}
+                src={developerSvg}
               ></img>
             )}
           </div>

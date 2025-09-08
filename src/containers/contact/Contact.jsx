@@ -6,6 +6,7 @@ import {motion as m} from "framer-motion";
 import email from "../../assets/lottie/email";
 import DisplayLottie from "../../components/displayLottie/DisplayLottie";
 import StyleContext from "../../contexts/StyleContext";
+import contactMailDarkSvg from "../../assets/images/contactMailDark.svg?url";
 
 export default function Contact() {
   const {isDark} = useContext(StyleContext);
@@ -63,7 +64,7 @@ export default function Contact() {
             ) : (
               <img
                 alt="Man working"
-                src={require("../../assets/images/contactMailDark.svg")}
+                src={contactMailDarkSvg}
               ></img>
             )}
           </div>
