@@ -1,6 +1,18 @@
 import React from "react";
 import "./SocialMedia.scss";
 import {socialMediaLinks} from "../../portfolio";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {
+  faGithub,
+  faLinkedin,
+  faFacebook,
+  faGitlab,
+  faMedium,
+  faInstagram,
+  faStackOverflow
+} from "@fortawesome/free-brands-svg-icons";
+import {faEnvelope} from "@fortawesome/free-solid-svg-icons";
+import "@/icons/fa";
 
 export default function socialMedia() {
   if (!socialMediaLinks.display) {
@@ -14,9 +26,9 @@ export default function socialMedia() {
           className="icon-button github"
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="Github"
         >
-          <i className="fab fa-github"></i>
-          <span></span>
+          <FontAwesomeIcon icon={faGithub} className="icon" />
         </a>
       ) : null}
 
@@ -26,9 +38,9 @@ export default function socialMedia() {
           className="icon-button linkedin"
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="LinkedIn"
         >
-          <i className="fab fa-linkedin-in"></i>
-          <span></span>
+          <FontAwesomeIcon icon={faLinkedin} className="icon" />
         </a>
       ) : null}
 
@@ -38,9 +50,9 @@ export default function socialMedia() {
           className="icon-button google"
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="Gmail"
         >
-          <i className="fas fa-envelope"></i>
-          <span></span>
+          <FontAwesomeIcon icon={faEnvelope} className="icon" />
         </a>
       ) : null}
 
@@ -50,9 +62,9 @@ export default function socialMedia() {
           className="icon-button gitlab"
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="Gitlab"
         >
-          <i className="fab fa-gitlab"></i>
-          <span></span>
+          <FontAwesomeIcon icon={faGitlab} className="icon" />
         </a>
       ) : null}
 
@@ -62,9 +74,9 @@ export default function socialMedia() {
           className="icon-button facebook"
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="Facebook"
         >
-          <i className="fab fa-facebook-f"></i>
-          <span></span>
+          <FontAwesomeIcon icon={faFacebook} className="icon" />
         </a>
       ) : null}
 
@@ -74,9 +86,9 @@ export default function socialMedia() {
           className="icon-button instagram"
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="Instagram"
         >
-          <i className="fab fa-instagram"></i>
-          <span></span>
+          <FontAwesomeIcon icon={faInstagram} className="icon" />
         </a>
       ) : null}
 
@@ -86,9 +98,9 @@ export default function socialMedia() {
           className="icon-button twitter"
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="Twitter"
         >
-          <i className="fab fa-twitter"></i>
-          <span></span>
+          <FontAwesomeIcon icon={faGithub} className="icon" />
         </a>
       ) : null}
 
@@ -98,9 +110,9 @@ export default function socialMedia() {
           className="icon-button medium"
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="Medium"
         >
-          <i className="fab fa-medium"></i>
-          <span></span>
+          <FontAwesomeIcon icon={faMedium} className="icon" />
         </a>
       ) : null}
 
@@ -110,21 +122,9 @@ export default function socialMedia() {
           className="icon-button stack-overflow"
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="Stack Overflow"
         >
-          <i className="fab fa-stack-overflow"></i>
-          <span></span>
-        </a>
-      ) : null}
-
-      {socialMediaLinks.kaggle ? (
-        <a
-          href={socialMediaLinks.kaggle}
-          className="icon-button kaggle"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <i className="fab fa-kaggle"></i>
-          <span></span>
+          <FontAwesomeIcon icon={faStackOverflow} className="icon" />
         </a>
       ) : null}
     </div>

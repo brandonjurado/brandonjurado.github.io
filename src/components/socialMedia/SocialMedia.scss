@@ -5,81 +5,57 @@
 }
 
 .icon-button {
-  margin-bottom: 10px;
-}
-
-.icon-button i {
+  --size: 2.6rem;
+  --fg: $textColorDark;
+  width: var(--size);
+  height: var(--size);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
   color: $textColorDark;
-  border-radius: 2.6rem;
+  margin: 0 5px 10px;
   cursor: pointer;
-  display: inline-block;
-  font-size: 1.3rem;
-  height: 2.6rem;
-  line-height: 2.6rem;
-  margin: 0 5px;
-  position: relative;
-  text-align: center;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
   user-select: none;
-  width: 2.6rem;
-  margin-bottom: 10px;
-  transition: 0.2s ease-in;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
 }
 
-.facebook i {
+/* size icon via font-size or width/height */
+.icon-button .icon {
+  font-size: 1.3rem;
+}
+
+/* per-network backgrounds on the ANCHOR (not the icon) */
+.icon-button.facebook {
   background-color: $faceBook;
 }
-
-.linkedin i {
+.icon-button.linkedin {
   background-color: $linkedin;
 }
-
-.github i {
+.icon-button.github {
   background-color: $github;
 }
-
-.gitlab i {
+.icon-button.gitlab {
   background-color: $gitlab;
 }
-
-.google i {
+.icon-button.google {
   background-color: $google;
 }
-
-.twitter i {
+.icon-button.twitter {
   background-color: $twitter;
 }
-
-.medium i {
+.icon-button.medium {
   background-color: $medium;
 }
-
-.stack-overflow i {
-  background-color: $stackoverflow;
-}
-
-.kaggle i {
-  background-color: $kaggle;
-}
-
-.instagram i {
+.icon-button.instagram {
   background-color: $instagram;
 }
 
-/* Hover Transition */
-.twitter i:hover,
-.google i:hover,
-.gitlab i:hover,
-.github i:hover,
-.linkedin i:hover,
-.facebook i:hover,
-.instagram i:hover,
-.stack-overflow i:hover,
-.kaggle i:hover,
-.medium i:hover {
-  background-color: $textColor;
+/* hover/focus */
+.icon-button:hover,
+.icon-button:focus-visible {
+  color: $textColor;
+  transform: translateY(-1px);
 }
 
 /* Media Query */
