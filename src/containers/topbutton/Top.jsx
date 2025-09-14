@@ -29,7 +29,11 @@ export default function Top() {
   // When the user clicks on the button, scroll to the top of the document
   return (
     <button onClick={TopEvent} id="topButton" title="Go to top">
-      <FontAwesomeIcon icon={faHandPointUp} className="icon" aria-hidden="true" />
+      <FontAwesomeIcon
+        icon={faHandPointUp}
+        className="icon"
+        aria-hidden="true"
+      />
     </button>
   );
 }
