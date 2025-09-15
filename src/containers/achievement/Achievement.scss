@@ -1,5 +1,9 @@
 @use "../../_globalColor" as *;
 
+.main {
+  content-visibility: auto;
+}
+
 .achievement-heading {
   font-size: 56px;
   font-weight: 400;

@@ -1,5 +1,9 @@
 @use "../../_globalColor" as *;
 
+.main {
+  content-visibility: auto;
+}
+
 /* Header */
 .additional-header {
   margin-bottom: 0.75rem;
