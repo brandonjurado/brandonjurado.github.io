@@ -1,19 +1,23 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, lazy, Suspense} from "react";
 import Header from "../components/header/Header";
 import Greeting from "./greeting/Greeting";
-import Skills from "./skills/Skills";
-import WorkExperience from "./workExperience/WorkExperience";
-import Achievement from "./achievement/Achievement";
-import AdditionalProjects from "../components/additionalProjects/AdditionalProjects";
-import Footer from "../components/footer/Footer";
-import Education from "./education/Education";
 import ScrollToTopButton from "./topbutton/Top";
-import Profile from "./profile/Profile";
 import SplashScreen from "./splashScreen/SplashScreen";
 import {splashScreen} from "../portfolio";
 import {StyleProvider} from "../contexts/StyleContext";
 import {useLocalStorage} from "../hooks/useLocalStorage";
 import "./Main.scss";
+
+// Lazy sections
+const Skills = lazy(() => import("./skills/Skills"));
+const Education = lazy(() => import("./education/Education"));
+const WorkExperience = lazy(() => import("./workExperience/WorkExperience"));
+const Achievement = lazy(() => import("./achievement/Achievement"));
+const AdditionalProjects = lazy(() =>
+  import("../components/additionalProjects/AdditionalProjects")
+);
+const Profile = lazy(() => import("./profile/Profile"));
+const Footer = lazy(() => import("../components/footer/Footer"));
 
 const Main = () => {
   const darkPref = window.matchMedia("(prefers-color-scheme: dark)");
@@ -23,36 +27,34 @@ const Main = () => {
 
   useEffect(() => {
     if (splashScreen.enabled) {
-      const splashTimer = setTimeout(
+      const t = setTimeout(
         () => setIsShowingSplashAnimation(false),
         splashScreen.duration
       );
-      return () => {
-        clearTimeout(splashTimer);
-      };
+      return () => clearTimeout(t);
     }
   }, []);
 
-  const changeTheme = () => {
-    setIsDark(!isDark);
-  };
+  const changeTheme = () => setIsDark(!isDark);
 
   return (
     <div className={isDark ? "dark-mode" : null}>
-      <StyleProvider value={{isDark: isDark, changeTheme: changeTheme}}>
+      <StyleProvider value={{isDark, changeTheme}}>
         {isShowingSplashAnimation && splashScreen.enabled ? (
           <SplashScreen />
         ) : (
           <>
             <Header />
             <Greeting />
-            <Skills />
-            <Education />
-            <WorkExperience />
-            <Achievement />
-            <AdditionalProjects />
-            <Profile />
-            <Footer />
+            <Suspense fallback={null}>
+              <Skills />
+              <Education />
+              <WorkExperience />
+              <Achievement />
+              <AdditionalProjects />
+              <Profile />
+              <Footer />
+            </Suspense>
             <ScrollToTopButton />
           </>
         )}
