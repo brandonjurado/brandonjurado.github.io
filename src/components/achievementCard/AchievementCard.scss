@@ -37,6 +37,10 @@
   -o-transition: all 0.3s ease;
   transition: all 0.3s ease;
 }
+.dark-mode.certificate-card {
+  background-color: $darkBackground;
+  border-color: color.adjust($darkBackground, $lightness: 8%);
+}
 .certificate-detail-div {
   text-align: center;
 }
@@ -44,7 +48,7 @@
   box-shadow: $lightBoxShadowDark 0px 20px 30px -10px;
 }
 .dark-mode.certificate-card:hover {
-  box-shadow: $achievementCertificateCardHoverDark 0px 20px 30px -10px;
+  box-shadow: $achievementCertificateCardHoverDark 0px 0px 20px -5px;
 }
 .certificate-image-div {
   position: relative;
