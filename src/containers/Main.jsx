@@ -27,11 +27,11 @@ const Main = () => {
 
   useEffect(() => {
     if (splashScreen.enabled) {
-      const t = setTimeout(
+      const splashTimer = setTimeout(
         () => setIsShowingSplashAnimation(false),
         splashScreen.duration
       );
-      return () => clearTimeout(t);
+      return () => clearTimeout(splashTimer);
     }
   }, []);
 
@@ -39,7 +39,7 @@ const Main = () => {
 
   return (
     <div className={isDark ? "dark-mode" : null}>
-      <StyleProvider value={{isDark, changeTheme}}>
+      <StyleProvider value={{isDark: isDark, changeTheme: changeTheme}}>
         {isShowingSplashAnimation && splashScreen.enabled ? (
           <SplashScreen />
         ) : (
