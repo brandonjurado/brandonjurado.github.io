@@ -7,7 +7,8 @@ export default defineConfig(({mode}) => {
     plugins: [react()],
     base: "/",
     resolve: {
-      alias: {"@": path.resolve(__dirname, "src")}
+      alias: {"@": path.resolve(__dirname, "src")},
+      'lottie-web': 'lottie-web/build/player/lottie_light_canvas'
     },
 
     build: {
