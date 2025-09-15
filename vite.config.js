@@ -8,7 +8,7 @@ export default defineConfig(({mode}) => {
     base: "/",
     resolve: {
       alias: {"@": path.resolve(__dirname, "src")},
-      'lottie-web': 'lottie-web/build/player/lottie_light_canvas'
+      "lottie-web": "lottie-web/build/player/lottie_light_canvas"
     },
 
     build: {
