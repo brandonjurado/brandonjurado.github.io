@@ -148,7 +148,7 @@ const educationInfo = {
   schools: [
     {
       schoolName: "Tarleton University",
-      logo: img("tarletonLogo.jpeg"),
+      logo: img("tarletonLogo.webp"),
       subHeader: "Bachelors of Science in Computer Science",
       duration: "August 2014 - May 2018 | Cum Laude",
       desc: "Maintained academic honors while working nearly 40 hours per week throughout undergrad.",
@@ -184,7 +184,7 @@ const workExperiences = {
     {
       role: "Software Engineer",
       company: "T-Mobile",
-      companylogo: img("tmobileLogo.jpeg"),
+      companylogo: img("tmobileLogo.webp"),
       date: "July 2021 – July 2023",
       desc: "Worked extensively with microservices to create an Ad-Hoc invoicing system solution to onboard large business line customers. Using Spring Boot services with a Cassandra persistence layer and AWS S3 storage, all presented to the user with an Angular frontend.",
       descBullets: [
@@ -199,7 +199,7 @@ const workExperiences = {
     {
       role: "Software Engineer",
       company: "USAA",
-      companylogo: img("usaaLogo.jpeg"),
+      companylogo: img("usaaLogo.webp"),
       date: "July 2019 – Sep 2021",
       desc: "Created and Deployed several distributed microservices using Kafka, Spring WebFlux and Spring Data to store critical data to be used for analysis.",
       descBullets: [
@@ -214,7 +214,7 @@ const workExperiences = {
     {
       role: "Software Engineer",
       company: "American Airlines",
-      companylogo: img("americanAirlinesLogo.jpeg"),
+      companylogo: img("americanAirlinesLogo.webp"),
       date: "May 2018 – July 2019",
       desc: "Delivered quality software iteratively through DevOps pipeline as part of a Scrum team, using Jenkins for automated testing and deployment. Decomposed existing monolothic code base into Spring Boot microservices running in a cloud environment that is used by millions of users based on analytics. If you have ever booked a flight through AA.com you have definitely seen my work. 😄",
       descBullets: [
@@ -275,7 +275,7 @@ const achievementSection = {
       subtitle: "Earth Hack 2018",
       description:
         "Built an Alexa skill that answers tax questions by scraping and ranking Intuit support content in real time. Implemented content parsing (BeautifulSoup), lightweight relevance scoring, and a Flask API deployed on AWS. Awarded Intuit’s event challenge winner.",
-      image: img("askIntuit.jpg"),
+      image: img("askIntuit.webp"),
       imageAlt: "Ask Intuit Logo",
       footerLink: [
         {
@@ -297,7 +297,7 @@ const achievementSection = {
       subtitle: "Social Credit (NLP + Web)",
       description:
         "Prototyped a web app that estimates a borrower ‘trust’ score from public social signals. Built Vue.js front end and Python NLP pipeline to extract linguistic features and classify risk bands. Presented live to judges and placed 3rd overall.",
-      image: img("socialCredit.jpg"),
+      image: img("socialCredit.webp"),
       imageAlt: "Social Credit Logo",
       footerLink: [
         {
@@ -315,7 +315,7 @@ const achievementSection = {
       subtitle: "HYTCH’D (Android + Maps)",
       description:
         "Developed an Android app to reduce emissions by coordinating shared rides to common destinations. Integrated Google Maps routing, live ETA, and cost-split UX. Selected as a finalist by judges.",
-      image: img("hytchdLogo.png"),
+      image: img("hytchdLogo.webp"),
       imageAlt: "Hytchd logo",
       footerLink: [
         {
