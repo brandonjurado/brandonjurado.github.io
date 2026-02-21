@@ -50,6 +50,12 @@
   background-color: $headerHoverBG;
 }
 
+.header .theme-toggle-wrap {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+}
+
 .header .logo {
   display: block;
   flex: none;

@@ -2,9 +2,15 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Brandon Jurado" />
     <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1" />
+      name="keywords"
+      content="Brandon Jurado, software engineer, backend engineer, Java, Spring Boot, AWS, portfolio, Austin" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="googlebot" content="index, follow, max-image-preview:large" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <link rel="canonical" href="https://bjurado.com/" />
 
     <title>Brandon Jurado | Software Engineer Portfolio</title>
     <meta name="title" content="Brandon Jurado | Software Engineer Portfolio" />
@@ -14,12 +20,15 @@
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Brandon Jurado" />
     <meta property="og:url" content="https://bjurado.com/" />
     <meta property="og:title" content="Brandon Jurado | Software Engineer Portfolio" />
     <meta
       property="og:description"
       content="Brandon Jurado is a software engineer focused on building scalable backend systems with Java, Spring Boot, and AWS. Explore projects, skills, and achievements." />
-    <!-- <meta property="og:image" content="/og-image.jpg" /> -->
+    <meta property="og:image" content="https://bjurado.com/favicon-96x96.png" />
+    <meta property="og:image:alt" content="Brandon Jurado portfolio logo" />
+    <meta property="og:locale" content="en_US" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -28,20 +37,22 @@
     <meta
       name="twitter:description"
       content="Software engineer portfolio showcasing backend expertise in Java, Spring Boot, AWS, and cloud-native development." />
-    <!-- <meta name="twitter:image" content="/og-image.jpg" /> -->
+    <meta name="twitter:image" content="https://bjurado.com/favicon-96x96.png" />
+    <meta name="twitter:image:alt" content="Brandon Jurado portfolio logo" />
 
     <meta name="msapplication-TileColor" content="#603cba" />
     <meta name="theme-color" content="#6c63ff" />
 
-    <!-- Icons & manifest (place these files in /public) -->
+    <!-- Icons & manifest -->
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v8=qAJ44G5Bm7" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v8=qAJ44G5Bm7" />
-    <link rel="mask-icon" href="/safari-pinned-tab.svg?v8=qAJ44G5Bm7" color="#885bd5" />
     <link rel="shortcut icon" href="/favicon.ico?v8=qAJ44G5Bm7" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v8=qAJ44G5Bm7" />
     <link rel="manifest" href="/manifest.json" />
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="LLMs Profile" />
 
-    <!-- Fonts (ensure these exist in /public/static/media or adjust paths/types) -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" as="style"
@@ -49,10 +60,64 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Roboto&family=Saira+Extra+Condensed&display=swap"
         media="print" onload="this.media='all'">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Person",
+            "name": "Brandon Jurado",
+            "url": "https://bjurado.com/",
+            "jobTitle": "Software Engineer",
+            "email": "mailto:hello@bjurado.com",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Austin",
+              "addressRegion": "TX",
+              "addressCountry": "US"
+            },
+            "sameAs": [
+              "https://github.com/brandonjurado",
+              "https://www.linkedin.com/in/brandonjurado/"
+            ],
+            "knowsAbout": [
+              "Java",
+              "Spring Boot",
+              "AWS",
+              "Distributed systems",
+              "Microservices",
+              "Backend architecture"
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "url": "https://bjurado.com/",
+            "name": "Brandon Jurado Portfolio",
+            "description": "Portfolio of Brandon Jurado, a software engineer specializing in scalable backend systems.",
+            "publisher": {
+              "@type": "Person",
+              "name": "Brandon Jurado"
+            }
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <div id="root">
+      <main>
+        <h1>Brandon Jurado | Software Engineer</h1>
+        <p>
+          Software engineer based in Austin, Texas, focused on scalable backend
+          systems with Java, Spring Boot, and AWS.
+        </p>
+        <p>
+          Explore professional experience, technical skills, achievements, and
+          contact details at <a href="https://bjurado.com/">bjurado.com</a>.
+        </p>
+      </main>
+    </div>
 
     <!-- Vite entry -->
     <script type="module" src="/src/index.jsx"></script>
