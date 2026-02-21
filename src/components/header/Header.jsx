@@ -66,10 +66,9 @@ function Header() {
             <a href="#contact">Contact</a>
           </li>
           <li>
-            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-            <a>
+            <div className="theme-toggle-wrap" aria-label="Theme toggle">
               <ToggleSwitch />
-            </a>
+            </div>
           </li>
         </ul>
       </header>
