@@ -438,7 +438,7 @@ const footerSection = {
 const contactInfo = {
   title: emoji("Get In Touch"),
   subtitle:
-    "Let's connect — I'm always open to new opportunities, collaborations, or just talking shop.",
+    "Let's connect. I'm always open to new opportunities, collaborations, or just talking shop.",
   number: "",
   email_address: ""
 };

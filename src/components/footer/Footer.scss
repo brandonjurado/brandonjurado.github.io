@@ -1,16 +1,269 @@
 @use "../../_globalColor" as *;
 
-.footer-text {
+.footer-div {
+  margin-top: var(--space-48);
+  padding-bottom: var(--space-16);
+  content-visibility: auto;
+}
+
+.footer-shell {
+  --footer-bg: #{$lightBackground1};
+  --footer-text: #1b1e24;
+  --footer-muted: #4f5863;
+  --footer-border: #{$lightBorder1};
+  --footer-accent: #{$buttonColor};
+  --footer-accent-strong: #{$buttonHover};
+  --footer-divider: rgba(85, 25, 139, 0.28);
+  --footer-glow: radial-gradient(
+    circle farthest-corner at 50% -180%,
+    rgba(85, 25, 139, 0) 62%,
+    rgba(85, 25, 139, 0.14) 92%
+  );
+  --footer-surface-blend: linear-gradient(
+    140deg,
+    rgba(85, 25, 139, 0.03) 0%,
+    rgba(255, 255, 255, 0.98) 45%,
+    rgba(245, 242, 244, 0.98) 100%
+  );
+  position: relative;
+  max-width: min(84rem, 94vw);
+  margin: 0 auto;
+  border-radius: var(--radius-xl-brand);
+  border: 1px solid var(--footer-border);
+  background-color: var(--footer-bg);
+  background-image: var(--footer-surface-blend);
+  color: var(--footer-text);
+  box-shadow: $lightBoxShadowDark 0 20px 30px -15px;
+  overflow: hidden;
+}
+
+.footer-shell.is-dark {
+  --footer-bg: #{$darkBackground};
+  --footer-text: #{$textColorDark};
+  --footer-muted: #{$darkBoxShadow};
+  --footer-border: rgba(255, 255, 255, 0.18);
+  --footer-accent: #{$buttonHover};
+  --footer-accent-strong: #{$buttonColor};
+  --footer-divider: rgba(140, 67, 206, 0.35);
+  --footer-glow: radial-gradient(
+    circle farthest-corner at 50% -190%,
+    rgba(140, 67, 206, 0) 58%,
+    rgba(140, 67, 206, 0.34) 93%
+  );
+  --footer-surface-blend: linear-gradient(
+    145deg,
+    rgba(140, 67, 206, 0.16) 0%,
+    rgba(23, 28, 40, 0.97) 40%,
+    rgba(23, 28, 40, 1) 100%
+  );
+  box-shadow: 0 20px 30px -15px rgba(0, 0, 0, 0.65);
+}
+
+.footer-shell-glow {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 100%;
+  background-image: var(--footer-glow);
+  opacity: 0.55;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.footer-shell.is-dark .footer-shell-glow {
+  mix-blend-mode: screen;
+  opacity: 0.45;
+}
+
+.footer-content {
+  position: relative;
+  display: grid;
+  gap: var(--space-32);
+  padding: clamp(1.5rem, 2.8vw, 3rem);
+}
+
+.footer-headline-wrap {
+  display: grid;
+  gap: var(--space-12);
+  justify-items: center;
   text-align: center;
+}
+
+.footer-eyebrow {
+  margin: 0;
+  font-family: var(--font-body-brand);
+  font-size: var(--text-overline-brand);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--footer-muted);
+}
+
+.footer-statement {
+  margin: 0;
+  font-family: var(--font-heading-brand);
+  font-size: clamp(1.6rem, 4vw, 3.2rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: var(--footer-text);
+  max-width: 18ch;
+}
+
+.footer-links-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-20);
+}
+
+.footer-links-col {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-8);
+}
+
+.footer-links-title {
+  margin: 0;
+  color: var(--footer-muted);
+  font-size: var(--text-overline-brand);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.footer-link {
+  text-decoration: none;
+  color: var(--footer-text);
+  font-family: var(--font-heading-brand);
+  font-size: clamp(1rem, 2.4vw, 1.35rem);
+  font-variation-settings: "wdth" 90;
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 1;
+  text-decoration-line: underline;
+  text-decoration-thickness: 0.08em;
+  text-decoration-color: transparent;
+  text-underline-offset: 0.2em;
+  transition: text-decoration-color var(--duration-fast-brand) ease;
+}
+
+.footer-link-clip {
+  clip-path: polygon(0 -2%, 0 94%, 100% 94%, 100% -2%);
+  display: inline-block;
+}
+
+.footer-link-text {
+  --link-offset: 1.35em;
+  display: inline-block;
+  text-shadow: 0 var(--link-offset) currentColor;
+  transition:
+    transform var(--duration-slow-brand) var(--ease-out-brand),
+    color var(--duration-slow-brand) var(--ease-out-brand);
+}
+
+.footer-link:hover .footer-link-text,
+.footer-link:focus-visible .footer-link-text {
+  transform: translateY(calc(-1 * var(--link-offset)));
+  color: var(--footer-accent);
+}
+
+.footer-link:hover,
+.footer-link:focus-visible {
+  text-decoration-color: currentColor;
+}
+
+.footer-link:focus-visible {
+  outline: 2px solid var(--footer-accent);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+.footer-brand-marquee {
+  border-top: 1px solid var(--footer-divider);
+  border-bottom: 1px solid var(--footer-divider);
+  overflow: hidden;
+  padding: var(--space-12) 0;
+}
+
+.footer-brand-track {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-24);
+  min-width: max-content;
+  animation: footer-marquee-flow 28s linear infinite;
+}
+
+.footer-brand-item {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: clamp(0.7rem, 1.4vw, 0.95rem);
+  color: var(--footer-accent-strong);
+  opacity: 1;
+  font-weight: 700;
+}
+
+.footer-brand-item::after {
+  content: "/";
+  margin-left: var(--space-24);
+  color: var(--footer-muted);
+}
+
+.footer-legal {
+  text-align: center;
+}
+
+.footer-text {
+  margin: 0;
+  color: var(--footer-muted);
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-align: center;
+  background-color: transparent !important;
   color: $subTitle !important;
+}
+
+.footer-shell.is-dark .footer-text {
+  color: $textColorDark !important;
 }
 
 .dark-mode {
   color: $textColorDark !important;
 }
 
-.footer-div {
-  margin-top: 2rem;
-  padding-bottom: 1rem;
-  content-visibility: auto;
+@media (forced-colors: active) {
+  .footer-shell,
+  .footer-shell.is-dark {
+    border: 1px solid CanvasText;
+    background: Canvas;
+    color: CanvasText;
+  }
+
+  .footer-link:focus-visible {
+    outline-color: Highlight;
+  }
+}
+
+@keyframes footer-marquee-flow {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-links-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-brand-track {
+    gap: var(--space-16);
+    animation-duration: 22s;
+  }
+
+  .footer-brand-item::after {
+    margin-left: var(--space-16);
+  }
 }
