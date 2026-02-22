@@ -407,6 +407,34 @@ export const additionalProjects = {
   ]
 };
 
+const landingMarquee = {
+  display: true,
+  keywords: [
+    "Distributed Systems",
+    "Microservices",
+    "Cloud Infrastructure",
+    "API Design",
+    "Data Streaming",
+    "Observability",
+    "CI/CD",
+    "Performance Engineering"
+  ],
+  brands: [
+    "H-E-B",
+    "T-Mobile",
+    "USAA",
+    "American Airlines",
+    "UT System",
+    "TIAER"
+  ]
+};
+
+const footerSection = {
+  display: true,
+  statement: "Always building resilient systems.",
+  legalText: "All rights reserved."
+};
+
 const contactInfo = {
   title: emoji("Get In Touch"),
   subtitle:
@@ -427,6 +455,8 @@ export {
   workExperiences,
   openSource,
   achievementSection,
+  landingMarquee,
+  footerSection,
   contactInfo,
   isHireable
 };
