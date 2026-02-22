@@ -72,6 +72,87 @@
   height: auto;
 }
 
+.landing-marquee {
+  position: relative;
+  left: 50%;
+  width: 100vw;
+  margin-left: -50vw;
+  margin-top: var(--space-32);
+  padding: var(--space-12) 0;
+  border-top: 1px solid var(--surface-divider-brand);
+  border-bottom: 1px solid var(--surface-divider-brand);
+  overflow: hidden;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.95) 8%,
+      rgba(255, 255, 255, 0.95) 92%,
+      rgba(255, 255, 255, 0) 100%
+    ),
+    var(--gradient-glow-brand);
+}
+
+.landing-marquee.is-dark {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(23, 28, 40, 0) 0%,
+      rgba(23, 28, 40, 0.9) 8%,
+      rgba(23, 28, 40, 0.9) 92%,
+      rgba(23, 28, 40, 0) 100%
+    ),
+    var(--gradient-glow-brand);
+}
+
+.landing-marquee-row {
+  display: flex;
+  width: max-content;
+  min-width: 100%;
+}
+
+.landing-marquee-track {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-24);
+  min-width: max-content;
+  animation: marquee-slide-right 34s var(--ease-linear-brand) infinite;
+}
+
+.landing-marquee-row.is-brands .landing-marquee-track {
+  animation-duration: 40s;
+}
+
+.landing-marquee-item {
+  font-family: var(--font-heading-brand);
+  font-size: clamp(0.8rem, 1.35vw, 1.15rem);
+  font-weight: 760;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--neutral-800);
+  white-space: nowrap;
+}
+
+.landing-marquee.is-dark .landing-marquee-item {
+  color: var(--text-body-brand);
+}
+
+.landing-marquee-item::after {
+  content: "/";
+  display: inline-block;
+  margin-left: var(--space-24);
+  color: var(--brand-secondary);
+}
+
+@keyframes marquee-slide-right {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
 @keyframes wave {
   0% {
     transform: rotate(0deg);
@@ -124,6 +205,19 @@
   }
   .greeting-main {
     display: block;
+  }
+  .landing-marquee {
+    margin-top: var(--space-24);
+  }
+  .landing-marquee-track {
+    gap: var(--space-16);
+    animation-duration: 25s;
+  }
+  .landing-marquee-row.is-brands .landing-marquee-track {
+    animation-duration: 30s;
+  }
+  .landing-marquee-item::after {
+    margin-left: var(--space-16);
   }
   .greeting-image-div {
     height: 25rem;
