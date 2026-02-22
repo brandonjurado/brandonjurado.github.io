@@ -13,8 +13,8 @@ const Skills = lazy(() => import("./skills/Skills"));
 const Education = lazy(() => import("./education/Education"));
 const WorkExperience = lazy(() => import("./workExperience/WorkExperience"));
 const Achievement = lazy(() => import("./achievement/Achievement"));
-const AdditionalProjects = lazy(() =>
-  import("../components/additionalProjects/AdditionalProjects")
+const AdditionalProjects = lazy(
+  () => import("../components/additionalProjects/AdditionalProjects")
 );
 const Profile = lazy(() => import("./profile/Profile"));
 const Footer = lazy(() => import("../components/footer/Footer"));

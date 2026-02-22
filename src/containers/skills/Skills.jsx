@@ -8,8 +8,8 @@ import StyleContext from "../../contexts/StyleContext";
 import developerSvg from "../../assets/images/developerActivity.svg?url";
 
 // Lazy-load the heavy Lottie component
-const DisplayLottie = lazy(() =>
-  import("../../components/displayLottie/DisplayLottie")
+const DisplayLottie = lazy(
+  () => import("../../components/displayLottie/DisplayLottie")
 );
 
 export default function Skills() {
