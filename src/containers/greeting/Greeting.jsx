@@ -8,6 +8,7 @@ import Button from "../../components/button/Button";
 import {illustration, greeting} from "../../portfolio";
 import StyleContext from "../../contexts/StyleContext";
 import manOnTableSvg from "../../assets/images/manOnTable.svg?url";
+import TextType from "../../components/reactBits/TextType/TextType";
 
 export default function Greeting() {
   const {isDark} = useContext(StyleContext);
@@ -28,8 +29,14 @@ export default function Greeting() {
               <h1
                 className={isDark ? "dark-mode greeting-text" : "greeting-text"}
               >
-                {" "}
-                {greeting.title}{" "}
+                <TextType
+                  text={greeting.title}
+                  as="span"
+                  loop={false}
+                  showCursor={true}
+                  cursorCharacter="|"
+                  className="greeting-name-type"
+                />
               </h1>
               <p
                 className={
