@@ -14,13 +14,17 @@
   justify-content: flex-start;
   margin: 0 20px 20px 0;
   color: $subTitle;
-  transition: color 0.2s ease, transform 0.15s ease;
+  transition:
+    color 0.2s ease,
+    transform 0.15s ease;
 }
 
 .software-skill-icon {
   font-size: 3rem;
   line-height: 1;
-  transition: color 0.2s ease, transform 0.15s ease;
+  transition:
+    color 0.2s ease,
+    transform 0.15s ease;
 }
 
 .software-skill-inline p {

@@ -57,6 +57,10 @@
   text-transform: uppercase;
 }
 
+.greeting-name-type .text-type__cursor {
+  color: inherit;
+}
+
 .greeting-text-p {
   font-size: 1.5rem;
   line-height: 40px;
