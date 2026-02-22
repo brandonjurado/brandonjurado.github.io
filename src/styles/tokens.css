@@ -1,0 +1,93 @@
+:root {
+  --brand-primary: #d2ff00;
+  --brand-secondary: #b2c73a;
+  --brand-accent: #ff6b00;
+
+  --neutral-0: #ffffff;
+  --neutral-50: #f4f4ed;
+  --neutral-100: #ebeee0;
+  --neutral-200: #dde1d2;
+  --neutral-300: #c8cbbd;
+  --neutral-400: #b9bbad;
+  --neutral-500: #b4b8a5;
+  --neutral-700: #535450;
+  --neutral-800: #3b3c38;
+  --neutral-900: #282c20;
+  --neutral-950: #111112;
+
+  --text-heading-brand: var(--neutral-50);
+  --text-body-brand: var(--neutral-100);
+  --text-muted-brand: var(--neutral-500);
+  --text-link-brand: var(--brand-primary);
+
+  --surface-page-brand: var(--neutral-900);
+  --surface-card-brand: var(--neutral-950);
+  --surface-elevated-brand: var(--neutral-800);
+  --surface-divider-brand: rgba(196, 201, 182, 0.3);
+
+  --semantic-success: #d2ff00;
+  --semantic-error: #ff6b00;
+  --semantic-warning: #b2c73a;
+  --semantic-info: #c8cbbd;
+
+  --gradient-footer-brand: radial-gradient(
+    circle farthest-corner at 50% -190%,
+    rgba(210, 255, 0, 0) 68%,
+    #d2ff00 83%
+  );
+  --gradient-glow-brand: linear-gradient(
+    90deg,
+    rgba(210, 255, 0, 0) 0%,
+    rgba(210, 255, 0, 0.18) 50%,
+    rgba(210, 255, 0, 0) 100%
+  );
+
+  --font-heading-brand: "Mona Sans Variable", "Montserrat", sans-serif;
+  --font-body-brand: "Mona Sans Variable", "Montserrat", sans-serif;
+  --font-display-brand: "Brier", "Montserrat", serif;
+  --font-mono-brand:
+    "SFMono-Regular", Menlo, Monaco, Consolas, "Courier New", monospace;
+
+  --text-h1-brand: 4rem;
+  --text-h2-brand: 3rem;
+  --text-h3-brand: 2rem;
+  --text-h4-brand: 1.5rem;
+  --text-h5-brand: 1.2rem;
+  --text-h6-brand: 1rem;
+  --text-body-lg-brand: 1.25rem;
+  --text-body-brand: 1rem;
+  --text-body-sm-brand: 0.875rem;
+  --text-label-brand: 0.75rem;
+  --text-overline-brand: 0.578125rem;
+  --text-btn-brand: 1rem;
+  --text-btn-nav-brand: 1.25rem;
+  --text-btn-footer-brand: 1.875rem;
+
+  --space-4: 0.25rem;
+  --space-8: 0.5rem;
+  --space-12: 0.75rem;
+  --space-16: 1rem;
+  --space-20: 1.25rem;
+  --space-24: 1.5rem;
+  --space-32: 2rem;
+  --space-48: 3rem;
+  --space-64: 4rem;
+  --space-80: 5rem;
+
+  --radius-sm-brand: 0.54rem;
+  --radius-md-brand: 1rem;
+  --radius-lg-brand: 3rem;
+  --radius-xl-brand: 6.25rem;
+  --radius-pill-brand: 999px;
+
+  --shadow-sm-brand: 0 10px 30px -15px rgba(0, 0, 0, 0.28);
+  --shadow-md-brand: 0 20px 30px -10px rgba(0, 0, 0, 0.35);
+  --shadow-glow-brand: 0 0 0 1px rgba(210, 255, 0, 0.28);
+
+  --duration-fast-brand: 0.2s;
+  --duration-normal-brand: 0.4s;
+  --duration-slow-brand: 0.75s;
+  --ease-default-brand: cubic-bezier(0.65, 0.05, 0, 1);
+  --ease-out-brand: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-linear-brand: linear;
+}
