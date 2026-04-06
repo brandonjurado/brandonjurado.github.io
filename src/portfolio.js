@@ -37,7 +37,7 @@ const greeting = {
   title: "Brandon Jurado",
   location: "Austin, TX",
   subTitle: emoji(
-    "Software Engineer with a focus on building scalable, high-impact backend systems. I bring a strong foundation in OOP and distributed systems, shaped by experience across startups and Fortune 50 environments. Passionate about clean code, system design, and delivering reliable infrastructure at scale."
+    "Software Engineer with experience spanning startup teams and Fortune 50 organizations, focused on building resilient backend platforms and customer-facing systems at scale. I enjoy turning complex product problems into dependable software, whether that means real-time notification pipelines, billing workflows, identity services, or the internal tools that keep those systems running smoothly."
   ),
   resumeLink: "",
   displayGreeting: true // Set false to hide this section, defaults to true
@@ -62,16 +62,17 @@ const socialMediaLinks = {
 
 const skillsSection = {
   title: "What I do",
-  subTitle: "Backend engineer who builds scalable, high-performance systems",
+  subTitle:
+    "Backend-focused engineer building scalable platforms, secure customer flows, and high-volume integrations",
   skills: [
     emoji(
       "⚡ Build robust backend APIs and microservices for high-throughput systems"
     ),
     emoji(
-      "⚡ Integrate cloud services like AWS, Firebase, and third-party APIs into production workflows"
+      "⚡ Ship cloud-native systems across AWS and containerized platforms with an emphasis on reliability, observability, and maintainable delivery pipelines"
     ),
     emoji(
-      "⚡ Deliver seamless web experiences with React, Angular, and responsive UIs"
+      "⚡ Contribute across the stack when needed, building frontend experiences and internal tools that improve both customer and operator workflows"
     )
   ],
 
@@ -147,9 +148,9 @@ const educationInfo = {
   display: true, // Set false to hide this section, defaults to true
   schools: [
     {
-      schoolName: "Tarleton University",
+      schoolName: "Tarleton State University",
       logo: img("tarletonLogo.webp"),
-      subHeader: "Bachelors of Science in Computer Science",
+      subHeader: "Bachelor of Science in Computer Science",
       duration: "August 2014 - May 2018 | Cum Laude",
       desc: "Maintained academic honors while working nearly 40 hours per week throughout undergrad.",
       descBullets: [
@@ -170,86 +171,95 @@ const workExperiences = {
       role: "Sr. Software Engineer",
       company: "H-E-B",
       companylogo: img("hebLogo.webp"),
+      accentColor: "#d71920",
       date: "July 2023 – Present",
-      desc: "Unexpected item in the coding area... As part of H-E-B Digital, I am actively contributing to the rapidly growing organization and building products related to Curbside Delivery.",
+      desc: "At H-E-B Digital, I help build the event-driven notification platform behind curbside and order communications. My work centers on delivering near real-time, personalized alerts across the full order journey and scaling the platform to handle millions of promotional and transactional messages each day with the reliability those experiences require.",
       descBullets: [
-        "Languages: Java, TypeScript",
-        "Frameworks & Runtimes: Spring Boot, Dropwizard, Node.js",
-        "Cloud & Infra: AWS (Lambda, ECS, S3, EventBridge), Terraform, GitLab CI, Docker",
-        "Data & Streaming: MySQL, DynamoDB, Kafka",
-        "CI/CD & Testing: GitLab CI/CD, Newman, JUnit, Jest",
-        "Observability: Datadog"
+        "Languages: Java, TypeScript, Bash",
+        "Frameworks & Runtimes: Spring Boot, Dropwizard",
+        "Cloud & IaC: AWS (SNS, SQS, EC2, ECS, Lambda, S3, IAM, RDS, SAM, CloudFormation), Terraform, Terragrunt",
+        "Platform & Tooling: MySQL, Docker, LocalStack, GitLab CI/CD, Postman, Datadog, Backstage"
       ]
     },
     {
       role: "Software Engineer",
       company: "T-Mobile",
       companylogo: img("tmobileLogo.webp"),
-      date: "July 2021 – July 2023",
-      desc: "Worked extensively with microservices to create an Ad-Hoc invoicing system solution to onboard large business line customers. Using Spring Boot services with a Cassandra persistence layer and AWS S3 storage, all presented to the user with an Angular frontend.",
+      accentColor: "#e20074",
+      date: "July 2021 – June 2023",
+      desc: "Delivered billing and payments capabilities for T-Mobile for Business, shipping enterprise features while improving the health of core services through dependency remediation and major Java and Spring Boot upgrades. I also helped establish cleaner API development practices and built an invoicing solution for the Department of Education that integrated with legacy workflows and enabled a new revenue stream.",
       descBullets: [
         "Languages: Java, TypeScript",
         "Frameworks & UI: Spring Boot, Angular",
-        "Cloud & Infra: AWS (S3, Lambda), Kubernetes (K8s), Docker, Terraform",
-        "Data: Cassandra",
-        "CI/CD & Testing: GitLab CI/CD, Newman, JUnit, Jest",
-        "Observability: Splunk"
+        "Cloud & Platform: AWS, Apigee, Kubernetes, Docker, Conduktor",
+        "Data: Cassandra, Spring Data",
+        "CI/CD & Tooling: GitLab CI/CD, Postman, Splunk"
       ]
     },
     {
       role: "Software Engineer",
       company: "USAA",
       companylogo: img("usaaLogo.webp"),
-      date: "July 2019 – Sep 2021",
-      desc: "Created and Deployed several distributed microservices using Kafka, Spring WebFlux and Spring Data to store critical data to be used for analysis.",
+      accentColor: "#003087",
+      date: "July 2019 – July 2021",
+      desc: "Within USAA's Platform Infrastructure organization, I built identity and access management capabilities that processed customer verification signals in real time. I contributed to login, registration, and password reset flows for USAA.com, integrated identity checks with credit agencies, and created internal tools that helped call center teams investigate and prevent suspected fraud.",
       descBullets: [
-        "Languages: Java",
-        "Frameworks: Spring Boot, Spring WebFlux, Spring Data",
-        "Platform: OpenShift, Docker",
-        "Data & Streaming: DB2, Kafka",
-        "Testing: JUnit",
-        "Observability: Splunk, Kibana, Grafana, Prometheus, Jaeger, OpenTelemetry"
+        "Languages: Java, Groovy",
+        "Frontend: React, Redux",
+        "Frameworks: Spring Boot, Spring Data JPA, Spring Security, Spring WebFlux, Spring Actuator",
+        "Platform & Data: Kafka, DB2, Couchbase, Docker, Kubernetes, OpenShift",
+        "Observability & Security: Splunk, Kibana, Grafana, Prometheus, Jaeger, OpenTelemetry, PromQL, OAuth, Postman"
       ]
     },
     {
       role: "Software Engineer",
       company: "American Airlines",
       companylogo: img("americanAirlinesLogo.webp"),
-      date: "May 2018 – July 2019",
-      desc: "Delivered quality software iteratively through DevOps pipeline as part of a Scrum team, using Jenkins for automated testing and deployment. Decomposed existing monolothic code base into Spring Boot microservices running in a cloud environment that is used by millions of users based on analytics. If you have ever booked a flight through AA.com you have definitely seen my work. 😄",
+      accentColor: "#0078d2",
+      date: "June 2018 – July 2019",
+      desc: "Played a hands-on role in modernizing the AA.com flight booking experience, helping move a core customer journey from a monolithic architecture to cloud-hosted microservices. That shift improved scalability, resilience, and performance for a platform serving millions of travelers.",
       descBullets: [
-        "Languages: Java, Kotlin, Typescript",
-        "Frameworks & UI: Spring Boot, Angular, Apache Struts",
-        "Cloud & CI/CD: IBM Cloud (Bluemix), Jenkins, GitHub Actions, Docker",
-        "Data & Caching: Redis",
+        "Languages: Kotlin, Java, TypeScript",
+        "Frameworks & UI: Spring Boot, Spring Data JPA, Spring Security, Spring WebFlux, Angular",
+        "Cloud & Delivery: IBM Bluemix, Kubernetes, Jenkins, GitHub Actions, Docker",
+        "Data & Testing: Redis, JUnit, Selenium, Postman, OAuth",
         "Observability: Splunk, New Relic, Dynatrace, Tealeaf"
       ]
     },
     {
-      role: "Software Engineer (Intern)",
+      role: "Software Engineer Intern",
       company: "UTx @ The University of Texas System",
       companylogo: img("utSystemLogo.webp"),
+      accentColor: "#bf5700",
       date: "May 2016 – Aug 2016",
-      desc: "Developed internal web-based tools on LAMP stacks for tracking development projects, keeping the graphical user interface design in mind with HTML. Generated web services layer in PHP and a JSON message structure for consumption by the message architecture.  Additionally, defined and developed PCI compliant API structures.",
-      descBullets: ["Stack: Linux, Apache, MySQL, PHP, JSON"]
+      desc: "Researched frontend approaches for a new product by prototyping applications with frameworks like React and evaluating what best matched the business use case. Alongside that exploration, I built internal LAMP-stack tools used to track development work across the organization.",
+      descBullets: ["Stack: React prototyping, Linux, Apache, MySQL, PHP, JSON"]
     },
     {
-      role: "Full Stack Developer",
+      role: "Software Engineer",
       company: "TIAER",
       companylogo: img("tiaerLogo.webp"),
+      accentColor: "#3f73b8",
       date: "Feb 2016 – May 2018",
-      desc: "Managed the interchange of data between the server and the users. Focused on the development of all server-side logic and maintenance of the central database &amp servers, while ensuring high performance and responsiveness to requests from the front-end. Created and integrated the front-end elements into web applications and familiarized junior developers with MVC frameworks.",
+      desc: "Led full-stack development of a web-based nutrient tracking platform from concept through delivery. I owned the frontend, backend services, databases, Linux infrastructure, and hosting footprint, while also bringing UX considerations into the product and mentoring junior developers on MVC-based application design.",
       descBullets: [
-        "Stack: Ruby on Rails, RSpec, Selenium, HTML/CSS/JS, MySQL, Jenkins, Linux"
+        "Core Stack: Ruby on Rails, MySQL, HTML, CSS, JavaScript, CoffeeScript, jQuery",
+        "Quality & Delivery: Selenium, RSpec, Jenkins",
+        "Infra & Operations: Linux, CRON, Batch jobs, Mailchimp"
       ]
     },
     {
-      role: "QA Engineer (Intern)",
+      role: "Associate Software Engineer",
       company: "TIAER",
       companylogo: img("tiaerLogo.webp"),
+      accentColor: "#3f73b8",
       date: "Feb 2015 – Feb 2016",
-      desc: "Provided end-to-end solutions to software quality problems by developing and executing exploratory and automated tests to ensure quality of web applications, while also handling front-end programming tasks. Designed and implemented tests, debugged and defined corrective actions. Conducted tests to ensure software ran smoothly and met client needs, while being cost-effective.",
-      descBullets: ["Tools: Selenium, RSpec, Cucumber, JavaScript, HTML/CSS"]
+      desc: "Helped improve web application quality through a mix of exploratory testing, automated test development, debugging, and frontend support work. The role combined hands-on QA with practical engineering tasks so issues were identified early, corrected efficiently, and aligned with what the client actually needed.",
+      descBullets: [
+        "Testing & QA: Selenium, RSpec, MiniTest",
+        "Frontend: HTML, CSS, JavaScript",
+        "Application Development: Ruby on Rails"
+      ]
     }
   ]
 };

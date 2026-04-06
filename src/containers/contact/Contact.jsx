@@ -1,15 +1,22 @@
-import React, {useContext} from "react";
+import React, {lazy, Suspense, useContext} from "react";
 import "./Contact.scss";
 import SocialMedia from "../../components/socialMedia/SocialMedia";
 import {illustration, contactInfo} from "../../portfolio";
 import {motion as m} from "framer-motion";
 import email from "../../assets/lottie/email";
-import DisplayLottie from "../../components/displayLottie/DisplayLottie";
 import StyleContext from "../../contexts/StyleContext";
 import contactMailDarkSvg from "../../assets/images/contactMailDark.svg?url";
+import {usePrefersReducedMotion} from "../../hooks/usePrefersReducedMotion";
+
+const DisplayLottie = lazy(
+  () => import("../../components/displayLottie/DisplayLottie")
+);
 
 export default function Contact() {
   const {isDark} = useContext(StyleContext);
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const shouldAnimateIllustration =
+    illustration.animated && !prefersReducedMotion;
   return (
     <m.div
       initial={{opacity: 0, y: 20}}
@@ -59,10 +66,30 @@ export default function Contact() {
             </div>
           </div>
           <div className="contact-image-div">
-            {illustration.animated ? (
-              <DisplayLottie animationData={email} />
+            {shouldAnimateIllustration ? (
+              <Suspense
+                fallback={
+                  <img
+                    alt="Contact illustration"
+                    src={contactMailDarkSvg}
+                    width="480"
+                    height="360"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                }
+              >
+                <DisplayLottie animationData={email} />
+              </Suspense>
             ) : (
-              <img alt="Man working" src={contactMailDarkSvg}></img>
+              <img
+                alt="Contact illustration"
+                src={contactMailDarkSvg}
+                width="480"
+                height="360"
+                loading="lazy"
+                decoding="async"
+              />
             )}
           </div>
         </div>

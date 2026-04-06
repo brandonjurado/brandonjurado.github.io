@@ -2,7 +2,7 @@ name: Build and Deploy
 env:
   CI: false
   GITHUB_USERNAME: ${{ github.repository_owner }}
-  REACT_APP_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This is automatically set by Github Actions
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   USE_GITHUB_DATA: "true"
 on:
   workflow_dispatch:
@@ -20,18 +20,15 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Setup Node.js 🔧
-        uses: actions/setup-node@v6.0.0
+      - name: Setup Bun 🔧
+        uses: oven-sh/setup-bun@v2
         with:
-          node-version: 22.x
-
-      - name: Update npm 🚀
-        run: npm install -g npm@latest
+          bun-version: 1.0.0
 
       - name: Install and Build 🔧 # Build the Project
         run: |
-          npm install
-          npm run build
+          bun install --frozen-lockfile
+          bun run build
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
