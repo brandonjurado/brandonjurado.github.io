@@ -12,7 +12,6 @@ export default function DisplayLottie({
       animationData={animationData}
       loop={loop}
       autoplay={autoplay}
-      renderer="canvas"
       aria-hidden="true"
       {...props}
     />

@@ -1,46 +1,52 @@
-import {defineConfig} from "vite";
-import react from "@vitejs/plugin-react-swc";
 import path from "node:path";
+import {defineConfig} from "vite";
+import react from "@vitejs/plugin-react";
+
+function manualChunks(id) {
+  if (
+    id.includes("/node_modules/react/") ||
+    id.includes("/node_modules/react-dom/")
+  ) {
+    return "react";
+  }
+
+  if (id.includes("/node_modules/framer-motion/")) {
+    return "motion";
+  }
+
+  if (
+    id.includes("/node_modules/lottie-react/") ||
+    id.includes("/node_modules/lottie-web/")
+  ) {
+    return "lottie";
+  }
+
+  return undefined;
+}
 
 export default defineConfig(() => {
   return {
     plugins: [react()],
     base: "/",
     resolve: {
-      alias: [
-        {find: "@", replacement: path.resolve(__dirname, "src")},
-        {
-          find: /^lottie-web$/,
-          replacement: path.resolve(
-            __dirname,
-            "node_modules/lottie-web/build/player/lottie_light_canvas.min.js"
-          )
-        }
-      ]
+      alias: [{find: "@", replacement: path.resolve(__dirname, "src")}]
     },
 
     build: {
       outDir: "dist",
-      target: "esnext", // or leave default 'baseline-widely-available' if you need wider support
+      target: "esnext",
       cssCodeSplit: true,
-      cssMinify: "lightningcss", // modern, fast CSS minifier
-      reportCompressedSize: false, // speed up build reporting
-      sourcemap: false, // flip to true only when debugging prod
-      chunkSizeWarningLimit: 700, // quieten harmless warnings
+      cssMinify: "lightningcss",
+      reportCompressedSize: false,
+      sourcemap: false,
+      chunkSizeWarningLimit: 700,
 
       rollupOptions: {
         output: {
-          // simple, predictable filenames for better caching
           entryFileNames: "assets/[name]-[hash].js",
           chunkFileNames: "assets/[name]-[hash].js",
           assetFileNames: "assets/[name]-[hash][extname]",
-
-          // optional: nudge big deps into their own chunks
-          manualChunks: {
-            react: ["react", "react-dom"],
-            motion: ["framer-motion"],
-            lottie: ["lottie-react"]
-          }
+          manualChunks
         }
       }
     }
