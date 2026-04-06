@@ -2,8 +2,8 @@ name: Check Format
 on:
   push:
   pull_request:
-      branches:
-        - main
+    branches:
+      - main
 jobs:
   check-format:
     runs-on: ubuntu-latest
@@ -13,15 +13,14 @@ jobs:
         with:
           persist-credentials: false
 
-      - uses: actions/setup-node@v6.0.0
+      - uses: oven-sh/setup-bun@v2
         with:
-          node-version: 22.x
+          bun-version: 1.0.0
 
       - name: Install 🔧 # Install dependencies
         run: |
-          npm install
+          bun install --frozen-lockfile
 
       - name: Check Format
         run: |
-          npm run check-format
-
+          bun run check-format

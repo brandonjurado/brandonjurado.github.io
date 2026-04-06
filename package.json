@@ -4,7 +4,9 @@
   "author": "Brandon Jurado",
   "version": "1.0.0",
   "private": true,
+  "packageManager": "bun@1.0.0",
   "engines": {
+    "bun": ">=1.0.0",
     "node": ">=22.12.0 || ^20.19.0"
   },
   "dependencies": {
@@ -12,7 +14,6 @@
     "@fortawesome/free-brands-svg-icons": "^7.2.0",
     "@fortawesome/free-solid-svg-icons": "^7.2.0",
     "@fortawesome/react-fontawesome": "^3.2.0",
-    "colorthief": "^2.6.0",
     "dotenv": "^17.3.1",
     "framer-motion": "^12.34.3",
     "gsap": "^3.14.2",
@@ -24,12 +25,14 @@
     "sass": "^1.97.3"
   },
   "scripts": {
-    "start": "node fetch.js && vite",
-    "build": "node fetch.js && vite build",
+    "prepare:data": "bun run scripts/fetch-profile.mjs",
+    "dev": "bun run prepare:data && vite",
+    "start": "bun run dev",
+    "build": "bun run prepare:data && vite build",
     "preview": "vite preview",
     "format": "prettier --write \"./**/*.{js,jsx,ts,tsx,css,json,scss}\"",
     "check-format": "prettier -c \"./**/*.{js,jsx,ts,tsx,css,json,scss}\"",
-    "test": "vitest"
+    "test": "vitest run --passWithNoTests"
   },
   "browserslist": {
     "production": [
@@ -51,7 +54,6 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
-    "@vitejs/plugin-react": "^5.1.4",
     "@vitejs/plugin-react-swc": "^4.2.3",
     "jsdom": "^28.1.0",
     "lightningcss": "^1.31.1",

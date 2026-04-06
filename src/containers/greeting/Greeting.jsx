@@ -1,31 +1,34 @@
-import React, {useContext} from "react";
-import {motion as m} from "framer-motion";
+import React, {lazy, Suspense, useContext} from "react";
 import "./Greeting.scss";
 import landingPerson from "../../assets/lottie/landingPerson";
-import DisplayLottie from "../../components/displayLottie/DisplayLottie";
 import SocialMedia from "../../components/socialMedia/SocialMedia";
 import Button from "../../components/button/Button";
 import {illustration, greeting, landingMarquee} from "../../portfolio";
 import StyleContext from "../../contexts/StyleContext";
 import manOnTableSvg from "../../assets/images/manOnTable.svg?url";
-import TextType from "../../components/reactBits/TextType/TextType";
+import {usePrefersReducedMotion} from "../../hooks/usePrefersReducedMotion";
+
+const DisplayLottie = lazy(
+  () => import("../../components/displayLottie/DisplayLottie")
+);
+const TextType = lazy(
+  () => import("../../components/reactBits/TextType/TextType")
+);
 
 export default function Greeting() {
   const {isDark} = useContext(StyleContext);
+  const prefersReducedMotion = usePrefersReducedMotion();
   const marqueeKeywords = landingMarquee?.keywords ?? [];
   const marqueeBrands = landingMarquee?.brands ?? [];
   const loopItems = items => [...items, ...items];
+  const shouldAnimateIllustration =
+    illustration.animated && !prefersReducedMotion;
 
   if (!greeting.displayGreeting) {
     return null;
   }
   return (
-    <m.div
-      initial={{opacity: 0, y: 40}}
-      whileInView={{opacity: 1, y: 0}}
-      transition={{duration: 1}}
-      viewport={{once: true, amount: 0.2}}
-    >
+    <div>
       <div className="greet-main" id="greeting">
         <div className="greeting-main">
           <div className="greeting-text-div">
@@ -33,14 +36,20 @@ export default function Greeting() {
               <h1
                 className={isDark ? "dark-mode greeting-text" : "greeting-text"}
               >
-                <TextType
-                  text={greeting.title}
-                  as="span"
-                  loop={false}
-                  showCursor={true}
-                  cursorCharacter="|"
-                  className="greeting-name-type"
-                />
+                <Suspense
+                  fallback={
+                    <span className="greeting-name-type">{greeting.title}</span>
+                  }
+                >
+                  <TextType
+                    text={greeting.title}
+                    as="span"
+                    loop={false}
+                    showCursor={true}
+                    cursorCharacter="|"
+                    className="greeting-name-type"
+                  />
+                </Suspense>
               </h1>
               <p
                 className={
@@ -76,10 +85,30 @@ export default function Greeting() {
             </div>
           </div>
           <div className="greeting-image-div">
-            {illustration.animated ? (
-              <DisplayLottie animationData={landingPerson} />
+            {shouldAnimateIllustration ? (
+              <Suspense
+                fallback={
+                  <img
+                    alt="Illustration of Brandon at a desk"
+                    src={manOnTableSvg}
+                    width="600"
+                    height="450"
+                    fetchPriority="high"
+                    decoding="async"
+                  />
+                }
+              >
+                <DisplayLottie animationData={landingPerson} />
+              </Suspense>
             ) : (
-              <img alt="man sitting on table" src={manOnTableSvg}></img>
+              <img
+                alt="Illustration of Brandon at a desk"
+                src={manOnTableSvg}
+                width="600"
+                height="450"
+                fetchPriority="high"
+                decoding="async"
+              />
             )}
           </div>
         </div>
@@ -120,6 +149,6 @@ export default function Greeting() {
             </div>
           )}
       </div>
-    </m.div>
+    </div>
   );
 }

@@ -6,6 +6,7 @@ import {motion as m} from "framer-motion";
 import codingPerson from "../../assets/lottie/codingPerson";
 import StyleContext from "../../contexts/StyleContext";
 import developerSvg from "../../assets/images/developerActivity.svg?url";
+import {usePrefersReducedMotion} from "../../hooks/usePrefersReducedMotion";
 
 // Lazy-load the heavy Lottie component
 const DisplayLottie = lazy(
@@ -14,6 +15,9 @@ const DisplayLottie = lazy(
 
 export default function Skills() {
   const {isDark} = useContext(StyleContext);
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const shouldAnimateIllustration =
+    illustration.animated && !prefersReducedMotion;
   if (!skillsSection.display) return null;
 
   return (
@@ -28,8 +32,19 @@ export default function Skills() {
           style={{willChange: "transform,opacity"}}
         >
           <div className="skills-image-div">
-            {illustration.animated ? (
-              <Suspense fallback={null}>
+            {shouldAnimateIllustration ? (
+              <Suspense
+                fallback={
+                  <img
+                    alt="Developer workflow illustration"
+                    src={developerSvg}
+                    width="480"
+                    height="360"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                }
+              >
                 <DisplayLottie animationData={codingPerson} />
               </Suspense>
             ) : (

@@ -1,15 +1,24 @@
-import React, {useContext} from "react";
+import React, {lazy, Suspense, useContext} from "react";
 import "./SplashScreen.css";
-import DisplayLottie from "../../components/displayLottie/DisplayLottie";
 import {greeting, splashScreen} from "../../portfolio";
 import StyleContext from "../../contexts/StyleContext";
+import {usePrefersReducedMotion} from "../../hooks/usePrefersReducedMotion";
+
+const DisplayLottie = lazy(
+  () => import("../../components/displayLottie/DisplayLottie")
+);
 
 export default function SplashScreen() {
   const {isDark} = useContext(StyleContext);
+  const prefersReducedMotion = usePrefersReducedMotion();
   return (
     <div className={isDark ? "dark-mode splash-container" : "splash-container"}>
       <div className="splash-animation-container">
-        <DisplayLottie animationData={splashScreen.animation} />
+        {!prefersReducedMotion ? (
+          <Suspense fallback={null}>
+            <DisplayLottie animationData={splashScreen.animation} />
+          </Suspense>
+        ) : null}
       </div>
       <div className="splash-title-container">
         <span className="grey-color"> &lt;</span>

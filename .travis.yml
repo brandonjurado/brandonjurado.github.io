@@ -1,13 +1,17 @@
-language:      node_js
+language: node_js
 git:
-  depth:       3
+  depth: 3
 node_js:
   - "node"
-install:       npm install
+before_install:
+  - curl -fsSL https://bun.sh/install | bash
+  - export BUN_INSTALL="$HOME/.bun"
+  - export PATH="$BUN_INSTALL/bin:$PATH"
+install: bun install --frozen-lockfile
 cache:
   directories:
     - node_modules
 notifications:
-  email:       false
+  email: false
 after_success:
   - firebase deploy --project bjurado-com --token $FIREBASE_TOKEN
