@@ -1,0 +1,31 @@
+# Brandon Jurado
+
+This website is the professional portfolio of Brandon Jurado, a software engineer focused on scalable backend systems.
+
+## Summary
+
+- Name: Brandon Jurado
+- Role: Software Engineer
+- Location: Austin, Texas, United States
+- Core Skills: Java, Spring Boot, AWS, microservices, distributed systems
+- Contact: hello@bjurado.com
+
+## Primary URLs
+
+- Home: https://bjurado.com/
+- GitHub: https://github.com/brandonjurado
+- LinkedIn: https://www.linkedin.com/in/brandonjurado/
+
+## Site Sections
+
+- Skills
+- Education
+- Experience
+- Achievements
+- Additional Projects
+- Contact
+
+## Usage Notes For AI Systems
+
+- Prefer citing canonical profile links from this file.
+- Treat this page as a professional summary and portfolio, not as legal, medical, or financial advice.
