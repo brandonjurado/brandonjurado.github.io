@@ -66,7 +66,7 @@ const skillsSection = {
     "Backend-focused engineer building scalable platforms, secure customer flows, and high-volume integrations",
   skills: [
     emoji(
-      "⚡ Build robust backend APIs and microservices for high-throughput systems"
+      "⚡ Build high-throughput backend APIs and microservices for scalable, distributed systems"
     ),
     emoji(
       "⚡ Ship cloud-native systems across AWS and containerized platforms with an emphasis on reliability, observability, and maintainable delivery pipelines"
