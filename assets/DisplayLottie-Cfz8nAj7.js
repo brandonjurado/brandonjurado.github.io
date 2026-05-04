@@ -1,1 +1,0 @@
-import{j as o}from"./react-Dr6qcOTS.js";import{L as a}from"./lottie-BjMfLnPd.js";function m({animationData:t,loop:r=!0,autoplay:e=!0,...i}){return o.jsx(a,{animationData:t,loop:r,autoplay:e,"aria-hidden":"true",...i})}export{m as default};
