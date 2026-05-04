@@ -1,0 +1,1 @@
+import{a as e}from"./rolldown-runtime-COnpUsM8.js";import{n as t,t as n}from"./lottie-DrOiywMl.js";import{n as r}from"./motion-Dnkvj6ej.js";t();var i=e(n()),a=r();function o({animationData:e,loop:t=!0,autoplay:n=!0,...r}){return(0,a.jsx)(i.default,{animationData:e,loop:t,autoplay:n,"aria-hidden":`true`,...r})}export{o as default};
