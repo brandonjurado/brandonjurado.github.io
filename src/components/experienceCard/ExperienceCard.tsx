@@ -44,7 +44,7 @@ export default function ExperienceCard({
         <img
           className="experience-roundedimg"
           src={cardInfo.companylogo}
-          srcSet={`${cardInfo.companylogo.replace("-256", "-128")} 128w, ${cardInfo.companylogo} 256w`}
+          srcSet={`${cardInfo.companylogo.replace("-256", "-128")} 128w, ${cardInfo.companylogo} ${["T-Mobile", "USAA", "American Airlines"].includes(cardInfo.company) ? 200 : 256}w`}
           sizes="128px"
           alt={cardInfo.company}
           width="128"

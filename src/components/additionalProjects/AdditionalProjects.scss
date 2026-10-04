@@ -28,9 +28,7 @@
   padding: 0.9rem 1rem;
   display: grid;
   gap: 0.6rem;
-  transition:
-    box-shadow 0.2s ease,
-    transform 0.2s ease;
+  transition: transform var(--duration-press) var(--ease-out);
 }
 
 .dark-mode.ap-card {
@@ -99,7 +97,7 @@
   color: $lightBackground3;
   font-size: 0.8rem;
   text-decoration: none;
-  transition: 0.2s ease-in;
+  transition: transform var(--duration-press) var(--ease-out);
 }
 .ap-link:hover {
   background: $buttonHover;

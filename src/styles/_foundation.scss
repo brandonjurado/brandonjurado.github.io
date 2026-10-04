@@ -150,3 +150,13 @@ html:not(.js) .theme-toggle {
     scroll-behavior: auto !important;
   }
 }
+.footer-link,
+.contact-detail-email,
+.not-found a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+a:active {
+  opacity: 0.8;
+}
