@@ -1,0 +1,60 @@
+.original-illustration {
+  position: relative;
+  width: 100%;
+}
+.original-illustration .poster,
+.original-illustration .animation {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+body .original-illustration .poster {
+  object-fit: contain;
+  aspect-ratio: auto;
+}
+.original-illustration .poster.is-playing {
+  visibility: hidden;
+}
+.greeting-image-div {
+  position: relative;
+}
+.intro-illustration {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 72px;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce), (prefers-reduced-data: reduce) {
+  .original-illustration .animation {
+    visibility: hidden;
+  }
+  .original-illustration .poster.is-playing {
+    visibility: visible;
+  }
+}
+
+.illustration-control {
+  position: absolute;
+  right: 0.25rem;
+  bottom: 0.25rem;
+  z-index: 1;
+  min-width: 44px;
+  min-height: 44px;
+  border: 1px solid currentColor;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  background: var(--page, white);
+  color: var(--ink, #171c28);
+  font: inherit;
+  cursor: pointer;
+}
+.illustration-control:disabled {
+  visibility: hidden;
+}
+@media (prefers-reduced-motion: reduce), (prefers-reduced-data: reduce) {
+  .illustration-control {
+    display: none;
+  }
+}

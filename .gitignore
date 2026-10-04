@@ -90,3 +90,6 @@ typings/
 .env
 # Local Netlify folder
 .netlify
+
+.prerender/
+.lighthouseci/

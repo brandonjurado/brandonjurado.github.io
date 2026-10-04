@@ -1,28 +1,16 @@
-import React, {lazy, Suspense, useContext} from "react";
+import Illustration from "../../components/illustration/Illustration";
+import React, {useContext} from "react";
 import "./Greeting.scss";
-import landingPerson from "../../assets/lottie/landingPerson";
 import SocialMedia from "../../components/socialMedia/SocialMedia";
 import Button from "../../components/button/Button";
-import {illustration, greeting, landingMarquee} from "../../portfolio";
+import {greeting, landingMarquee} from "../../portfolio";
 import StyleContext from "../../contexts/StyleContext";
-import manOnTableSvg from "../../assets/images/manOnTable.svg?url";
-import {usePrefersReducedMotion} from "../../hooks/usePrefersReducedMotion";
-
-const DisplayLottie = lazy(
-  () => import("../../components/displayLottie/DisplayLottie")
-);
-const TextType = lazy(
-  () => import("../../components/reactBits/TextType/TextType")
-);
 
 export default function Greeting() {
   const {isDark} = useContext(StyleContext);
-  const prefersReducedMotion = usePrefersReducedMotion();
   const marqueeKeywords = landingMarquee?.keywords ?? [];
   const marqueeBrands = landingMarquee?.brands ?? [];
   const loopItems = items => [...items, ...items];
-  const shouldAnimateIllustration =
-    illustration.animated && !prefersReducedMotion;
 
   if (!greeting.displayGreeting) {
     return null;
@@ -36,20 +24,7 @@ export default function Greeting() {
               <h1
                 className={isDark ? "dark-mode greeting-text" : "greeting-text"}
               >
-                <Suspense
-                  fallback={
-                    <span className="greeting-name-type">{greeting.title}</span>
-                  }
-                >
-                  <TextType
-                    text={greeting.title}
-                    as="span"
-                    loop={false}
-                    showCursor={true}
-                    cursorCharacter="|"
-                    className="greeting-name-type"
-                  />
-                </Suspense>
+                <span className="greeting-name-type">{greeting.title}</span>
               </h1>
               <p
                 className={
@@ -85,31 +60,18 @@ export default function Greeting() {
             </div>
           </div>
           <div className="greeting-image-div">
-            {shouldAnimateIllustration ? (
-              <Suspense
-                fallback={
-                  <img
-                    alt="Illustration of Brandon at a desk"
-                    src={manOnTableSvg}
-                    width="600"
-                    height="450"
-                    fetchPriority="high"
-                    decoding="async"
-                  />
-                }
-              >
-                <DisplayLottie animationData={landingPerson} />
-              </Suspense>
-            ) : (
-              <img
-                alt="Illustration of Brandon at a desk"
-                src={manOnTableSvg}
-                width="600"
-                height="450"
-                fetchPriority="high"
-                decoding="async"
+            <Illustration
+              name="landingPerson"
+              label="Original waving character"
+              eager
+            />
+            <div className="intro-illustration">
+              <Illustration
+                name="splashAnimation"
+                label="Original intro animation"
+                eager
               />
-            )}
+            </div>
           </div>
         </div>
         {landingMarquee?.display &&
