@@ -33,9 +33,15 @@
   padding: 1.5rem;
   border-radius: 10px;
   border: 1px solid $lightBorder1;
-  -webkit-transition: all 0.3s ease;
-  -o-transition: all 0.3s ease;
-  transition: all 0.3s ease;
+  -webkit-transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+  -o-transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
 }
 .dark-mode.certificate-card {
   background-color: $darkBackground;
@@ -84,7 +90,7 @@
   margin: 0 0.5rem 0.5rem 0;
   padding: 0 0.75em;
   cursor: pointer;
-  transition: 0.2s ease-in;
+  transition: transform var(--duration-press) var(--ease-out);
 }
 span.certificate-tag:hover {
   background: $buttonHover;

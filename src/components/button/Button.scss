@@ -16,12 +16,16 @@
   margin-top: 20px;
   font-size: 1rem;
   cursor: pointer;
-  transition: all 0.3s ease-in-out 0s;
+  transition:
+    transform 0.3s ease-in-out 0s,
+    opacity 0.3s ease-in-out 0s;
 }
 .main-button:hover {
   background-color: $darkBoxShadow2;
   color: $buttonColor;
-  transition: all 0.3s ease 0s;
+  transition:
+    transform 0.3s ease 0s,
+    opacity 0.3s ease 0s;
   transform: translateY(-3px);
 }
 .project-button {

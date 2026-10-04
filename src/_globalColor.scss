@@ -9,8 +9,8 @@ $topButtonHover: #000;
 
 // text colors light theme
 $titleColor: #000000;
-$textColor: #000000;
-$subTitle: #868e96;
+$textColor: var(--ink);
+$subTitle: var(--muted);
 $cardSubtitle: #666666;
 $talkCardSubTitle: #7f8287;
 $blogCardTitleColor: #262626;

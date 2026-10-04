@@ -116,7 +116,7 @@
   align-items: center;
   gap: var(--space-24);
   min-width: max-content;
-  animation: marquee-slide-right 34s var(--ease-linear-brand) infinite;
+  animation: none;
 }
 
 .landing-marquee-row.is-brands .landing-marquee-track {
