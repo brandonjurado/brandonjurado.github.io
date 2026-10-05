@@ -24,10 +24,7 @@ export default function Skills() {
           style={{willChange: "transform,opacity"}}
         >
           <div className="skills-image-div">
-            <Illustration
-              name="codingPerson"
-              label="Man Working"
-            />
+            <Illustration name="codingPerson" label="Man Working" />
           </div>
         </m.div>
 

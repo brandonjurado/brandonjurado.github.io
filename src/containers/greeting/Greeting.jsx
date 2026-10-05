@@ -66,11 +66,7 @@ export default function Greeting() {
               eager
             />
             <div className="intro-illustration">
-              <Illustration
-                name="splashAnimation"
-                label=""
-                eager
-              />
+              <Illustration name="splashAnimation" label="" eager />
             </div>
           </div>
         </div>
