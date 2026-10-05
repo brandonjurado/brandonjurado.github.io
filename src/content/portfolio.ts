@@ -22,7 +22,7 @@ const greeting = {
   title: "Brandon Jurado",
   location: "Austin, TX",
   subTitle:
-    "I'm a senior software engineer based in Austin, Texas. I've worked with startup teams and at H-E-B, T-Mobile, USAA, and American Airlines. I've built customer notifications, billing and payment services, identity verification flows, and flight booking systems. My focus is backend engineering, especially systems that handle high volumes and need to stay reliable. I've also built web interfaces and managed the infrastructure behind them. I enjoy working with a team to turn complicated requirements into software people can use and maintain.",
+    "I'm a software engineer with experience on startup teams and at Fortune 50 companies. I build backend platforms and customer-facing systems that need to stay reliable under heavy use. I enjoy turning complex product problems into software people can depend on. My work includes real-time notifications, billing workflows, identity services, and the internal tools that support them.",
   resumeLink: "",
   displayGreeting: true // Set false to hide this section, defaults to true
 };
