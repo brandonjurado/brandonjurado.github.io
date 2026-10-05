@@ -37,7 +37,7 @@
   overflow: hidden;
 }
 
-.footer-shell.is-dark {
+:root:not([data-theme="light"]) .footer-shell {
   --footer-bg: #{$darkBackground};
   --footer-text: #{$textColorDark};
   --footer-muted: #{$darkBoxShadow};
@@ -69,7 +69,7 @@
   pointer-events: none;
 }
 
-.footer-shell.is-dark .footer-shell-glow {
+:root:not([data-theme="light"]) .footer-shell .footer-shell-glow {
   mix-blend-mode: screen;
   opacity: 0.45;
 }
@@ -223,17 +223,13 @@
   color: $subTitle !important;
 }
 
-.footer-shell.is-dark .footer-text {
-  color: $textColorDark !important;
-}
-
-.dark-mode {
+:root:not([data-theme="light"]) .footer-shell .footer-text {
   color: $textColorDark !important;
 }
 
 @media (forced-colors: active) {
   .footer-shell,
-  .footer-shell.is-dark {
+  :root:not([data-theme="light"]) .footer-shell {
     border: 1px solid CanvasText;
     background: Canvas;
     color: CanvasText;

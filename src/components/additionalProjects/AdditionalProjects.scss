@@ -33,7 +33,7 @@
     transform 0.2s ease;
 }
 
-.dark-mode.ap-card {
+:root:not([data-theme="light"]) .ap-card {
   background-color: $darkBackground;
   border-color: rgba(255, 255, 255, 0.12);
   box-shadow: $achievementCertificateCardHoverDark 0 10px 30px -15px;
@@ -43,7 +43,7 @@
   transform: translateY(-2px);
   box-shadow: $lightBoxShadowDark 0 20px 30px -12px;
 }
-.dark-mode.ap-card:hover {
+:root:not([data-theme="light"]) .ap-card:hover {
   box-shadow: $achievementCertificateCardHoverDark 0 20px 30px -12px;
 }
 
