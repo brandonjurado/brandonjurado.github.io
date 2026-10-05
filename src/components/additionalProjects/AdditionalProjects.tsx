@@ -1,51 +1,33 @@
-import React, {useContext} from "react";
 import "./AdditionalProjects.scss";
 import {additionalProjects} from "../../content/portfolio";
-import StyleContext from "../../contexts/StyleContext";
 
 export default function AdditionalProjects() {
-  const {isDark} = useContext(StyleContext);
   if (!additionalProjects?.display) return null;
 
   return (
     <div>
       <section className="main" id="additional-projects">
         <div className="additional-header">
-          <h2 className={isDark ? "dark-mode heading" : "heading"}>
-            {additionalProjects.title}
-          </h2>
+          <h2 className="heading">{additionalProjects.title}</h2>
           {additionalProjects.subtitle && (
-            <p
-              className={
-                isDark
-                  ? "dark-mode subTitle additional-subtitle"
-                  : "subTitle additional-subtitle"
-              }
-            >
+            <p className="subTitle additional-subtitle">
               {additionalProjects.subtitle}
             </p>
           )}
         </div>
 
         <div className="ap-grid">
-          {additionalProjects.items.map((p, i) => (
-            <article
-              key={i}
-              className={isDark ? "dark-mode ap-card" : "ap-card"}
-            >
+          {additionalProjects.items.map(p => (
+            <article key={p.name} className="ap-card">
               <div className="ap-header">
                 <h3 className="ap-name">{p.name}</h3>
-                {p.description && (
-                  <p className={isDark ? "dark-mode ap-desc" : "ap-desc"}>
-                    {p.description}
-                  </p>
-                )}
+                {p.description && <p className="ap-desc">{p.description}</p>}
               </div>
 
               {p.tech?.length ? (
                 <div className="ap-tags">
-                  {p.tech.map((t, j) => (
-                    <span className="ap-tag" key={j}>
+                  {p.tech.map(t => (
+                    <span className="ap-tag" key={t}>
                       {t}
                     </span>
                   ))}
@@ -54,9 +36,9 @@ export default function AdditionalProjects() {
 
               {p.links?.length ? (
                 <div className="ap-links">
-                  {p.links.map((l, j) => (
+                  {p.links.map(l => (
                     <a
-                      key={j}
+                      key={l.url}
                       className="ap-link"
                       href={l.url}
                       target="_blank"

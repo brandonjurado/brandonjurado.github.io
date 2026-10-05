@@ -20,15 +20,6 @@ export default tseslint.config(
     }
   },
   {
-    files: ["**/*.tsx"],
-    rules: {
-      "@typescript-eslint/no-unused-vars": [
-        "error",
-        {varsIgnorePattern: "^React$"}
-      ]
-    }
-  },
-  {
     files: ["**/*.mjs", "**/*.cjs"],
     rules: {"@typescript-eslint/no-require-imports": "off"}
   }

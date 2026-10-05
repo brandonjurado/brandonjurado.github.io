@@ -96,3 +96,39 @@ test("cache rules never combine an immutable asset policy with HTML revalidation
     /\/index.html\n {2}Cache-Control: public, max-age=0, must-revalidate/
   );
 });
+
+test("original job descriptions and image alternatives are preserved", () => {
+  const descriptions = [
+    ...document.querySelectorAll(".experience-text-desc")
+  ].map(node => node.textContent);
+  assert.deepEqual(descriptions, [
+    "At H-E-B Digital, I help build the event-driven notification platform behind curbside and order communications. My work centers on delivering near real-time, personalized alerts across the full order journey and scaling the platform to handle millions of promotional and transactional messages each day with the reliability those experiences require.",
+    "Delivered billing and payments capabilities for T-Mobile for Business, shipping enterprise features while improving the health of core services through dependency remediation and major Java and Spring Boot upgrades. I also helped establish cleaner API development practices and built an invoicing solution for the Department of Education that integrated with legacy workflows and enabled a new revenue stream.",
+    "Within USAA's Platform Infrastructure organization, I built identity and access management capabilities that processed customer verification signals in real time. I contributed to login, registration, and password reset flows for USAA.com, integrated identity checks with credit agencies, and created internal tools that helped call center teams investigate and prevent suspected fraud.",
+    "Played a hands-on role in modernizing the AA.com flight booking experience, helping move a core customer journey from a monolithic architecture to cloud-hosted microservices. That shift improved scalability, resilience, and performance for a platform serving millions of travelers.",
+    "Researched frontend approaches for a new product by prototyping applications with frameworks like React and evaluating what best matched the business use case. Alongside that exploration, I built internal LAMP-stack tools used to track development work across the organization.",
+    "Led full-stack development of a web-based nutrient tracking platform from concept through delivery. I owned the frontend, backend services, databases, Linux infrastructure, and hosting footprint, while also bringing UX considerations into the product and mentoring junior developers on MVC-based application design.",
+    "Helped improve web application quality through a mix of exploratory testing, automated test development, debugging, and frontend support work. The role combined hands-on QA with practical engineering tasks so issues were identified early, corrected efficiently, and aligned with what the client actually needed."
+  ]);
+  assert.deepEqual(
+    [...document.querySelectorAll("#root img")].map(image => image.alt),
+    [
+      "Illustration of Brandon at a desk",
+      "",
+      "Man Working",
+      "Tarleton State University",
+      "H-E-B",
+      "T-Mobile",
+      "USAA",
+      "American Airlines",
+      "UTx @ The University of Texas System",
+      "TIAER",
+      "TIAER",
+      "Ask Intuit Logo",
+      "Social Credit Logo",
+      "Hytchd logo",
+      "Contact illustration"
+    ]
+  );
+  assert.equal(document.documentElement.dataset.theme, "dark");
+});
