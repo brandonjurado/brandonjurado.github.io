@@ -1,10 +1,13 @@
 import {useRef, useState} from "react";
+import {flushSync} from "react-dom";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import "./Header.scss";
 const links = [
-  ["Experience", "experience"],
   ["Skills", "skills"],
+  ["Education", "education"],
+  ["Experience", "experience"],
   ["Projects", "additional-projects"],
+  ["Achievements", "achievements"],
   ["Contact", "contact"]
 ] as const;
 export default function Header() {
@@ -16,9 +19,13 @@ export default function Header() {
         Skip to content
       </a>
       <a className="logo" href="/">
-        <span aria-hidden="true">&lt;</span>
+        <span className="grey-color" aria-hidden="true">
+          &lt;
+        </span>
         <span className="logo-name">Brandon Jurado</span>
-        <span aria-hidden="true">/&gt;</span>
+        <span className="grey-color" aria-hidden="true">
+          /&gt;
+        </span>
       </a>
       <button
         ref={menuButton}
@@ -43,7 +50,11 @@ export default function Header() {
         }}
       >
         {links.map(([label, id]) => (
-          <a key={id} href={`/#${id}`} onClick={() => setOpen(false)}>
+          <a
+            key={id}
+            href={`#${id}`}
+            onClick={() => flushSync(() => setOpen(false))}
+          >
             {label}
           </a>
         ))}
