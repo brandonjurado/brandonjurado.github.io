@@ -24,7 +24,7 @@ function manualChunks(id) {
   return undefined;
 }
 
-export default defineConfig(() => {
+export default defineConfig(({isSsrBuild}) => {
   return {
     plugins: [react()],
     base: "/",
@@ -43,7 +43,7 @@ export default defineConfig(() => {
 
       rollupOptions: {
         output: {
-          entryFileNames: "assets/[name]-[hash].js",
+          entryFileNames: isSsrBuild ? "[name].mjs" : "assets/[name]-[hash].js",
           chunkFileNames: "assets/[name]-[hash].js",
           assetFileNames: "assets/[name]-[hash][extname]",
           manualChunks

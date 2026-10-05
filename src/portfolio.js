@@ -21,7 +21,7 @@ const img = file => {
 // Splash Screen
 
 const splashScreen = {
-  enabled: true, // set false to disable splash screen
+  enabled: false, // set false to disable splash screen
   animation: splashAnimation,
   duration: 2000 // Set animation duration as per your animation
 };
@@ -29,7 +29,7 @@ const splashScreen = {
 // Summary And Greeting Section
 
 const illustration = {
-  animated: true // Set to false to use static SVG
+  animated: false // Set to false to use static SVG
 };
 
 const greeting = {
@@ -173,7 +173,7 @@ const workExperiences = {
       companylogo: img("hebLogo.webp"),
       accentColor: "#d71920",
       date: "July 2023 – Present",
-      desc: "At H-E-B Digital, I help build the event-driven notification platform behind curbside and order communications. My work centers on delivering near real-time, personalized alerts across the full order journey and scaling the platform to handle millions of promotional and transactional messages each day with the reliability those experiences require.",
+      desc: "Build and maintain event-driven backend services for customer communications, with an emphasis on reliability and operational visibility.",
       descBullets: [
         "Languages: Java, TypeScript, Bash",
         "Frameworks & Runtimes: Spring Boot, Dropwizard",
@@ -187,7 +187,7 @@ const workExperiences = {
       companylogo: img("tmobileLogo.webp"),
       accentColor: "#e20074",
       date: "July 2021 – June 2023",
-      desc: "Delivered billing and payments capabilities for T-Mobile for Business, shipping enterprise features while improving the health of core services through dependency remediation and major Java and Spring Boot upgrades. I also helped establish cleaner API development practices and built an invoicing solution for the Department of Education that integrated with legacy workflows and enabled a new revenue stream.",
+      desc: "Delivered enterprise billing and payment capabilities, modernized Java and Spring Boot services, and improved API development practices.",
       descBullets: [
         "Languages: Java, TypeScript",
         "Frameworks & UI: Spring Boot, Angular",
@@ -202,7 +202,7 @@ const workExperiences = {
       companylogo: img("usaaLogo.webp"),
       accentColor: "#003087",
       date: "July 2019 – July 2021",
-      desc: "Within USAA's Platform Infrastructure organization, I built identity and access management capabilities that processed customer verification signals in real time. I contributed to login, registration, and password reset flows for USAA.com, integrated identity checks with credit agencies, and created internal tools that helped call center teams investigate and prevent suspected fraud.",
+      desc: "Developed customer identity experiences and internal support tools, with a focus on secure, dependable services.",
       descBullets: [
         "Languages: Java, Groovy",
         "Frontend: React, Redux",
@@ -217,7 +217,7 @@ const workExperiences = {
       companylogo: img("americanAirlinesLogo.webp"),
       accentColor: "#0078d2",
       date: "June 2018 – July 2019",
-      desc: "Played a hands-on role in modernizing the AA.com flight booking experience, helping move a core customer journey from a monolithic architecture to cloud-hosted microservices. That shift improved scalability, resilience, and performance for a platform serving millions of travelers.",
+      desc: "Played a hands-on role in modernizing the AA.com flight booking experience, helping move a core customer journey from a monolithic architecture to cloud-hosted microservices. That shift improved scalability, resilience, and performance for the customer booking experience.",
       descBullets: [
         "Languages: Kotlin, Java, TypeScript",
         "Frameworks & UI: Spring Boot, Spring Data JPA, Spring Security, Spring WebFlux, Angular",
