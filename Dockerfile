@@ -8,4 +8,4 @@ COPY . .
 RUN bun run build
 ENV HOST=0.0.0.0
 EXPOSE 4173
-CMD ["bun", "run", "preview", "--host", "0.0.0.0", "--port", "4173"]
+CMD ["bun", "run", "preview"]

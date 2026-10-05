@@ -1,4 +1,9 @@
-src/serviceWorker.js
-package-lock.json
-src/assets/lottie
-
+node_modules/
+dist/
+.prerender/
+.lighthouseci/
+reports/
+public/media/
+public/share-card.png
+src/assets/
+bun.lock

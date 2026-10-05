@@ -41,12 +41,13 @@ for (const notFound of [false, true]) {
   await writeFile(notFound ? "dist/404.html" : "dist/index.html", html);
 }
 const headers = `/*
-  ${process.env.CONTEXT === "deploy-preview" ? "X-Robots-Tag: noindex\n  " : ""}Cache-Control: public, max-age=0, must-revalidate
+  ${process.env.CONTEXT === "deploy-preview" ? "X-Robots-Tag: noindex\n  " : ""}X-Frame-Options: DENY
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
   Strict-Transport-Security: max-age=31536000
   Content-Security-Policy: default-src 'self'; script-src 'self' ${[...scriptHashes].join(" ")}; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'; upgrade-insecure-requests
+${["/", "/index.html", "/404.html", "/media/*", "/share-card.png", "/manifest.json", "/robots.txt", "/sitemap.xml", "/llms.txt", "/favicon*", "/apple-touch-icon.png"].map(path => `${path}\n  Cache-Control: public, max-age=0, must-revalidate`).join("\n")}
 /assets/*
   Cache-Control: public, max-age=31536000, immutable
 `;
