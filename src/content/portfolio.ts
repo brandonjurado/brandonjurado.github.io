@@ -22,7 +22,7 @@ const greeting = {
   title: "Brandon Jurado",
   location: "Austin, TX",
   subTitle:
-    "Senior Software Engineer building large-scale, event-driven backend systems. Java, Spring Boot, Kafka, AWS and Terraform — with strong TypeScript and a focus on reliability.",
+    "I'm a senior software engineer based in Austin, Texas. I've worked with startup teams and at H-E-B, T-Mobile, USAA, and American Airlines. I've built customer notifications, billing and payment services, identity verification flows, and flight booking systems. My focus is backend engineering, especially systems that handle high volumes and need to stay reliable. I've also built web interfaces and managed the infrastructure behind them. I enjoy working with a team to turn complicated requirements into software people can use and maintain.",
   resumeLink: "",
   displayGreeting: true // Set false to hide this section, defaults to true
 };
