@@ -22,7 +22,7 @@
   --page: #ffffff;
   --surface: #ffffff;
   --ink: #000000;
-  --muted: #868e96;
+  --muted: #6f767d;
   --accent: #55198b;
   --line: #c1bdc9;
 }
@@ -116,6 +116,9 @@ a:active {
 
 // Former dark-mode text classes, driven by the same attribute as the switch.
 :root:not([data-theme="light"]) {
+  .greeting-text {
+    color: #b98ae8 !important;
+  }
   .greeting-text-subheading,
   .greeting-text-p,
   .skills-heading,

@@ -1,6 +1,4 @@
-import React, {useContext} from "react";
 import "./Footer.scss";
-import StyleContext from "../../contexts/StyleContext";
 import {
   greeting,
   skillsSection,
@@ -13,7 +11,6 @@ import {
 } from "../../content/portfolio";
 
 export default function Footer() {
-  const {isDark} = useContext(StyleContext);
   if (footerSection?.display === false) {
     return null;
   }
@@ -59,7 +56,7 @@ export default function Footer() {
   return (
     <div>
       <div className="footer-div">
-        <footer className={isDark ? "footer-shell is-dark" : "footer-shell"}>
+        <footer className="footer-shell">
           <div className="footer-shell-glow" aria-hidden="true"></div>
           <div className="footer-content">
             <div className="footer-headline-wrap">

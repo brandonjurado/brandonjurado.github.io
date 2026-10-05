@@ -2,12 +2,19 @@ language: node_js
 git:
   depth: 3
 node_js:
-  - "node"
+  - "22"
 before_install:
-  - curl -fsSL https://bun.sh/install | bash
+  - curl -fsSL https://bun.sh/install | bash -s "bun-v1.3.6"
   - export BUN_INSTALL="$HOME/.bun"
   - export PATH="$BUN_INSTALL/bin:$PATH"
 install: bun install --frozen-lockfile
+script:
+  - bun run lint
+  - bun run check-format
+  - bun run typecheck
+  - bun run build
+  - bun run test:static
+  - bun run check:bundle
 cache:
   directories:
     - node_modules

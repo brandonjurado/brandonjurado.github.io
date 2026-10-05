@@ -1,4 +1,3 @@
-import React from "react";
 import "./Education.scss";
 import EducationCard from "../../components/educationCard/EducationCard";
 import {educationInfo} from "../../content/portfolio";
@@ -9,8 +8,8 @@ export default function Education() {
       <div className="education-section" id="education">
         <h2 className="education-heading">Education</h2>
         <div className="education-card-container">
-          {educationInfo.schools.map((school, index) => (
-            <EducationCard key={index} school={school} />
+          {educationInfo.schools.map(school => (
+            <EducationCard key={school.schoolName} school={school} />
           ))}
         </div>
       </div>
