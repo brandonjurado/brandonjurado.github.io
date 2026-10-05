@@ -77,7 +77,12 @@ try {
         projectPadding: style(".ap-card").padding,
         footerBackground: style(".footer-shell").backgroundImage,
         footerGlow: style(".footer-shell-glow").display,
-        marquee: style(".landing-marquee").display
+        marquee: style(".landing-marquee").display,
+        introColor: style(".greeting-text").color,
+        introButtonPadding: style(".button-greeting-div .main-button").padding,
+        introButtonSize: style(".button-greeting-div .main-button").fontSize,
+        introButtonMinHeight: style(".button-greeting-div .main-button")
+          .minHeight
       };
     });
     assert.match(restoredStyles.introFont, /Saira Extra Condensed/);
@@ -87,6 +92,10 @@ try {
     assert.match(restoredStyles.footerBackground, /linear-gradient/);
     assert.notEqual(restoredStyles.footerGlow, "none");
     assert.notEqual(restoredStyles.marquee, "none");
+    assert.equal(restoredStyles.introColor, "rgb(85, 25, 139)");
+    assert.equal(restoredStyles.introButtonPadding, "12px 18px");
+    assert.equal(restoredStyles.introButtonSize, "15.008px");
+    assert.equal(restoredStyles.introButtonMinHeight, "0px");
     const smallTargets = await page
       .locator("a,button")
       .evaluateAll(elements => {
@@ -125,6 +134,15 @@ try {
       [],
       `${colorScheme} accessibility`
     );
+    // Check actual scrolling, not only matching fragment URLs.
+    const sectionIds = [
+      "skills",
+      "education",
+      "experience",
+      "additional-projects",
+      "achievements",
+      "contact"
+    ];
     for (const width of [320, 390, 768, 1440]) {
       await page.setViewportSize({width, height: 844});
       assert.ok(
@@ -133,6 +151,55 @@ try {
         ),
         `overflow ${colorScheme} ${width}`
       );
+      for (const id of sectionIds) {
+        const menu = page.getByRole("button", {name: "Menu", exact: true});
+        if (
+          (await menu.isVisible()) &&
+          (await menu.getAttribute("aria-expanded")) === "false"
+        )
+          await menu.click();
+        const link = page.locator(`.navigation a[href="#${id}"]`);
+        assert.equal(await link.count(), 1, `navbar target ${id}`);
+        assert.equal(
+          await link.evaluate(element => getComputedStyle(element).padding),
+          "15px 20px"
+        );
+        assert.equal(
+          await link.evaluate(element => getComputedStyle(element).color),
+          colorScheme === "dark" ? "rgb(255, 255, 255)" : "rgb(0, 0, 0)"
+        );
+        await link.hover();
+        assert.equal(
+          await link.evaluate(
+            element => getComputedStyle(element).backgroundColor
+          ),
+          colorScheme === "dark" ? "rgb(85, 25, 139)" : "rgb(244, 244, 244)"
+        );
+        await link.click();
+        assert.equal(new URL(page.url()).hash, `#${id}`);
+        await page.waitForFunction(target => {
+          const rect = document.getElementById(target).getBoundingClientRect();
+          const atEnd =
+            Math.abs(
+              scrollY + innerHeight - document.documentElement.scrollHeight
+            ) < 2;
+          return (
+            (rect.top >= 0 && rect.top < 40) ||
+            (atEnd && rect.top >= 0 && rect.top < innerHeight)
+          );
+        }, id);
+        if (await menu.isVisible())
+          assert.equal(await menu.getAttribute("aria-expanded"), "false");
+      }
+      await page.evaluate(() => window.scrollTo({top: 0, behavior: "instant"}));
+      await page.locator(".button-greeting-div .main-button").click();
+      assert.equal(new URL(page.url()).hash, "#contact");
+      await page.waitForFunction(() => {
+        const top = document
+          .getElementById("contact")
+          .getBoundingClientRect().top;
+        return top >= 0 && top < innerHeight;
+      });
     }
     assert.deepEqual(errors, [], "Hydration/console errors");
     await page.evaluate(() => localStorage.setItem("theme", "dark"));
