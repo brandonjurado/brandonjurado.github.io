@@ -1,30 +1,61 @@
+@use "../../_globalColor" as *;
+
 .header {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 1rem;
-  padding: 1rem max(5vw, env(safe-area-inset-right)) 1rem
-    max(5vw, env(safe-area-inset-left));
+  justify-content: space-between;
+  max-width: 100%;
+  padding: 15px 20px;
+  margin: 0 auto;
+  background: var(--page);
 }
-.logo {
-  font-size: 1.25rem;
-  font-weight: 700;
+.header .logo {
+  display: block;
+  flex: none;
+  font-size: 1.5em;
   text-decoration: none;
-  margin-right: auto;
+  margin-top: 10px;
+  line-height: normal;
+  color: var(--ink);
 }
-.nav-toggle {
-  display: none;
+.grey-color {
+  color: $subTitle;
+}
+.logo-name {
+  font-family: "Agustina Regular";
+  font-weight: bold;
+  font-variant-ligatures: no-common-ligatures;
+  padding: 0 10px;
 }
 .navigation {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
   align-items: center;
   width: 100%;
 }
 .navigation a {
-  padding: 0.75rem;
+  display: block;
+  padding: 15px 20px;
+  color: var(--ink);
   text-decoration: none;
+}
+.navigation a:hover,
+.nav-toggle:hover {
+  background-color: $headerHoverBG;
+}
+:root:not([data-theme="light"]) {
+  .navigation a:hover,
+  .nav-toggle:hover {
+    background-color: $buttonColor;
+  }
+}
+.navigation .theme-toggle {
+  margin: 15px 20px;
+}
+.nav-toggle {
+  display: none;
+  padding: 28px 20px;
 }
 .js .nav-toggle {
   display: inline-flex;
@@ -32,7 +63,7 @@
 .js .navigation:not(.is-open) {
   display: none;
 }
-@media (min-width: 64rem) {
+@media (min-width: 48em) {
   .js .nav-toggle {
     display: none;
   }
@@ -40,6 +71,11 @@
   .js .navigation:not(.is-open) {
     display: flex;
     width: auto;
+  }
+}
+@media (max-width: 960px) and (min-width: 768px) {
+  .header {
+    font-size: 12px;
   }
 }
 
@@ -77,14 +113,4 @@
 .nav-toggle[aria-expanded="true"] .navicon::after {
   top: 0;
   transform: rotate(-45deg);
-}
-
-@font-face {
-  font-family: "Agustina";
-  src: url("../../assets/fonts/Agustina.woff") format("woff");
-  font-display: swap;
-}
-.logo-name {
-  font-family: "Agustina", cursive;
-  padding: 0 10px;
 }
