@@ -62,13 +62,13 @@ export default function Greeting() {
           <div className="greeting-image-div">
             <Illustration
               name="landingPerson"
-              label="Original waving character"
+              label="Illustration of Brandon at a desk"
               eager
             />
             <div className="intro-illustration">
               <Illustration
                 name="splashAnimation"
-                label="Original intro animation"
+                label=""
                 eager
               />
             </div>
