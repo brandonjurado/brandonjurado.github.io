@@ -26,7 +26,7 @@ export default function Skills() {
           <div className="skills-image-div">
             <Illustration
               name="codingPerson"
-              label="Original developer and cat illustration"
+              label="Man Working"
             />
           </div>
         </m.div>
