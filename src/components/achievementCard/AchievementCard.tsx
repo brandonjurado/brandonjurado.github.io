@@ -1,12 +1,6 @@
 import type {Achievement} from "../../content/portfolio";
 import "./AchievementCard.scss";
-type Props = {
-  cardInfo: Omit<Achievement, "footerLink"> & {
-    footer: Achievement["footerLink"];
-  };
-  isDark: boolean;
-};
-export default function AchievementCard({cardInfo}: Props) {
+export default function AchievementCard({cardInfo}: {cardInfo: Achievement}) {
   return (
     <article className="certificate-card">
       <div className="certificate-image-div">
@@ -28,7 +22,7 @@ export default function AchievementCard({cardInfo}: Props) {
         <p className="card-subtitle">{cardInfo.description}</p>
       </div>
       <div className="certificate-card-footer">
-        {cardInfo.footer.map(link => (
+        {cardInfo.footerLink.map(link => (
           <a
             key={link.url}
             className="certificate-tag"

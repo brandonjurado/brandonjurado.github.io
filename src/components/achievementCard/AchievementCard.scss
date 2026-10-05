@@ -8,7 +8,7 @@
   color: $cardSubtitle;
 }
 :root:not([data-theme="light"]) .card-eyebrow {
-  color: color.adjust($cardSubtitle, $lightness: 10%);
+  color: var(--muted);
 }
 .card-image {
   max-width: 100%;

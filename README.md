@@ -33,7 +33,7 @@ bun run test
 
 ## GitHub Profile Sync
 
-If you want the site to fetch live GitHub profile data during development or production builds:
+To generate optional GitHub profile data:
 
 ```bash
 cp env.example .env
@@ -47,7 +47,7 @@ GITHUB_USERNAME="your-username"
 USE_GITHUB_DATA="true"
 ```
 
-If `USE_GITHUB_DATA` is not set to `"true"`, the fetch step is skipped and the site falls back to the static contact section.
+Run `bun run prepare:data` to write `public/profile.json`. If `USE_GITHUB_DATA` is not `"true"`, the command skips the request. Normal builds use the portfolio content in `src/content/portfolio.ts` and do not fetch profile data.
 
 ## Performance Notes
 
@@ -70,7 +70,7 @@ Required repository secrets and env:
 
 - `GITHUB_TOKEN`
 - `GITHUB_USERNAME`
-- `USE_GITHUB_DATA=true` if you want profile data generated during deploy
+- GitHub profile generation is optional and runs separately with `bun run prepare:data`.
 
 ### Docker
 
@@ -81,4 +81,4 @@ docker run -p 3000:3000 portfolio:latest
 
 ## Customization
 
-Portfolio content lives in [`src/portfolio.js`](/Users/mac/Development/Personal/web-portfolio/brandonjurado.github.io/src/portfolio.js). Update that file to change copy, links, employers, achievements, and section visibility.
+Portfolio content lives in `src/content/portfolio.ts`. Update that file to change copy, links, employers, achievements, and section visibility.

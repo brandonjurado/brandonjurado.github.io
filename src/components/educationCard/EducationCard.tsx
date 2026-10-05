@@ -1,11 +1,7 @@
 import type {School} from "../../content/portfolio";
-import {useContext} from "react";
 import "./EducationCard.scss";
-import StyleContext from "../../contexts/StyleContext";
 
 export default function EducationCard({school}: {school: School}) {
-  const {isDark} = useContext(StyleContext);
-
   return (
     <div>
       <div className="education-card">
@@ -26,24 +22,12 @@ export default function EducationCard({school}: {school: School}) {
         <div className="education-card-right">
           <h3 className="education-text-school">{school.schoolName}</h3>
           <div className="education-text-details">
-            <h3
-              className={
-                isDark
-                  ? "dark-mode education-text-subHeader"
-                  : "education-text-subHeader"
-              }
-            >
-              {school.subHeader}
-            </h3>
-            <p
-              className={`${isDark ? "dark-mode" : ""} education-text-duration`}
-            >
-              {school.duration}
-            </p>
+            <h3 className="education-text-subHeader">{school.subHeader}</h3>
+            <p className="education-text-duration">{school.duration}</p>
             <p className="education-text-desc">{school.desc}</p>
             <ul>
-              {(school.descBullets || []).map((b, i) => (
-                <li key={i} className="subTitle">
+              {school.descBullets.map(b => (
+                <li key={b} className="subTitle">
                   {b}
                 </li>
               ))}

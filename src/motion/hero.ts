@@ -4,7 +4,9 @@ export function createHeroMotion(element: HTMLElement): MotionHandle {
   return {
     init() {
       if (animations.length) {
-        animations.forEach(animation => animation.play());
+        animations.forEach(animation => {
+          if (animation.playState === "paused") animation.play();
+        });
         return;
       }
       const targets = element.querySelectorAll(
