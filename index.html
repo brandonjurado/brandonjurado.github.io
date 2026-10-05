@@ -1,161 +1,43 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="author" content="Brandon Jurado" />
     <meta
-      name="keywords"
-      content="Brandon Jurado, software engineer, backend engineer, Java, Spring Boot, AWS, portfolio, Austin"
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
     />
-    <meta name="robots" content="index, follow, max-image-preview:large" />
-    <meta name="googlebot" content="index, follow, max-image-preview:large" />
-    <meta name="referrer" content="strict-origin-when-cross-origin" />
-    <link rel="canonical" href="https://bjurado.com/" />
-
-    <title>Brandon Jurado | Software Engineer Portfolio</title>
-    <meta name="title" content="Brandon Jurado | Software Engineer Portfolio" />
-    <meta
-      name="description"
-      content="Portfolio of Brandon Jurado, a software engineer specializing in scalable backend systems using Java, Spring Boot, and AWS. Explore projects, technical expertise, and achievements."
-    />
-
-    <!-- Open Graph -->
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Brandon Jurado" />
-    <meta property="og:url" content="https://bjurado.com/" />
-    <meta
-      property="og:title"
-      content="Brandon Jurado | Software Engineer Portfolio"
-    />
-    <meta
-      property="og:description"
-      content="Brandon Jurado is a software engineer focused on building scalable backend systems with Java, Spring Boot, and AWS. Explore projects, skills, and achievements."
-    />
-    <meta property="og:image" content="https://bjurado.com/favicon-96x96.png" />
-    <meta property="og:image:alt" content="Brandon Jurado portfolio logo" />
-    <meta property="og:locale" content="en_US" />
-
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content="https://bjurado.com/" />
-    <meta
-      name="twitter:title"
-      content="Brandon Jurado | Software Engineer Portfolio"
-    />
-    <meta
-      name="twitter:description"
-      content="Software engineer portfolio showcasing backend expertise in Java, Spring Boot, AWS, and cloud-native development."
-    />
-    <meta
-      name="twitter:image"
-      content="https://bjurado.com/favicon-96x96.png"
-    />
-    <meta name="twitter:image:alt" content="Brandon Jurado portfolio logo" />
-
-    <meta name="msapplication-TileColor" content="#603cba" />
-    <meta name="theme-color" content="#6c63ff" />
-
-    <!-- Icons & manifest -->
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="/favicon-32x32.png?v8=qAJ44G5Bm7"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="/favicon-16x16.png?v8=qAJ44G5Bm7"
-    />
-    <link rel="shortcut icon" href="/favicon.ico?v8=qAJ44G5Bm7" />
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="/apple-touch-icon.png?v8=qAJ44G5Bm7"
-    />
+    <meta name="theme-color" content="#55198b" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
-    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+    <script>
+      document.documentElement.classList.add("js");
+      try {
+        var t = localStorage.getItem("theme");
+        if (t === "dark" || t === "light")
+          document.documentElement.dataset.theme = t;
+      } catch {}
+    </script>
     <link
-      rel="alternate"
-      type="text/plain"
-      href="/llms.txt"
-      title="LLMs Profile"
-    />
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="preconnect"
-      href="https://cdn.prod.website-files.com"
+      rel="preload"
+      href="/src/assets/fonts/Montserrat-Regular.woff2"
+      as="font"
+      type="font/woff2"
       crossorigin
     />
     <link
       rel="preload"
-      as="style"
-      href="https://fonts.googleapis.com/css2?family=Roboto&family=Saira+Extra+Condensed&display=swap"
+      href="/src/assets/fonts/SairaExtraCondensed-Regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
     />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Roboto&family=Saira+Extra+Condensed&display=swap"
-      media="print"
-      onload="this.media = 'all'"
-    />
-    <noscript>
-      <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Roboto&family=Saira+Extra+Condensed&display=swap"
-      />
-    </noscript>
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@graph": [
-          {
-            "@type": "Person",
-            "name": "Brandon Jurado",
-            "url": "https://bjurado.com/",
-            "jobTitle": "Software Engineer",
-            "email": "mailto:hello@bjurado.com",
-            "address": {
-              "@type": "PostalAddress",
-              "addressLocality": "Austin",
-              "addressRegion": "TX",
-              "addressCountry": "US"
-            },
-            "sameAs": [
-              "https://github.com/brandonjurado",
-              "https://www.linkedin.com/in/brandonjurado/"
-            ],
-            "knowsAbout": [
-              "Java",
-              "Spring Boot",
-              "AWS",
-              "Distributed systems",
-              "Microservices",
-              "Backend architecture"
-            ]
-          },
-          {
-            "@type": "WebSite",
-            "url": "https://bjurado.com/",
-            "name": "Brandon Jurado Portfolio",
-            "description": "Portfolio of Brandon Jurado, a software engineer specializing in scalable backend systems.",
-            "publisher": {
-              "@type": "Person",
-              "name": "Brandon Jurado"
-            }
-          }
-        ]
-      }
-    </script>
+    <!--app-head-->
   </head>
   <body>
     <div id="root"><!--app-html--></div>
-
-    <!-- Vite entry -->
-    <script type="module" src="/src/index.jsx"></script>
+    <script type="module" src="/src/index.tsx"></script>
   </body>
 </html>

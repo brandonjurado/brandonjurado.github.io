@@ -1,0 +1,146 @@
+@mixin dark-theme {
+  --page: #171c28;
+  --surface: #171c28;
+  --ink: #ffffff;
+  --muted: #868e96;
+  --accent: #55198b;
+  --line: #596273;
+}
+:root {
+  @include dark-theme;
+  color-scheme: dark;
+  --space-small: 0.5rem;
+  --space-medium: 1rem;
+  --space-large: 2rem;
+  --duration-press: 180ms;
+  --duration-enter: 600ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: linear(0, 0.45 18%, 0.82 36%, 1.04 58%, 0.99 80%, 1);
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+  --page: #ffffff;
+  --surface: #ffffff;
+  --ink: #000000;
+  --muted: #868e96;
+  --accent: #55198b;
+  --line: #c1bdc9;
+}
+.header,
+.header * {
+  box-sizing: border-box;
+}
+html {
+  scroll-padding-top: 1rem;
+}
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--ink);
+}
+a {
+  color: var(--accent);
+  text-underline-offset: 0.2em;
+}
+button,
+a {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+button {
+  font: inherit;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 0.6rem;
+  cursor: pointer;
+  padding: 0.6rem 0.9rem;
+}
+button,
+.main-button,
+.icon-button,
+.navigation a,
+.logo {
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+button,
+.main-button {
+  transition: transform var(--duration-press) var(--ease-spring);
+}
+button:active,
+.main-button:active {
+  transform: scale(0.97);
+}
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 4px;
+}
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  z-index: 20;
+  padding: 1rem;
+  background: var(--page);
+  transform: translateY(-200%);
+}
+.skip-link:focus {
+  transform: none;
+}
+.not-found {
+  max-width: 45rem;
+  margin: auto;
+  min-height: 100dvh;
+  padding: 15dvh 1.5rem;
+}
+html:not(.js) .theme-toggle {
+  display: none;
+}
+@media (prefers-reduced-motion: reduce), (prefers-reduced-data: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+.contact-detail-email,
+.not-found a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+a:active {
+  opacity: 0.8;
+}
+
+// Former dark-mode text classes, driven by the same attribute as the switch.
+:root:not([data-theme="light"]) {
+  .greeting-text-subheading,
+  .greeting-text-p,
+  .skills-heading,
+  .skills-text-subtitle,
+  .skills-text,
+  .achievement-heading,
+  .achievement-subtitle,
+  .contact-subtitle,
+  .card-title,
+  .card-subtitle,
+  .ap-desc,
+  .education-text-subHeader,
+  .education-text-duration,
+  .experience-text-role,
+  .experience-text-date,
+  .experience-card .subTitle {
+    color: #ffffff !important;
+  }
+}
+// Preserve heading semantics with the former h5 date's visual weight.
+.experience-text-date {
+  line-height: inherit;
+}
