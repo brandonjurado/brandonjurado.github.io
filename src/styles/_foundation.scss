@@ -57,22 +57,17 @@ button {
   padding: 0.6rem 0.9rem;
 }
 button,
-.main-button,
-.icon-button,
-.navigation a,
-.logo {
+.icon-button {
   min-height: 44px;
   min-width: 44px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
 }
-button,
-.main-button {
+button {
   transition: transform var(--duration-press) var(--ease-spring);
 }
-button:active,
-.main-button:active {
+button:active {
   transform: scale(0.97);
 }
 :focus-visible {
