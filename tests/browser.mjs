@@ -48,8 +48,48 @@ try {
         .getAttribute("aria-expanded"),
       "true"
     );
-    await page.getByRole("button", {name: /Color theme:/}).click();
-    await page.keyboard.press("Escape");
+    const themeToggle = page.getByRole("button", {name: /Color theme:/});
+    const checkThemeVisual = async theme =>
+      page.waitForFunction(expected => {
+        const toggle = document.querySelector(".theme-toggle");
+        const thumb = toggle.querySelector(".theme-thumb");
+        const track = toggle.querySelector(".theme-track");
+        const offset =
+          thumb.getBoundingClientRect().left -
+          track.getBoundingClientRect().left;
+        return (
+          toggle.dataset.theme === expected &&
+          thumb.textContent === (expected === "dark" ? "🌜" : "☀️") &&
+          Math.abs(offset - (expected === "dark" ? 22 : 0)) < 0.1
+        );
+      }, theme);
+    assert.equal(await themeToggle.getAttribute("data-theme"), "dark");
+    await checkThemeVisual("dark");
+    assert.equal(await page.locator("html").getAttribute("data-theme"), "dark");
+    await page.emulateMedia({
+      colorScheme: colorScheme === "dark" ? "light" : "dark"
+    });
+    assert.equal(await themeToggle.getAttribute("data-theme"), "dark");
+    await checkThemeVisual("dark");
+    await themeToggle.click();
+    assert.equal(
+      await page.locator("html").getAttribute("data-theme"),
+      "light"
+    );
+    await page.reload();
+    await page.getByRole("button", {name: "Menu", exact: true}).click();
+    await page
+      .getByRole("button", {name: "Color theme: light. Change theme"})
+      .waitFor();
+    await themeToggle.click();
+    await checkThemeVisual("dark");
+    assert.equal(await page.locator("html").getAttribute("data-theme"), "dark");
+    await page.reload();
+    await page.getByRole("button", {name: "Menu", exact: true}).click();
+    await page
+      .getByRole("button", {name: "Color theme: dark. Change theme"})
+      .waitFor();
+    await themeToggle.press("Escape");
     assert.equal(
       await page
         .getByRole("button", {name: "Menu", exact: true})
@@ -218,6 +258,7 @@ try {
     viewport: {width: 390, height: 844}
   });
   await nojs.goto(url);
+  assert.equal(await nojs.locator("html").getAttribute("data-theme"), "dark");
   for (const id of ["experience", "skills", "contact"])
     assert.ok(await nojs.locator(`#${id}`).isVisible());
   assert.ok(await nojs.getByRole("navigation", {name: "Primary"}).isVisible());
@@ -252,7 +293,14 @@ try {
   await writeFile(
     "reports/browser.json",
     JSON.stringify(
-      {results, noJS: true, reducedMotion: true, saveData: true, real404: true},
+      {
+        results,
+        contrastFailures,
+        noJS: true,
+        reducedMotion: true,
+        saveData: true,
+        real404: true
+      },
       null,
       2
     )
