@@ -1,26 +1,11 @@
-# This file is the main docker file configurations
-
-# Official Bun runtime as a parent image
-FROM oven/bun:1.0.0-alpine
-
-# Set the working directory to ./app
+FROM oven/bun:1.3.6 AS bun
+FROM node:22-bookworm-slim
+COPY --from=bun /usr/local/bin/bun /usr/local/bin/bun
 WORKDIR /app
-
-# Install app dependencies
-# Copy only the files needed for dependency resolution first.
-COPY package.json bun.lockb ./
-
-RUN apk add --no-cache git
-
-# Install any needed packages
+COPY package.json bun.lock ./
 RUN bun install --frozen-lockfile
-
-# Bundle app source
-COPY . /app
-
-# Build the static site
+COPY . .
 RUN bun run build
-
-# Preview the built site inside the container
+ENV HOST=0.0.0.0
 EXPOSE 4173
 CMD ["bun", "run", "preview", "--host", "0.0.0.0", "--port", "4173"]

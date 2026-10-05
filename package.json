@@ -4,9 +4,9 @@
   "author": "Brandon Jurado",
   "version": "1.0.0",
   "private": true,
-  "packageManager": "bun@1.0.0",
+  "packageManager": "bun@1.3.6",
   "engines": {
-    "bun": ">=1.0.0",
+    "bun": ">=1.3.6",
     "node": ">=22.12.0 || ^20.19.0"
   },
   "dependencies": {
@@ -22,13 +22,14 @@
     "react-dom": "^19.2.4",
     "react-easy-emoji": "^1.8.1",
     "react-headroom": "^3.2.1",
-    "sass": "^1.97.3"
+    "sass": "^1.97.3",
+    "lottie-web": "5.13.0"
   },
   "scripts": {
     "prepare:data": "bun run scripts/fetch-profile.mjs",
     "dev": "bun run prepare:data && vite",
     "start": "bun run dev",
-    "build": "bun run prepare:data && vite build",
+    "build": "bun run prepare:data && vite build && vite build --ssr src/entry-server.jsx --outDir .prerender && node scripts/prerender.mjs",
     "preview": "vite preview",
     "format": "prettier --write \"./**/*.{js,jsx,ts,tsx,css,json,scss}\"",
     "check-format": "prettier -c \"./**/*.{js,jsx,ts,tsx,css,json,scss}\"",

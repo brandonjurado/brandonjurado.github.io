@@ -1,23 +1,15 @@
-import React, {useContext, lazy, Suspense} from "react";
+import Illustration from "../../components/illustration/Illustration";
+import React, {useContext} from "react";
 import "./Skills.scss";
 import SoftwareSkill from "../../components/softwareSkills/SoftwareSkill";
-import {illustration, skillsSection} from "../../portfolio";
+import {skillsSection} from "../../portfolio";
 import {motion as m} from "framer-motion";
-import codingPerson from "../../assets/lottie/codingPerson";
 import StyleContext from "../../contexts/StyleContext";
-import developerSvg from "../../assets/images/developerActivity.svg?url";
-import {usePrefersReducedMotion} from "../../hooks/usePrefersReducedMotion";
 
 // Lazy-load the heavy Lottie component
-const DisplayLottie = lazy(
-  () => import("../../components/displayLottie/DisplayLottie")
-);
 
 export default function Skills() {
   const {isDark} = useContext(StyleContext);
-  const prefersReducedMotion = usePrefersReducedMotion();
-  const shouldAnimateIllustration =
-    illustration.animated && !prefersReducedMotion;
   if (!skillsSection.display) return null;
 
   return (
@@ -25,44 +17,23 @@ export default function Skills() {
       <div className="skills-main-div">
         {/* LEFT */}
         <m.div
-          initial={{opacity: 0, y: 18}}
+          initial={false}
           whileInView={{opacity: 1, y: 0}}
           transition={{duration: 0.4, ease: "easeOut"}}
           viewport={{once: true, amount: 0.25}}
           style={{willChange: "transform,opacity"}}
         >
           <div className="skills-image-div">
-            {shouldAnimateIllustration ? (
-              <Suspense
-                fallback={
-                  <img
-                    alt="Developer workflow illustration"
-                    src={developerSvg}
-                    width="480"
-                    height="360"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                }
-              >
-                <DisplayLottie animationData={codingPerson} />
-              </Suspense>
-            ) : (
-              <img
-                alt="Man Working"
-                src={developerSvg}
-                width="480"
-                height="360"
-                loading="lazy"
-                decoding="async"
-              />
-            )}
+            <Illustration
+              name="codingPerson"
+              label="Original developer and cat illustration"
+            />
           </div>
         </m.div>
 
         {/* RIGHT */}
         <m.div
-          initial={{opacity: 0, y: 18}}
+          initial={false}
           whileInView={{opacity: 1, y: 0}}
           transition={{duration: 0.4, ease: "easeOut"}}
           viewport={{once: true, amount: 0.25}}

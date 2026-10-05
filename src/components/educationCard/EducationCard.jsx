@@ -16,7 +16,7 @@ export default function EducationCard({school}) {
       <m.div
         className="education-card"
         variants={item}
-        initial="hidden"
+        initial={false}
         whileInView="show"
         viewport={{amount: 0.3, once: true}}
       >
@@ -64,7 +64,7 @@ export default function EducationCard({school}) {
       </m.div>
       <m.div
         className="education-card-border"
-        initial={{scaleX: 0}}
+        initial={false}
         whileInView={{scaleX: 1}}
         viewport={{once: true}}
         transition={{duration: 2.0, ease: "easeOut"}}
