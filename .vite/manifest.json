@@ -1,0 +1,73 @@
+{
+  "_lottie_light-D0fqc_sI.js": {
+    "file": "assets/lottie_light-D0fqc_sI.js",
+    "name": "lottie_light",
+    "isDynamicEntry": true
+  },
+  "index.html": {
+    "file": "assets/index-B2bfMpfd.js",
+    "name": "index",
+    "src": "index.html",
+    "isEntry": true,
+    "dynamicImports": [
+      "_lottie_light-D0fqc_sI.js",
+      "src/motion/hero.ts"
+    ],
+    "css": [
+      "assets/index-BQX9jTz9.css"
+    ],
+    "assets": [
+      "assets/landingPerson-DKU4CXQq.json",
+      "assets/codingPerson-B3NVhJne.json",
+      "assets/splashAnimation-Brlv9XkX.json",
+      "assets/email-CmjlNLeU.json",
+      "assets/Agustina-QfTSMhmS.woff",
+      "assets/Montserrat-Regular--ehudYVy.woff2",
+      "assets/Brier-Bold-n6byLD0k.woff2",
+      "assets/MonaSans-Variable-DhRIL2e3.woff2",
+      "assets/SairaExtraCondensed-Regular-B1V-_Lnb.woff2"
+    ]
+  },
+  "src/assets/fonts/Agustina.woff": {
+    "file": "assets/Agustina-QfTSMhmS.woff",
+    "src": "src/assets/fonts/Agustina.woff"
+  },
+  "src/assets/fonts/Brier-Bold.woff2": {
+    "file": "assets/Brier-Bold-n6byLD0k.woff2",
+    "src": "src/assets/fonts/Brier-Bold.woff2"
+  },
+  "src/assets/fonts/MonaSans-Variable.woff2": {
+    "file": "assets/MonaSans-Variable-DhRIL2e3.woff2",
+    "src": "src/assets/fonts/MonaSans-Variable.woff2"
+  },
+  "src/assets/fonts/Montserrat-Regular.woff2": {
+    "file": "assets/Montserrat-Regular--ehudYVy.woff2",
+    "src": "src/assets/fonts/Montserrat-Regular.woff2"
+  },
+  "src/assets/fonts/SairaExtraCondensed-Regular.woff2": {
+    "file": "assets/SairaExtraCondensed-Regular-B1V-_Lnb.woff2",
+    "src": "src/assets/fonts/SairaExtraCondensed-Regular.woff2"
+  },
+  "src/assets/lottie/codingPerson.json": {
+    "file": "assets/codingPerson-B3NVhJne.json",
+    "src": "src/assets/lottie/codingPerson.json"
+  },
+  "src/assets/lottie/email.json": {
+    "file": "assets/email-CmjlNLeU.json",
+    "src": "src/assets/lottie/email.json"
+  },
+  "src/assets/lottie/landingPerson.json": {
+    "file": "assets/landingPerson-DKU4CXQq.json",
+    "src": "src/assets/lottie/landingPerson.json"
+  },
+  "src/assets/lottie/splashAnimation.json": {
+    "file": "assets/splashAnimation-Brlv9XkX.json",
+    "src": "src/assets/lottie/splashAnimation.json"
+  },
+  "src/motion/hero.ts": {
+    "file": "assets/hero-C8D7F52h.js",
+    "name": "hero",
+    "src": "src/motion/hero.ts",
+    "isDynamicEntry": true
+  }
+}
