@@ -93,3 +93,6 @@ typings/
 
 .prerender/
 .lighthouseci/
+
+public/media/
+public/share-card.png

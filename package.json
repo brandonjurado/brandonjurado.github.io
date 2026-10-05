@@ -10,30 +10,21 @@
     "node": ">=22.12.0 || ^20.19.0"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^7.2.0",
-    "@fortawesome/free-brands-svg-icons": "^7.2.0",
-    "@fortawesome/free-solid-svg-icons": "^7.2.0",
-    "@fortawesome/react-fontawesome": "^3.2.0",
-    "dotenv": "^17.3.1",
-    "framer-motion": "^12.34.3",
-    "gsap": "^3.14.2",
-    "lottie-react": "^2.4.1",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "react-easy-emoji": "^1.8.1",
-    "react-headroom": "^3.2.1",
-    "sass": "^1.97.3",
     "lottie-web": "5.13.0"
   },
   "scripts": {
     "prepare:data": "bun run scripts/fetch-profile.mjs",
-    "dev": "bun run prepare:data && vite",
+    "dev": "bun run prepare:assets && vite",
     "start": "bun run dev",
-    "build": "bun run prepare:data && vite build && vite build --ssr src/entry-server.jsx --outDir .prerender && node scripts/prerender.mjs",
+    "build": "bun run prepare:assets && vite build && vite build --ssr src/entry-server.tsx --outDir .prerender && node scripts/prerender.mjs",
     "preview": "vite preview",
     "format": "prettier --write \"./**/*.{js,jsx,ts,tsx,css,json,scss}\"",
     "check-format": "prettier -c \"./**/*.{js,jsx,ts,tsx,css,json,scss}\"",
-    "test": "vitest run --config vitest.config.mjs --passWithNoTests"
+    "test": "vitest run --config vitest.config.mjs --passWithNoTests",
+    "typecheck": "tsc --noEmit",
+    "prepare:assets": "node scripts/prepare-assets.mjs"
   },
   "browserslist": {
     "production": [
@@ -60,6 +51,12 @@
     "lightningcss": "^1.31.1",
     "prettier": "^3.8.1",
     "vite": "^7.3.1",
-    "vitest": "^4.0.18"
+    "vitest": "^4.0.18",
+    "sass": "^1.97.3",
+    "typescript": "~5.9.3",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "sharp": "^0.34.5",
+    "dotenv": "^17.3.1"
   }
 }

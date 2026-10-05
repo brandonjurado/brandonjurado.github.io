@@ -93,7 +93,7 @@
     var(--gradient-glow-brand);
 }
 
-.landing-marquee.is-dark {
+:root:not([data-theme="light"]) .landing-marquee {
   background:
     linear-gradient(
       90deg,
@@ -133,7 +133,7 @@
   white-space: nowrap;
 }
 
-.landing-marquee.is-dark .landing-marquee-item {
+:root:not([data-theme="light"]) .landing-marquee .landing-marquee-item {
   color: var(--text-body-brand);
 }
 

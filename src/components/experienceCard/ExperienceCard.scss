@@ -8,7 +8,7 @@
   border: 1px solid $lightBorder1;
 }
 
-.experience-card-dark {
+:root:not([data-theme="light"]) .experience-card {
   position: relative;
   background-color: $darkBackground;
   box-shadow: $lightBoxShadowDark 0px 10px 30px -15px;
@@ -16,7 +16,7 @@
   border: 1px solid $lightBorder1;
 }
 
-.experience-card:hover {
+:root[data-theme="light"] .experience-card:hover {
   box-shadow: $lightBoxShadowDark 0px 20px 30px -10px;
 }
 
