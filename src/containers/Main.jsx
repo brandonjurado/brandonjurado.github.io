@@ -14,7 +14,7 @@ import "./Main.scss";
 export default function Main() {
   // The server and first client render must agree. Theme preferences are handled
   // by CSS in the delivery follow-up, without changing the rendered content.
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(true);
   return (
     <div className={isDark ? "dark-mode" : undefined}>
       <StyleProvider

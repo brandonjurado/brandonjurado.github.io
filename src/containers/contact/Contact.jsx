@@ -49,7 +49,7 @@ export default function Contact() {
             </div>
           </div>
           <div className="contact-image-div">
-            <Illustration name="email" label="Original animated envelope" />
+            <Illustration name="email" label="Contact illustration" />
           </div>
         </div>
       </div>
