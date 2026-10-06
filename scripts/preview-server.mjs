@@ -21,6 +21,7 @@ const types = {
   ".js": "text/javascript; charset=utf-8",
   ".css": "text/css; charset=utf-8",
   ".json": "application/json",
+  ".pdf": "application/pdf",
   ".svg": "image/svg+xml",
   ".webp": "image/webp",
   ".png": "image/png",

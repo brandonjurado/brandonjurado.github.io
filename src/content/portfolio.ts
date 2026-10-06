@@ -130,7 +130,7 @@ const educationInfo = {
       logo: img("tarletonLogo.webp"),
       subHeader: "Bachelor of Science in Computer Science",
       duration: "August 2014 - May 2018 | Cum Laude",
-      desc: "Maintained academic honors while working nearly 40 hours per week throughout undergrad.",
+      desc: "Graduated Cum Laude.",
       descBullets: [
         "Computer Science Club Member",
         "Student Orientation Leader",
@@ -164,7 +164,7 @@ const workExperiences = {
       company: "T-Mobile",
       companylogo: img("tmobileLogo.webp"),
       accentColor: "#e20074",
-      date: "July 2021 – June 2023",
+      date: "July 2021 – July 2023",
       desc: "Delivered billing and payments capabilities for T-Mobile for Business, shipping enterprise features while improving the health of core services through dependency remediation and major Java and Spring Boot upgrades. I also helped establish cleaner API development practices and built an invoicing solution for the Department of Education that integrated with legacy workflows and enabled a new revenue stream.",
       descBullets: [
         "Languages: Java, TypeScript",
@@ -180,7 +180,7 @@ const workExperiences = {
       companylogo: img("usaaLogo.webp"),
       accentColor: "#003087",
       date: "July 2019 – July 2021",
-      desc: "Within USAA's Platform Infrastructure organization, I built identity and access management capabilities that processed customer verification signals in real time. I contributed to login, registration, and password reset flows for USAA.com, integrated identity checks with credit agencies, and created internal tools that helped call center teams investigate and prevent suspected fraud.",
+      desc: "At USAA, I built identity and access management capabilities that processed customer verification signals in real time. I contributed to login, registration, and password reset flows for USAA.com, integrated identity checks with credit agencies, and created internal tools that helped call center teams investigate and prevent suspected fraud.",
       descBullets: [
         "Languages: Java, Groovy",
         "Frontend: React, Redux",
@@ -194,7 +194,7 @@ const workExperiences = {
       company: "American Airlines",
       companylogo: img("americanAirlinesLogo.webp"),
       accentColor: "#0078d2",
-      date: "June 2018 – July 2019",
+      date: "May 2018 – July 2019",
       desc: "Played a hands-on role in modernizing the AA.com flight booking experience, helping move a core customer journey from a monolithic architecture to cloud-hosted microservices. That shift improved scalability, resilience, and performance for a platform serving millions of travelers.",
       descBullets: [
         "Languages: Kotlin, Java, TypeScript",
@@ -254,7 +254,7 @@ const openSource = {
 // Include certificates, talks etc
 
 const achievementSection = {
-  title: "Achievements And Certifications 🏆 ",
+  title: "Earlier builds",
   subtitle: "Achievements, Certifications, Awards",
 
   achievementsCards: [

@@ -98,3 +98,6 @@ public/media/
 public/share-card.png
 
 reports/
+
+# Keep résumés private until a redacted copy is approved.
+**/*[Rr]esume*.pdf

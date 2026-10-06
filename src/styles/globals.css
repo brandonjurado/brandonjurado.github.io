@@ -1,44 +1,49 @@
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  background-color: var(--neutral-0);
-  color: #111112;
-  font-family: var(--font-body-brand);
-}
-
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-  font-family: var(--font-heading-brand);
-  text-transform: uppercase;
+  font-family: var(--font-sans);
+  color: var(--ink);
+  font-weight: 400;
+  text-wrap: balance;
 }
 
-a {
-  color: inherit;
+h1 {
+  font-size: var(--text-display);
+  line-height: 0.96;
+  letter-spacing: -0.045em;
+}
+
+h2 {
+  font-size: var(--text-section);
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+}
+
+code,
+kbd,
+pre {
+  font-family: var(--font-mono);
+}
+
+img,
+svg {
+  max-width: 100%;
 }
 
 ::selection {
-  background-color: var(--brand-primary);
-  color: var(--neutral-950);
+  background: var(--accent);
+  color: var(--page);
 }
 
-:focus-visible {
-  outline: 2px solid var(--brand-primary);
-  outline-offset: 2px;
+/* Existing links keep readable contrast on their shared dark surfaces. */
+.legacy-sections :is(.main-button, .ap-link) {
+  background: var(--surface);
+  color: var(--accent);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
+.legacy-sections .card-image {
+  filter: grayscale(1);
 }

@@ -1,3 +1,4 @@
+import {sectionLabel} from "../../content/sections";
 import Illustration from "../../components/illustration/Illustration";
 import "./Contact.scss";
 import SocialMedia from "../../components/socialMedia/SocialMedia";
@@ -9,6 +10,7 @@ export default function Contact() {
       <div className="main contact-margin-top" id="contact">
         <div className="contact-div-main">
           <div className="contact-header">
+            <p className="section-eyebrow">{sectionLabel("contact")}</p>
             <h2 className="heading contact-title">{contactInfo.title}</h2>
             <p className="subTitle contact-subtitle">{contactInfo.subtitle}</p>
             <div className="contact-text-div">

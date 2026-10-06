@@ -6,7 +6,6 @@ import WorkExperience from "./workExperience/WorkExperience";
 import Achievement from "./achievement/Achievement";
 import AdditionalProjects from "../components/additionalProjects/AdditionalProjects";
 import Contact from "./contact/Contact";
-import Top from "./topbutton/Top";
 import Footer from "../components/footer/Footer";
 import "./Main.scss";
 
@@ -15,16 +14,19 @@ export default function Main() {
     <div className="site">
       <Header />
       <main id="main-content">
-        <Greeting />
-        <Skills />
-        <Education />
-        <WorkExperience />
-        <Achievement />
-        <AdditionalProjects />
-        <Contact />
+        <div className="overview-region">
+          <Greeting />
+          <Skills />
+        </div>
+        <div className="legacy-sections">
+          <WorkExperience />
+          <Achievement />
+          <AdditionalProjects />
+          <Education />
+          <Contact />
+        </div>
       </main>
       <Footer />
-      <Top />
     </div>
   );
 }

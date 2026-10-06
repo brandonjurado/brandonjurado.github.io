@@ -1,83 +1,81 @@
-import Illustration from "../../components/illustration/Illustration";
-import {useHeroMotion} from "../../motion/useHeroMotion";
+import RequestTrace from "../../components/requestTrace/RequestTrace";
+import {overview} from "../../content/overview";
+import {sectionLabel} from "../../content/sections";
 import "./Greeting.scss";
-import SocialMedia from "../../components/socialMedia/SocialMedia";
-import Button from "../../components/button/Button";
-import {greeting, landingMarquee} from "../../content/portfolio";
 
 export default function Greeting() {
-  useHeroMotion();
-  const marqueeKeywords = landingMarquee?.keywords ?? [];
-  const marqueeBrands = landingMarquee?.brands ?? [];
-  const loopItems = (items: string[]) => [...items, ...items];
-
-  if (!greeting.displayGreeting) {
-    return null;
-  }
   return (
-    <div>
-      <div className="greet-main" id="greeting">
-        <div className="greeting-main">
-          <div className="greeting-text-div">
-            <div>
-              <h1 className="greeting-text">
-                <span className="greeting-name-type">{greeting.title}</span>
-              </h1>
-              <p className="greeting-text-subheading subTitle">
-                <span className="location">{greeting.location}</span>
-              </p>
-              <p className="greeting-text-p subTitle">{greeting.subTitle}</p>
-              <SocialMedia />
-              <div className="button-greeting-div">
-                <Button text="Contact me" href="#contact" />
-              </div>
-            </div>
+    <section
+      className="overview-hero"
+      id="greeting"
+      aria-labelledby="overview-heading"
+    >
+      <p className="overview-eyebrow">{sectionLabel("overview")}</p>
+      <div className="overview-hero-layout">
+        <div className="overview-copy">
+          <div className="overview-identity">
+            <p className="overview-name">{overview.name}</p>
+            <p className="overview-role">
+              {overview.role} <span aria-hidden="true">/</span>{" "}
+              {overview.location}
+            </p>
           </div>
-          <div className="greeting-image-div">
-            <Illustration
-              name="landingPerson"
-              label="Illustration of Brandon at a desk"
-              eager
-            />
-            <div className="intro-illustration">
-              <Illustration name="splashAnimation" label="" eager />
-            </div>
+          <h1 className="overview-headline" id="overview-heading">
+            {overview.headline.map(line => (
+              <span key={line}>{line}</span>
+            ))}
+          </h1>
+          <p className="overview-description">{overview.description}</p>
+          <div className="overview-actions">
+            <a
+              className="overview-action overview-action-primary"
+              href="#contact"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                width="20"
+                height="20"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.75"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M3 5h18v14H3zM3 5l9 7 9-7" />
+              </svg>
+              {overview.contactLabel}
+            </a>
+            <a className="overview-action" href="#experience">
+              {overview.experienceLabel}
+              <svg
+                viewBox="0 0 24 24"
+                width="20"
+                height="20"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.75"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M5 12h14m-5-5 5 5-5 5" />
+              </svg>
+            </a>
           </div>
         </div>
-        {landingMarquee?.display &&
-          (marqueeKeywords.length > 0 || marqueeBrands.length > 0) && (
-            <div className="landing-marquee" aria-hidden="true">
-              {marqueeKeywords.length > 0 && (
-                <div className="landing-marquee-row is-keywords">
-                  <div className="landing-marquee-track" aria-hidden="true">
-                    {loopItems(marqueeKeywords).map((item, index) => (
-                      <span
-                        className="landing-marquee-item"
-                        key={`${item}-${index}`}
-                      >
-                        {item}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-              {marqueeBrands.length > 0 && (
-                <div className="landing-marquee-row is-brands">
-                  <div className="landing-marquee-track" aria-hidden="true">
-                    {loopItems(marqueeBrands).map((item, index) => (
-                      <span
-                        className="landing-marquee-item"
-                        key={`${item}-${index}`}
-                      >
-                        {item}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
+        <div className="overview-trace">
+          <RequestTrace />
+        </div>
+        <div className="overview-proof" aria-label={overview.proofLabel}>
+          <p>{overview.proofLabel}</p>
+          <ul>
+            {overview.employers.map(employer => (
+              <li key={employer}>{employer}</li>
+            ))}
+          </ul>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }

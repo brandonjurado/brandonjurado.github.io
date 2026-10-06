@@ -1,3 +1,4 @@
+import {sectionLabel} from "../../content/sections";
 import "./WorkExperience.scss";
 import ExperienceCard from "../../components/experienceCard/ExperienceCard";
 import {workExperiences} from "../../content/portfolio";
@@ -8,6 +9,7 @@ export default function WorkExperience() {
       <div id="experience">
         <div className="experience-container" id="workExperience">
           <div>
+            <p className="section-eyebrow">{sectionLabel("experience")}</p>
             <h2 className="experience-heading">Experience</h2>
             <div className="experience-cards-div">
               {workExperiences.experience.map(card => (

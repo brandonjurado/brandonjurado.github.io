@@ -1,67 +1,102 @@
 :root {
-  --brand-primary: #d2ff00;
-  --brand-secondary: #b2c73a;
-  --brand-accent: #ff6b00;
+  color-scheme: dark;
 
-  --neutral-0: #ffffff;
-  --neutral-50: #f4f4ed;
-  --neutral-100: #ebeee0;
-  --neutral-200: #dde1d2;
-  --neutral-300: #c8cbbd;
-  --neutral-400: #b9bbad;
-  --neutral-500: #b4b8a5;
-  --neutral-700: #535450;
-  --neutral-800: #3b3c38;
-  --neutral-900: #282c20;
-  --neutral-950: #111112;
+  --color-obsidian: #0a0a13;
+  --color-nav: #040407;
+  --color-surface: #08080c;
+  --color-halo: #181826;
+  --color-text: #fcfcfc;
+  --color-muted: #a3a3b3;
+  --color-muted-large: #757580;
+  --color-iris: #6199f6;
+  --color-violet-border: #4f4f80;
+  --color-hairline: #2a2a32;
 
-  --text-heading-brand: var(--neutral-50);
-  --text-body-brand: var(--neutral-100);
-  --text-muted-brand: var(--neutral-500);
-  --text-link-brand: var(--brand-primary);
+  --page: var(--color-obsidian);
+  --nav: var(--color-nav);
+  --surface: var(--color-surface);
+  --halo-surface: var(--color-halo);
+  --halo-border: var(--color-violet-border);
+  --ink: var(--color-text);
+  --muted: var(--color-muted);
+  --accent: var(--color-iris);
+  --line: var(--color-hairline);
+  --font-sans: "Inter", "Inter Fallback", Arial, sans-serif;
+  --font-mono:
+    "JetBrains Mono", "JetBrains Mono Fallback", "Courier New", monospace;
+  --sans: var(--font-sans);
+  --font-body: var(--font-sans);
 
-  --surface-page-brand: var(--neutral-900);
-  --surface-card-brand: var(--neutral-950);
-  --surface-elevated-brand: var(--neutral-800);
-  --surface-divider-brand: rgba(196, 201, 182, 0.3);
+  --content-width: 80rem;
+  --section-space: 5rem;
+  --text-display: clamp(2.75rem, 6vw, 5rem);
+  --text-section: clamp(2rem, 4vw, 3rem);
+  --radius-container: 10px;
+  --radius-feature: 24px;
+  --radius-pill: 100px;
+  --duration-press: 200ms;
+  --duration-enter: 400ms;
+  --ease-out: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
 
-  --semantic-success: #d2ff00;
-  --semantic-error: #ff6b00;
-  --semantic-warning: #b2c73a;
-  --semantic-info: #c8cbbd;
-
-  --gradient-footer-brand: radial-gradient(
-    circle farthest-corner at 50% -190%,
-    rgba(210, 255, 0, 0) 68%,
-    #d2ff00 83%
+  --gradient-page:
+    radial-gradient(ellipse at 76% 4%, rgb(79 79 128 / 18%), transparent 26%),
+    radial-gradient(ellipse at 8% 38%, rgb(79 79 128 / 12%), transparent 22%),
+    radial-gradient(ellipse at 86% 75%, rgb(24 24 38 / 90%), transparent 27%);
+  --gradient-section: radial-gradient(
+    ellipse at 100% 0%,
+    rgb(79 79 128 / 12%),
+    transparent 68%
   );
+
+  /* Existing components share the same foundation while their sections evolve. */
+  --brand-primary: var(--accent);
+  --brand-secondary: var(--accent);
+  --brand-accent: var(--accent);
+  --neutral-0: var(--ink);
+  --neutral-50: var(--ink);
+  --neutral-100: var(--ink);
+  --neutral-200: var(--muted);
+  --neutral-300: var(--muted);
+  --neutral-400: var(--muted);
+  --neutral-500: var(--muted);
+  --neutral-700: var(--color-violet-border);
+  --neutral-800: var(--color-halo);
+  --neutral-900: var(--page);
+  --neutral-950: var(--surface);
+  --text-heading-brand: var(--ink);
+  --text-body-brand: var(--ink);
+  --text-muted-brand: var(--muted);
+  --text-link-brand: var(--accent);
+  --surface-page-brand: var(--page);
+  --surface-card-brand: var(--surface);
+  --surface-elevated-brand: var(--color-halo);
+  --surface-divider-brand: var(--line);
+  --gradient-footer-brand: var(--gradient-section);
   --gradient-glow-brand: linear-gradient(
     90deg,
-    rgba(210, 255, 0, 0) 0%,
-    rgba(210, 255, 0, 0.18) 50%,
-    rgba(210, 255, 0, 0) 100%
+    transparent,
+    rgb(97 153 246 / 8%),
+    transparent
   );
-
-  --font-heading-brand: "Mona Sans Variable", "Montserrat", sans-serif;
-  --font-body-brand: "Mona Sans Variable", "Montserrat", sans-serif;
-  --font-display-brand: "Brier", "Montserrat", serif;
-  --font-mono-brand:
-    "SFMono-Regular", Menlo, Monaco, Consolas, "Courier New", monospace;
-
-  --text-h1-brand: 4rem;
-  --text-h2-brand: 3rem;
-  --text-h3-brand: 2rem;
-  --text-h4-brand: 1.5rem;
-  --text-h5-brand: 1.2rem;
+  --font-heading-brand: var(--font-sans);
+  --font-body-brand: var(--font-sans);
+  --font-display-brand: var(--font-sans);
+  --font-mono-brand: var(--font-mono);
+  --text-h1-brand: var(--text-display);
+  --text-h2-brand: var(--text-section);
+  --text-h3-brand: 1.5rem;
+  --text-h4-brand: 1.25rem;
+  --text-h5-brand: 1.125rem;
   --text-h6-brand: 1rem;
-  --text-body-lg-brand: 1.25rem;
+  --text-body-lg-brand: 1.125rem;
   --text-body-brand: 1rem;
   --text-body-sm-brand: 0.875rem;
   --text-label-brand: 0.75rem;
-  --text-overline-brand: 0.578125rem;
+  --text-overline-brand: 0.75rem;
   --text-btn-brand: 1rem;
-  --text-btn-nav-brand: 1.25rem;
-  --text-btn-footer-brand: 1.875rem;
+  --text-btn-nav-brand: 0.875rem;
+  --text-btn-footer-brand: 1rem;
 
   --space-4: 0.25rem;
   --space-8: 0.5rem;
@@ -73,21 +108,18 @@
   --space-48: 3rem;
   --space-64: 4rem;
   --space-80: 5rem;
-
-  --radius-sm-brand: 0.54rem;
-  --radius-md-brand: 1rem;
-  --radius-lg-brand: 3rem;
-  --radius-xl-brand: 6.25rem;
-  --radius-pill-brand: 999px;
-
-  --shadow-sm-brand: 0 10px 30px -15px rgba(0, 0, 0, 0.28);
-  --shadow-md-brand: 0 20px 30px -10px rgba(0, 0, 0, 0.35);
-  --shadow-glow-brand: 0 0 0 1px rgba(210, 255, 0, 0.28);
-
-  --duration-fast-brand: 0.2s;
-  --duration-normal-brand: 0.4s;
-  --duration-slow-brand: 0.75s;
-  --ease-default-brand: cubic-bezier(0.65, 0.05, 0, 1);
-  --ease-out-brand: cubic-bezier(0.19, 1, 0.22, 1);
+  --space-small: var(--space-8);
+  --space-medium: var(--space-16);
+  --space-large: var(--space-32);
+  --radius-sm-brand: var(--radius-container);
+  --radius-md-brand: var(--radius-container);
+  --radius-lg-brand: var(--radius-feature);
+  --radius-xl-brand: var(--radius-feature);
+  --radius-pill-brand: var(--radius-pill);
+  --duration-fast-brand: 200ms;
+  --duration-normal-brand: 300ms;
+  --duration-slow-brand: 400ms;
+  --ease-default-brand: var(--ease-out);
+  --ease-out-brand: var(--ease-expo);
   --ease-linear-brand: linear;
 }
