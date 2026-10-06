@@ -1,6 +1,13 @@
 export const site = {
   name: "Brandon Jurado",
   role: "Senior Software Engineer",
+  location: "Austin, TX",
+  footerRole: "Backend software engineer",
+  availabilityLabel: "Open to conversations",
+  sitemapLabel: "Sitemap",
+  linkedinLabel: "LinkedIn",
+  githubLabel: "GitHub",
+  contactLabel: "Send message",
   url: "https://bjurado.com",
   title: "Brandon Jurado | Senior Software Engineer",
   description:

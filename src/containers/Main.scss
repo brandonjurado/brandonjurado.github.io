@@ -1,6 +1,86 @@
-@use "../_globalColor" as *;
-
-.dark-mode {
-  background-color: $darkBackground;
-  color: white;
+.site {
+  overflow: clip;
+}
+.overview-region {
+  background:
+    radial-gradient(ellipse at 85% 20%, #1a163b66, transparent 55%),
+    radial-gradient(ellipse at 10% 85%, #18182699, transparent 50%);
+}
+.legacy-sections {
+  background: radial-gradient(ellipse at 15% 35%, #1a163b55, transparent 65%);
+  padding-block: 16px 80px;
+  .main,
+  .experience-container,
+  .education-section {
+    width: calc(100% - 48px);
+    max-width: var(--content-width);
+    margin: 64px auto 0;
+    padding: 0;
+  }
+  h2 {
+    text-align: left;
+    font-size: clamp(32px, 4vw, 48px);
+    letter-spacing: -0.04em;
+    font-weight: 400;
+    line-height: 1.1;
+    margin-block: 16px 32px;
+  }
+  p,
+  li {
+    line-height: 1.65;
+  }
+  .experience-banner {
+    background: var(--halo-surface, #181826) !important;
+  }
+  .experience-blurred_div {
+    display: none;
+  }
+  .experience-card,
+  .certificate-card,
+  .ap-card {
+    box-shadow: none !important;
+  }
+  .experience-roundedimg,
+  .education-roundedimg,
+  .certificate-image {
+    filter: grayscale(1);
+  }
+  .social-media-div a {
+    background: var(--surface) !important;
+    color: var(--accent) !important;
+    border: 1px solid var(--line);
+    box-shadow: none;
+  }
+  .contact-image-div {
+    display: none;
+  }
+  .education-text-school {
+    height: auto;
+    white-space: normal;
+  }
+  .education-card-border {
+    transition: none;
+    border-width: 1px;
+  }
+  .main-button,
+  .ap-link,
+  .certificate-card .certificate-card-footer span {
+    background: var(--surface);
+    color: var(--accent);
+    border: 1px solid var(--line);
+    box-shadow: none;
+    border-radius: var(--radius-pill);
+  }
+}
+@media (max-width: 359px) {
+  .legacy-sections .main,
+  .legacy-sections .experience-container,
+  .legacy-sections .education-section {
+    width: calc(100% - 32px);
+  }
+}
+@media (max-width: 1000px) {
+  .site {
+    padding-bottom: calc(88px + env(safe-area-inset-bottom));
+  }
 }

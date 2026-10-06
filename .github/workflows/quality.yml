@@ -28,6 +28,13 @@ jobs:
           restore-keys: bun-${{ runner.os }}-
       - run: bun install --frozen-lockfile
       - run: bun run lint && bun run check-format && bun run typecheck
+      - name: Check foundation design patterns
+        run: |
+          mkdir -p reports
+          curl --fail --silent --show-error --location https://github.com/pbakaus/impeccable/releases/download/engine-v0.1.11/impeccable-linux-x64 --output "$RUNNER_TEMP/impeccable"
+          printf '0221607e1f535af937ea267c347b1f90233b85dc2563cbd2eeefdf42e0e5c594  %s\n' "$RUNNER_TEMP/impeccable" | sha256sum --check
+          chmod +x "$RUNNER_TEMP/impeccable"
+          "$RUNNER_TEMP/impeccable" detect --json index.html src/index.scss src/styles src/containers/Main.tsx src/containers/Main.scss src/components/header src/components/footer src/components/requestTrace src/containers/greeting src/containers/skills > reports/design.json
       - run: bun run build && bun run check:bundle && bun run test:static
       - run: bunx playwright install --with-deps chromium
       - run: bun run test:browser

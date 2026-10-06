@@ -1,116 +1,108 @@
-@use "../../_globalColor" as *;
-
 .header {
+  position: relative;
+  z-index: 10;
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  max-width: 100%;
-  padding: 15px 20px;
-  margin: 0 auto;
-  background: var(--page);
+  gap: 24px;
+  max-width: 1328px;
+  min-height: 104px;
+  margin-inline: auto;
+  padding-inline: 24px;
 }
-.header .logo {
-  display: block;
-  flex: none;
-  font-size: 1.5em;
-  text-decoration: none;
-  margin-top: 10px;
-  line-height: normal;
+.header-brand {
   color: var(--ink);
-}
-.grey-color {
-  color: $subTitle;
-}
-.logo-name {
-  font-family: "Agustina Regular";
-  font-weight: bold;
-  font-variant-ligatures: no-common-ligatures;
-  padding: 0 10px;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  text-decoration: none;
+  white-space: nowrap;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
 }
 .navigation {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  width: 100%;
-}
-.navigation a {
-  display: block;
-  padding: 15px 20px;
-  color: var(--ink);
-  text-decoration: none;
-}
-.navigation a:hover,
-.nav-toggle:hover {
-  background-color: $headerHoverBG;
-}
-:root:not([data-theme="light"]) {
-  .navigation a:hover,
-  .nav-toggle:hover {
-    background-color: $buttonColor;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: var(--nav, #040407);
+  a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 8px 20px;
+    border-radius: var(--radius-pill);
+    color: var(--muted);
+    font-size: 14px;
+    text-decoration: none;
+    white-space: nowrap;
+    &:hover,
+    &:focus-visible {
+      color: var(--ink);
+      background: var(--halo-surface, #181826);
+    }
   }
 }
-.navigation .theme-toggle {
-  margin: 15px 20px;
-}
-.nav-toggle {
-  display: none;
-  padding: 28px 20px;
-}
-.js .nav-toggle {
+.availability {
   display: inline-flex;
-}
-.js .navigation:not(.is-open) {
-  display: none;
-}
-@media (min-width: 48em) {
-  .js .nav-toggle {
-    display: none;
-  }
-  .navigation,
-  .js .navigation:not(.is-open) {
-    display: flex;
-    width: auto;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  color: var(--muted);
+  font-size: 12px;
+  text-decoration: none;
+  white-space: nowrap;
+  &:hover {
+    color: var(--accent);
   }
 }
-@media (max-width: 960px) and (min-width: 768px) {
+.status-dot {
+  width: 6px;
+  height: 6px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--accent);
+}
+@media (max-width: 1000px) {
   .header {
-    font-size: 12px;
+    min-height: 80px;
+  }
+  .navigation {
+    top: auto;
+    bottom: calc(16px + env(safe-area-inset-bottom));
+    max-width: calc(100% - 32px);
+    width: 368px;
+    a {
+      flex: 1;
+      padding: 8px 8px;
+      font-size: 14px;
+    }
   }
 }
-
-.nav-toggle {
-  background: transparent;
-  border: 0;
+@media (max-width: 400px) {
+  .header {
+    gap: 8px;
+  }
+  .availability {
+    max-width: 144px;
+    white-space: normal;
+  }
+  .navigation a {
+    padding-inline: 8px;
+  }
 }
-.navicon,
-.navicon::before,
-.navicon::after {
-  display: block;
-  width: 18px;
-  height: 2px;
-  background: currentColor;
-  position: relative;
-}
-.navicon::before,
-.navicon::after {
-  content: "";
-  position: absolute;
-}
-.navicon::before {
-  top: -5px;
-}
-.navicon::after {
-  top: 5px;
-}
-.nav-toggle[aria-expanded="true"] .navicon {
-  background: transparent;
-}
-.nav-toggle[aria-expanded="true"] .navicon::before {
-  top: 0;
-  transform: rotate(45deg);
-}
-.nav-toggle[aria-expanded="true"] .navicon::after {
-  top: 0;
-  transform: rotate(-45deg);
+@media (max-width: 359px) {
+  .header {
+    padding-inline: 16px;
+  }
+  .availability {
+    max-width: 120px;
+  }
 }
