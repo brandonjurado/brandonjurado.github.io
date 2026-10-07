@@ -88,6 +88,14 @@ try {
   assert.equal(await page.locator("html").getAttribute("data-theme"), "dark");
   assert.equal(await page.locator(".theme-toggle").count(), 0);
   assert.equal(await page.locator("h1").count(), 1);
+  assert.equal(await page.locator("#notes").count(), 0);
+  assert.deepEqual(await page.locator(".navigation a").allTextContents(), [
+    "Overview",
+    "Skills",
+    "Systems",
+    "Experience",
+    "Contact"
+  ]);
   await page.keyboard.press("Tab");
   assert.equal(await page.locator(":focus").textContent(), "Skip to content");
   await page.keyboard.press("Enter");
@@ -113,7 +121,13 @@ try {
     assert.match(styles.font, /Inter/);
     assert.equal(styles.weight, "400");
     assert.ok(styles.wordmarkFits, `footer wordmark fits at ${width}`);
-    for (const id of ["greeting", "systems", "experience", "contact"]) {
+    for (const id of [
+      "greeting",
+      "skills",
+      "systems",
+      "experience",
+      "contact"
+    ]) {
       await page.locator(`.navigation a[href="#${id}"]`).click();
       assert.equal(new URL(page.url()).hash, `#${id}`);
       await page.waitForFunction(target => {
@@ -251,7 +265,6 @@ try {
     "skills",
     "systems",
     "experience",
-    "notes",
     "off-the-clock",
     "achievements",
     "education",
@@ -303,10 +316,77 @@ try {
       preference === "normal" ? "running" : "static"
     );
     if (preference === "normal") {
+      for (const width of [1440, 390]) {
+        await motion.setViewportSize({width, height: 900});
+        await motion.locator(".request-trace").scrollIntoViewIfNeeded();
+        await motion.waitForFunction(
+          () =>
+            document.querySelector(".request-trace")?.dataset.motion ===
+            "running"
+        );
+        if (process.env.CAPTURE_SCREENSHOTS === "1") {
+          await mkdir("reports", {recursive: true});
+          await motion.screenshot({
+            path: `reports/after-${width === 1440 ? "desktop" : "mobile"}-${width}.jpg`,
+            type: "jpeg",
+            quality: 90,
+            fullPage: true
+          });
+        }
+        const pathError = await motion.evaluate(() => {
+          const graph = [
+            ...document.querySelectorAll(".request-trace__connections")
+          ].find(element => getComputedStyle(element).display !== "none");
+          graph.pauseAnimations();
+          const route = graph.querySelector(".request-trace__route");
+          const packet = graph.querySelector(".request-trace__packet");
+          const animation = packet.querySelector("animateMotion");
+          const start = animation.getStartTime();
+          const error = Math.max(
+            ...[0.1, 0.45, 0.5, 0.55, 0.9].map(progress => {
+              graph.setCurrentTime(start + progress * 6);
+              const expected = route
+                .getPointAtLength(route.getTotalLength() * progress)
+                .matrixTransform(route.getScreenCTM());
+              const actual = new DOMPoint(0, 0).matrixTransform(
+                packet.getScreenCTM()
+              );
+              return Math.hypot(expected.x - actual.x, expected.y - actual.y);
+            })
+          );
+          graph.unpauseAnimations();
+          return error;
+        });
+        assert.ok(
+          pathError < 0.1,
+          `${width}: packet follows SVG path (${pathError}px)`
+        );
+      }
+      assert.equal(
+        await motion
+          .locator(".request-trace__connections--compact")
+          .evaluate(graph => graph.animationsPaused()),
+        false
+      );
       await motion.locator("#contact").scrollIntoViewIfNeeded();
       await motion.waitForFunction(
         () =>
           document.querySelector(".request-trace")?.dataset.motion === "paused"
+      );
+      assert.ok(
+        await motion
+          .locator(".request-trace__connections--compact")
+          .evaluate(graph => graph.animationsPaused())
+      );
+      await motion.locator(".header").scrollIntoViewIfNeeded();
+      await motion.waitForFunction(
+        () => document.querySelector(".header")?.dataset.motion === "running"
+      );
+      assert.equal(
+        await motion
+          .locator(".status-dot")
+          .evaluate(dot => getComputedStyle(dot, "::after").animationPlayState),
+        "running"
       );
     } else {
       assert.equal(
@@ -314,6 +394,12 @@ try {
           .locator(".request-trace__packet")
           .first()
           .evaluate(el => getComputedStyle(el).display),
+        "none"
+      );
+      assert.equal(
+        await motion
+          .locator(".status-dot")
+          .evaluate(dot => getComputedStyle(dot, "::after").animationName),
         "none"
       );
     }
@@ -340,6 +426,8 @@ try {
         nativeMoreBuilds: true,
         staticPreferences: true,
         offscreenPause: true,
+        exactRequestPath: true,
+        statusGlow: true,
         resumeUnpublished: true,
         real404: true
       },

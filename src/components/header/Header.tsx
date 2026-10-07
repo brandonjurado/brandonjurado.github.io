@@ -1,9 +1,11 @@
 import {site} from "../../content/site";
 import {navigation} from "../../content/sections";
+import {useAmbientMotion} from "../../motion/useAmbientMotion";
 import "./Header.scss";
 export default function Header() {
+  const {ref, motion} = useAmbientMotion();
   return (
-    <header className="header">
+    <header ref={ref} className="header" data-motion={motion}>
       <a className="skip-link" href="#main-content">
         Skip to content
       </a>

@@ -1,52 +1,34 @@
 import {traceStages, traceCopy} from "../../content/trace";
-import {useEffect, useRef} from "react";
-import {motionAllowed} from "../../motion/lifecycle";
+import {useEffect, useId, useRef} from "react";
+import {useAmbientMotion} from "../../motion/useAmbientMotion";
 import "./RequestTrace.scss";
 
 export default function RequestTrace() {
-  const panel = useRef<HTMLElement>(null);
+  const {ref: panel, motion} = useAmbientMotion();
+  const id = useId();
+  const started = useRef(false);
 
   useEffect(() => {
-    const element = panel.current;
-    if (!element) return;
-    const preference = matchMedia(
-      "(prefers-reduced-motion: reduce), (prefers-reduced-data: reduce)"
+    const graphs = panel.current?.querySelectorAll<SVGSVGElement>(
+      ".request-trace__connections"
     );
-    const connection = (
-      navigator as Navigator & {
-        connection?: EventTarget & {saveData?: boolean};
+    graphs?.forEach(graph => {
+      if (motion === "running") {
+        if (!started.current) {
+          graph
+            .querySelectorAll<SVGAnimationElement>("animateMotion")
+            .forEach(animation => animation.beginElement());
+        }
+        graph.unpauseAnimations();
+      } else {
+        graph.pauseAnimations();
       }
-    ).connection;
-    let visible = false;
-    const sync = () => {
-      element.dataset.motion = !motionAllowed()
-        ? "static"
-        : visible && !document.hidden
-          ? "running"
-          : "paused";
-    };
-    const observer =
-      "IntersectionObserver" in window
-        ? new IntersectionObserver(([entry]) => {
-            visible = entry.isIntersecting;
-            sync();
-          })
-        : undefined;
-    observer?.observe(element);
-    document.addEventListener("visibilitychange", sync);
-    preference.addEventListener("change", sync);
-    connection?.addEventListener?.("change", sync);
-    sync();
-    return () => {
-      observer?.disconnect();
-      document.removeEventListener("visibilitychange", sync);
-      preference.removeEventListener("change", sync);
-      connection?.removeEventListener?.("change", sync);
-    };
-  }, []);
+    });
+    if (motion === "running") started.current = true;
+  }, [motion, panel]);
 
   return (
-    <figure ref={panel} className="request-trace" data-motion="paused">
+    <figure ref={panel} className="request-trace" data-motion={motion}>
       <figcaption className="request-trace__heading">
         <span>{traceCopy.title}</span>
         <span className="request-trace__annotation">
@@ -55,40 +37,58 @@ export default function RequestTrace() {
       </figcaption>
       <p className="request-trace__description">{traceCopy.description}</p>
       <div className="request-trace__graph" aria-hidden="true">
-        <svg
-          className="request-trace__connections request-trace__connections--wide"
-          viewBox="0 0 480 192"
-          preserveAspectRatio="none"
-          focusable="false"
-        >
-          <path d="M80 24H432Q456 24 456 48V112Q456 136 432 136H80" />
-          <path
-            className="request-trace__direction"
-            d="m164 20 4 4-4 4m160-8 4 4-4 4m-156 108-4 4 4 4m156-8-4 4 4 4"
-          />
-          <circle className="request-trace__packet" cx="80" cy="24" r="3" />
-          <circle
-            className="request-trace__packet request-trace__packet--following"
-            cx="80"
-            cy="24"
-            r="3"
-          />
-        </svg>
-        <svg
-          className="request-trace__connections request-trace__connections--narrow"
-          viewBox="0 0 40 320"
-          preserveAspectRatio="none"
-          focusable="false"
-        >
-          <path d="M20 20V300" />
-          <circle className="request-trace__packet" cx="20" cy="20" r="3" />
-          <circle
-            className="request-trace__packet request-trace__packet--following"
-            cx="20"
-            cy="20"
-            r="3"
-          />
-        </svg>
+        {[
+          {name: "wide", height: 192, top: 24, bottom: 136},
+          {name: "compact", height: 152, top: 16, bottom: 104}
+        ].map(layout => {
+          const pathId = `${id}-${layout.name}`;
+          const glowId = `${pathId}-glow`;
+          return (
+            <svg
+              key={layout.name}
+              className={`request-trace__connections request-trace__connections--${layout.name}`}
+              viewBox={`0 0 480 ${layout.height}`}
+              preserveAspectRatio="none"
+              focusable="false"
+            >
+              <defs>
+                <radialGradient id={glowId}>
+                  <stop
+                    offset="0"
+                    stopColor="var(--accent)"
+                    stopOpacity="0.6"
+                  />
+                  <stop
+                    offset="0.35"
+                    stopColor="var(--accent)"
+                    stopOpacity="0.3"
+                  />
+                  <stop offset="1" stopColor="var(--accent)" stopOpacity="0" />
+                </radialGradient>
+              </defs>
+              <path
+                id={pathId}
+                className="request-trace__route"
+                d={`M80 ${layout.top}H432Q456 ${layout.top} 456 ${layout.top + 24}V${layout.bottom - 24}Q456 ${layout.bottom} 432 ${layout.bottom}H80`}
+              />
+              <path
+                className="request-trace__direction"
+                d={`M164 ${layout.top - 4}l4 4-4 4 M324 ${layout.top - 4}l4 4-4 4 M168 ${layout.bottom - 4}l-4 4 4 4 M328 ${layout.bottom - 4}l-4 4 4 4`}
+              />
+              <g className="request-trace__packet">
+                <circle r="12" fill={`url(#${glowId})`} />
+                <circle r="3" fill="var(--accent)" />
+                <animateMotion
+                  begin="indefinite"
+                  dur="6s"
+                  repeatCount="indefinite"
+                >
+                  <mpath href={`#${pathId}`} />
+                </animateMotion>
+              </g>
+            </svg>
+          );
+        })}
         {traceStages.map(stage => (
           <div
             key={stage.id}
