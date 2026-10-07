@@ -11,15 +11,26 @@
   padding-inline: 24px;
 }
 .header-brand {
+  width: 208px;
+  flex: none;
   color: var(--ink);
   font-size: 16px;
   font-weight: 500;
-  letter-spacing: -0.03em;
   text-decoration: none;
   white-space: nowrap;
   min-height: 44px;
   display: inline-flex;
   align-items: center;
+}
+.header-brand__bracket {
+  color: var(--muted);
+}
+.header-brand__signature {
+  font-family: "Agustina Regular", cursive;
+  font-size: 24px;
+  font-weight: 700;
+  font-variant-ligatures: no-common-ligatures;
+  padding-inline: 8px;
 }
 .navigation {
   position: fixed;
@@ -126,6 +137,16 @@
     padding-inline: 6px;
   }
 }
+@media (max-width: 600px) {
+  .header-brand {
+    width: 168px;
+    font-size: 14px;
+  }
+  .header-brand__signature {
+    font-size: 20px;
+    padding-inline: 6px;
+  }
+}
 @media (max-width: 359px) {
   .header {
     padding-inline: 16px;
@@ -134,6 +155,13 @@
     max-width: 120px;
   }
   .navigation a {
+    padding-inline: 4px;
+  }
+  .header-brand {
+    width: 152px;
+  }
+  .header-brand__signature {
+    font-size: 18px;
     padding-inline: 4px;
   }
 }
