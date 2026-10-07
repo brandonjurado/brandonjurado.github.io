@@ -91,6 +91,7 @@ try {
   await page.keyboard.press("Tab");
   assert.equal(await page.locator(":focus").textContent(), "Skip to content");
   await page.keyboard.press("Enter");
+  await page.waitForURL(new URL("#main-content", url).href);
   assert.equal(new URL(page.url()).hash, "#main-content");
 
   const results = [];
