@@ -49,7 +49,6 @@
     transparent 68%
   );
 
-  /* Existing components share the same foundation while their sections evolve. */
   --brand-primary: var(--accent);
   --brand-secondary: var(--accent);
   --brand-accent: var(--accent);

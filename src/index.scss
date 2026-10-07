@@ -3,7 +3,7 @@
 @use "./styles/globals.css";
 
 @font-face {
-  /* impeccable-disable-next-line overused-font: Inter is required by the approved design brief. */
+  /* impeccable-disable-next-line overused-font: Inter is the primary typeface. */
   font-family: "Inter";
   src: url("./assets/fonts/InterVariable-latin.woff2") format("woff2");
   font-style: normal;
@@ -12,7 +12,7 @@
 }
 
 @font-face {
-  /* impeccable-disable-next-line overused-font: Metric-matched fallback for the required Inter face. */
+  /* impeccable-disable-next-line overused-font: Metric-matched fallback for Inter. */
   font-family: "Inter Fallback";
   src: local("Arial");
   font-style: normal;
