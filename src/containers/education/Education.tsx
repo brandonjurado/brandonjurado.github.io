@@ -1,21 +1,33 @@
-import {sectionLabel} from "../../content/sections";
+import SectionHeading from "../../components/sectionHeading/SectionHeading";
+import {education, educationCopy} from "../../content/education";
 import "./Education.scss";
-import EducationCard from "../../components/educationCard/EducationCard";
-import {educationInfo} from "../../content/portfolio";
 
 export default function Education() {
-  if (educationInfo.display) {
-    return (
-      <div className="education-section" id="education">
-        <p className="section-eyebrow">{sectionLabel("education")}</p>
-        <h2 className="education-heading">Education</h2>
-        <div className="education-card-container">
-          {educationInfo.schools.map(school => (
-            <EducationCard key={school.schoolName} school={school} />
-          ))}
-        </div>
-      </div>
-    );
-  }
-  return null;
+  return (
+    <section
+      className="education-section"
+      id="education"
+      aria-labelledby="education-heading"
+    >
+      <SectionHeading
+        sectionKey="education"
+        headingId="education-heading"
+        title={educationCopy.title}
+      />
+      {education.map(school => (
+        <article className="education-record" key={school.schoolName}>
+          <div>
+            <h3>{school.schoolName}</h3>
+            <p className="education-degree">{school.subHeader}</p>
+            <p className="education-period">{school.duration}</p>
+          </div>
+          <ul className="education-activities">
+            {school.descBullets.map(activity => (
+              <li key={activity}>{activity}</li>
+            ))}
+          </ul>
+        </article>
+      ))}
+    </section>
+  );
 }
