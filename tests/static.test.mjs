@@ -4,14 +4,28 @@ import {readFile, access} from "node:fs/promises";
 import {createHash} from "node:crypto";
 import {JSDOM} from "jsdom";
 import sharp from "sharp";
+import {transformWithEsbuild} from "vite";
+
+const {code: portfolioCode} = await transformWithEsbuild(
+  await readFile("src/content/portfolio.ts", "utf8"),
+  "portfolio.ts",
+  {loader: "ts", format: "esm"}
+);
+const {workExperiences, achievementSection, additionalProjects, educationInfo} =
+  await import(
+    `data:text/javascript;base64,${Buffer.from(portfolioCode).toString("base64")}`
+  );
 const html = await readFile("dist/index.html", "utf8");
 const document = new JSDOM(html, {url: "https://bjurado.com/"}).window.document;
 test("crawler gets substantive content, semantic headings and working anchors", () => {
   assert.equal(document.querySelectorAll("h1").length, 1);
   for (const id of [
     "skills",
+    "systems",
     "education",
     "experience",
+    "notes",
+    "off-the-clock",
     "achievements",
     "additional-projects",
     "contact"
@@ -97,7 +111,7 @@ test("cache rules never combine an immutable asset policy with HTML revalidation
   );
 });
 
-test("job descriptions, proof, capabilities, and image alternatives are preserved", () => {
+test("all seven roles retain their complete descriptions, dates, and technology lists", () => {
   const descriptions = [
     ...document.querySelectorAll(".experience-text-desc")
   ].map(node => node.textContent);
@@ -110,22 +124,65 @@ test("job descriptions, proof, capabilities, and image alternatives are preserve
     "Led full-stack development of a web-based nutrient tracking platform from concept through delivery. I owned the frontend, backend services, databases, Linux infrastructure, and hosting footprint, while also bringing UX considerations into the product and mentoring junior developers on MVC-based application design.",
     "Helped improve web application quality through a mix of exploratory testing, automated test development, debugging, and frontend support work. The role combined hands-on QA with practical engineering tasks so issues were identified early, corrected efficiently, and aligned with what the client actually needed."
   ]);
-  const imageAlternatives = [...document.querySelectorAll("#root img")].map(
-    image => image.alt
+  const roles = [...document.querySelectorAll("#experience details")];
+  assert.equal(roles.length, 7);
+  for (const [index, expected] of workExperiences.experience.entries()) {
+    const role = roles[index];
+    const summary = role.querySelector("summary");
+    assert.ok(summary.textContent.includes(expected.company), expected.company);
+    assert.ok(summary.textContent.includes(expected.role), expected.role);
+    assert.equal(
+      summary.querySelector(".experience-text-date").textContent,
+      expected.date
+    );
+    assert.deepEqual(
+      [...role.querySelectorAll("ul li")].map(item => item.textContent),
+      expected.descBullets,
+      `${expected.company}: complete technology coverage`
+    );
+    assert.equal(
+      document
+        .getElementById(summary.getAttribute("aria-controls"))
+        ?.textContent.includes(expected.desc),
+      true,
+      `${expected.company}: linked disclosure content`
+    );
+  }
+});
+
+test("earlier builds retain all original external links and education content", () => {
+  const featuredLinks = achievementSection.achievementsCards.flatMap(build =>
+    build.footerLink.map(link => link.url)
   );
-  for (const alt of [
-    "Tarleton State University",
-    "H-E-B",
-    "T-Mobile",
-    "USAA",
-    "American Airlines",
-    "UTx @ The University of Texas System",
-    "TIAER",
-    "Ask Intuit Logo",
-    "Social Credit Logo",
-    "Hytchd logo"
-  ])
-    assert.ok(imageAlternatives.includes(alt), alt);
+  const additionalLinks = additionalProjects.items.flatMap(project =>
+    project.links.map(link => link.url)
+  );
+  const moreBuilds = document.getElementById("additional-projects");
+  assert.equal(moreBuilds.tagName, "DETAILS");
+  assert.ok(
+    moreBuilds.querySelector("summary").textContent.includes("More builds")
+  );
+  for (const url of [...featuredLinks, ...additionalLinks]) {
+    const link = document.querySelector(`#achievements a[href="${url}"]`);
+    assert.ok(link?.textContent.trim(), `preserved external link: ${url}`);
+  }
+  assert.deepEqual(
+    [...moreBuilds.querySelectorAll("a")].map(link => link.href).sort(),
+    additionalLinks.toSorted()
+  );
+  const education = document.getElementById("education");
+  for (const school of educationInfo.schools) {
+    for (const value of [
+      school.schoolName,
+      school.subHeader,
+      school.duration,
+      ...school.descBullets
+    ])
+      assert.ok(education.textContent.includes(value), value);
+  }
+});
+
+test("proof, capabilities, navigation, and illustrative systems remain available to crawlers", () => {
   assert.equal(document.querySelectorAll(".overview-proof li").length, 4);
   assert.equal(document.querySelectorAll(".capability").length, 4);
   assert.equal(document.querySelectorAll(".footer-wordmark").length, 1);
@@ -135,6 +192,28 @@ test("job descriptions, proof, capabilities, and image alternatives are preserve
     /illustrative/
   );
   assert.equal(document.documentElement.dataset.theme, "dark");
+  assert.deepEqual(
+    [...document.querySelectorAll(".navigation a")].map(link => link.hash),
+    ["#greeting", "#systems", "#experience", "#contact"]
+  );
+  const tabs = [...document.querySelectorAll('[role="tab"]')];
+  assert.deepEqual(
+    tabs.map(tab => tab.textContent),
+    ["Notifications", "Identity", "Billing", "Booking"]
+  );
+  for (const tab of tabs) {
+    const panel = document.getElementById(tab.getAttribute("aria-controls"));
+    assert.equal(panel.getAttribute("role"), "tabpanel");
+    assert.equal(panel.getAttribute("aria-labelledby"), tab.id);
+    assert.ok(panel.querySelector("h3").textContent.length > 20);
+    const diagram = panel.querySelector("figure");
+    assert.match(
+      document.getElementById(diagram.getAttribute("aria-describedby"))
+        .textContent,
+      /illustrative/i
+    );
+    assert.doesNotMatch(panel.textContent, /\bTODO\b/);
+  }
 });
 
 test("résumé stays unpublished until a redacted copy is supplied", async () => {
