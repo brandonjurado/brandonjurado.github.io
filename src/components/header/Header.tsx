@@ -10,7 +10,13 @@ export default function Header() {
         Skip to content
       </a>
       <a className="header-brand" href="#greeting">
-        {site.name}
+        <span className="header-brand__bracket" aria-hidden="true">
+          &lt;
+        </span>
+        <span className="header-brand__signature">{site.name}</span>
+        <span className="header-brand__bracket" aria-hidden="true">
+          /&gt;
+        </span>
       </a>
       <nav aria-label="Primary" className="navigation">
         {navigation.map(link => (

@@ -108,19 +108,17 @@ try {
     await assertNoOverflow(page, width);
     const styles = await page.evaluate(() => {
       const heading = getComputedStyle(document.querySelector("h1"));
-      const wordmark = document.querySelector(".footer-wordmark");
       return {
         font: heading.fontFamily,
         weight: heading.fontWeight,
-        wordmarkFits:
-          Math.abs(
-            wordmark.querySelector("text").getComputedTextLength() - 1280
-          ) < 1
+        signatureFont: getComputedStyle(
+          document.querySelector(".header-brand__signature")
+        ).fontFamily
       };
     });
     assert.match(styles.font, /Inter/);
     assert.equal(styles.weight, "400");
-    assert.ok(styles.wordmarkFits, `footer wordmark fits at ${width}`);
+    assert.match(styles.signatureFont, /Agustina Regular/);
     for (const id of [
       "greeting",
       "skills",
@@ -326,12 +324,28 @@ try {
         );
         if (process.env.CAPTURE_SCREENSHOTS === "1") {
           await mkdir("reports", {recursive: true});
+          await motion.evaluate(() => document.fonts.ready);
           await motion.screenshot({
             path: `reports/after-${width === 1440 ? "desktop" : "mobile"}-${width}.jpg`,
             type: "jpeg",
             quality: 90,
             fullPage: true
           });
+          for (const [name, selector] of [
+            ["header", ".header"],
+            ["footer", ".footer-shell"]
+          ])
+            await motion.locator(selector).screenshot({
+              path: `reports/${name}-${width}.jpg`,
+              type: "jpeg",
+              quality: 90
+            });
+          await motion.locator(".request-trace").scrollIntoViewIfNeeded();
+          await motion.waitForFunction(
+            () =>
+              document.querySelector(".request-trace")?.dataset.motion ===
+              "running"
+          );
         }
         const pathError = await motion.evaluate(() => {
           const graph = [

@@ -41,16 +41,6 @@ export default function Footer() {
             <a href={`mailto:${socialMediaLinks.gmail}`}>{site.contactLabel}</a>
           </div>
         </div>
-        <svg
-          className="footer-wordmark"
-          viewBox="0 0 1280 180"
-          aria-hidden="true"
-          focusable="false"
-        >
-          <text x="0" y="140" textLength="1280" lengthAdjust="spacingAndGlyphs">
-            {site.name}
-          </text>
-        </svg>
         <p className="footer-copyright">
           © {__BUILD_YEAR__} {site.name}
         </p>
