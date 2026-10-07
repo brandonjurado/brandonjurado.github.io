@@ -24,7 +24,6 @@ module.exports = {
     },
     assert: {
       assertions: {
-        // Visual fidelity takes precedence over these load-time targets.
         "categories:performance": [
           "warn",
           {minScore: 0.95, aggregationMethod: "median"}
