@@ -7,7 +7,7 @@ export const site = {
   sitemapLabel: "Sitemap",
   linkedinLabel: "LinkedIn",
   githubLabel: "GitHub",
-  contactLabel: "Send message",
+  contactLabel: "Send a message",
   url: "https://bjurado.com",
   title: "Brandon Jurado | Senior Software Engineer",
   description:
