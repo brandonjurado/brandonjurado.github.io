@@ -3,6 +3,14 @@
 @use "./styles/globals.css";
 
 @font-face {
+  font-family: "Agustina Regular";
+  src: url("./assets/fonts/Agustina-signature.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
   /* impeccable-disable-next-line overused-font: Inter is the primary typeface. */
   font-family: "Inter";
   src: url("./assets/fonts/InterVariable-latin.woff2") format("woff2");

@@ -184,7 +184,7 @@ test("earlier builds retain all original external links and education content", 
 test("proof, capabilities, navigation, and illustrative systems remain available to crawlers", () => {
   assert.equal(document.querySelectorAll(".overview-proof li").length, 4);
   assert.equal(document.querySelectorAll(".capability").length, 4);
-  assert.equal(document.querySelectorAll(".footer-wordmark").length, 1);
+  assert.equal(document.querySelectorAll(".footer-wordmark").length, 0);
   assert.equal(document.querySelector('a[href="/resume.pdf"]'), null);
   assert.match(
     document.querySelector(".request-trace__description").textContent,
