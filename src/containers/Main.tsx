@@ -4,7 +4,6 @@ import Skills from "./skills/Skills";
 import Education from "./education/Education";
 import SelectedSystems from "../features/systems/SelectedSystems";
 import CareerTrace from "../features/experience/CareerTrace";
-import EngineeringNotes from "../features/notes/EngineeringNotes";
 import OffTheClock from "../features/personal/OffTheClock";
 import EarlierBuilds from "../features/builds/EarlierBuilds";
 import Contact from "./contact/Contact";
@@ -23,7 +22,6 @@ export default function Main() {
         <div className="depth-region">
           <SelectedSystems />
           <CareerTrace />
-          <EngineeringNotes />
           <OffTheClock />
           <EarlierBuilds />
           <Education />

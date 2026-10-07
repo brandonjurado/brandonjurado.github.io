@@ -24,7 +24,6 @@ test("crawler gets substantive content, semantic headings and working anchors", 
     "systems",
     "education",
     "experience",
-    "notes",
     "off-the-clock",
     "achievements",
     "additional-projects",
@@ -194,7 +193,7 @@ test("proof, capabilities, navigation, and illustrative systems remain available
   assert.equal(document.documentElement.dataset.theme, "dark");
   assert.deepEqual(
     [...document.querySelectorAll(".navigation a")].map(link => link.hash),
-    ["#greeting", "#systems", "#experience", "#contact"]
+    ["#greeting", "#skills", "#systems", "#experience", "#contact"]
   );
   const tabs = [...document.querySelectorAll('[role="tab"]')];
   assert.deepEqual(

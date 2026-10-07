@@ -73,7 +73,7 @@
   stroke: var(--accent, #6199f6);
 }
 
-.request-trace__connections--narrow {
+.request-trace__connections--compact {
   display: none;
 }
 
@@ -137,15 +137,10 @@
 }
 
 .request-trace__packet {
-  fill: var(--accent, #6199f6);
   stroke: none;
   opacity: 0;
-  animation: request-path-wide 6s linear infinite;
+  animation: request-packet 6s linear infinite;
   animation-play-state: paused;
-}
-
-.request-trace__packet--following {
-  animation-delay: -3s;
 }
 
 .request-trace__waterfall {
@@ -242,51 +237,14 @@
   animation: none;
 }
 
-@keyframes request-path-wide {
-  0% {
+@keyframes request-packet {
+  0%,
+  100% {
     opacity: 0;
-    transform: translate(0, 0);
   }
-  4% {
-    opacity: 1;
-  }
-  40% {
-    transform: translate(352px, 0);
-  }
-  44% {
-    transform: translate(376px, 24px);
-  }
-  54% {
-    transform: translate(376px, 88px);
-  }
-  58% {
-    transform: translate(352px, 112px);
-  }
+  4%,
   94% {
     opacity: 1;
-    transform: translate(0, 112px);
-  }
-  100% {
-    opacity: 0;
-    transform: translate(0, 112px);
-  }
-}
-
-@keyframes request-path-narrow {
-  0% {
-    opacity: 0;
-    transform: translateY(0);
-  }
-  8% {
-    opacity: 1;
-  }
-  92% {
-    opacity: 1;
-    transform: translateY(280px);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(280px);
   }
 }
 
@@ -301,6 +259,12 @@
 }
 
 @media (max-width: 600px) {
+  .request-trace__connections--wide {
+    display: none;
+  }
+  .request-trace__connections--compact {
+    display: block;
+  }
   .request-trace {
     padding: 16px;
   }
