@@ -10,7 +10,8 @@
     text-wrap: balance;
   }
 }
-.section-heading__eyebrow {
+.section-heading__eyebrow,
+.legacy-sections .section-eyebrow {
   margin: 0 0 16px;
   color: var(--accent);
   font-family: var(--font-mono);
