@@ -15,7 +15,7 @@ export function sectionLabel(key: SectionKey): string {
 }
 export const navigation = [
   {label: "Overview", href: "#greeting"},
-  {label: "What I do", href: "#skills"},
+  {label: "Systems", href: "#systems"},
   {label: "Experience", href: "#experience"},
   {label: "Contact", href: "#contact"}
 ] as const;

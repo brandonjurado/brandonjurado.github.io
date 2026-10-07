@@ -1,0 +1,36 @@
+.section-heading {
+  margin-bottom: 40px;
+  h2 {
+    margin: 0;
+    color: var(--ink);
+    font-size: var(--text-section);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+    text-wrap: balance;
+  }
+}
+.section-heading__eyebrow {
+  margin: 0 0 16px;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.5;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.section-heading__description {
+  max-width: 65ch;
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.6;
+}
+@media (max-width: 600px) {
+  .section-heading {
+    margin-bottom: 32px;
+  }
+  .section-heading__description {
+    font-size: 16px;
+  }
+}
