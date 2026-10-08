@@ -17,9 +17,9 @@ export default function Main() {
       <main id="main-content">
         <div className="overview-region">
           <Greeting />
-          <Skills />
         </div>
         <div className="depth-region">
+          <Skills />
           <SelectedSystems />
           <CareerTrace />
           <OffTheClock />

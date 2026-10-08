@@ -1,6 +1,5 @@
 import RequestTrace from "../../components/requestTrace/RequestTrace";
 import {overview} from "../../content/overview";
-import {sectionLabel} from "../../content/sections";
 import "./Greeting.scss";
 
 export default function Greeting() {
@@ -10,7 +9,6 @@ export default function Greeting() {
       id="greeting"
       aria-labelledby="overview-heading"
     >
-      <p className="overview-eyebrow">{sectionLabel("overview")}</p>
       <div className="overview-hero-layout">
         <div className="overview-copy">
           <div className="overview-identity">

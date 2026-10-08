@@ -3,6 +3,8 @@ import SectionHeading from "../../components/sectionHeading/SectionHeading";
 import "./OffTheClock.scss";
 
 export default function OffTheClock() {
+  if (!personalCopy.display) return null;
+
   return (
     <section
       className="off-the-clock"
@@ -14,19 +16,11 @@ export default function OffTheClock() {
         headingId="personal-heading"
         title={personalCopy.title}
       />
-      <div className="personal-photos">
+      <ul className="personal-interests" role="list">
         {personalInterests.map(interest => (
-          <figure
-            className={`personal-photo personal-photo--${interest.id}`}
-            key={interest.id}
-          >
-            <div className="personal-photo-placeholder">
-              <span>{personalCopy.photoStatus}</span>
-            </div>
-            <figcaption>{interest.label}</figcaption>
-          </figure>
+          <li key={interest.id}>{interest.label}</li>
         ))}
-      </div>
+      </ul>
     </section>
   );
 }

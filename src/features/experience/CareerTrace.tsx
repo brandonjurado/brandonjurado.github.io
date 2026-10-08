@@ -73,6 +73,11 @@ function CareerRow({role, hydrated}: {role: CareerRole; hydrated: boolean}) {
               <path d="m6 9 6 6 6-6" />
             </svg>
           </span>
+          {role.contribution && (
+            <span className="career-trace__contribution">
+              {role.contribution}
+            </span>
+          )}
         </summary>
         <div
           className="career-trace__details"

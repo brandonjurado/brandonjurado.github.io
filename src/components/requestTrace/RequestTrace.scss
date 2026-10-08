@@ -5,13 +5,13 @@
   margin: 0;
   padding: 24px;
   border: 1px solid var(--halo-border);
-  border-radius: var(--radius-feature);
+  border-radius: 16px;
   background:
     radial-gradient(ellipse at 90% 0, #181826 0, transparent 65%),
     var(--surface, #08080c);
   color: var(--ink, #fcfcfc);
   font-family: var(--font-mono, "JetBrains Mono", monospace);
-  font-size: 12px;
+  font-size: var(--text-metadata);
   line-height: 1.5;
   box-sizing: border-box;
 }
@@ -27,12 +27,13 @@
 .request-trace__heading {
   padding-bottom: 16px;
   border-bottom: 1px solid var(--line, #2a2a32);
-  font-size: 14px;
+  font-size: 1rem;
+  font-family: var(--font-sans);
 }
 
 .request-trace__annotation {
   color: var(--muted, #a3a3b3);
-  font-size: 12px;
+  font-size: var(--text-metadata);
 }
 
 .request-trace__description {
@@ -49,7 +50,7 @@
   position: relative;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  grid-template-rows: repeat(2, 80px);
+  grid-template-rows: repeat(2, 88px);
   gap: 32px 0;
   margin: 24px 0;
 }
@@ -128,6 +129,7 @@
 
 .request-trace__node-label {
   max-width: 100%;
+  font-family: var(--font-sans);
   text-align: center;
   color: var(--muted, #a3a3b3);
 }
@@ -164,7 +166,7 @@
 
 .request-trace__span {
   display: grid;
-  grid-template-columns: 136px minmax(0, 1fr);
+  grid-template-columns: 152px minmax(0, 1fr);
   align-items: center;
   gap: 16px;
   min-height: 24px;
@@ -270,7 +272,7 @@
   }
   .request-trace__graph {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    grid-template-rows: repeat(2, 64px);
+    grid-template-rows: repeat(2, 80px);
     gap: 24px 0;
     margin-block: 16px;
   }
@@ -284,14 +286,17 @@
     gap: 8px;
   }
   .request-trace__node-label {
-    font-size: 12px;
+    font-size: var(--text-metadata);
   }
   .request-trace__span {
-    grid-template-columns: 128px minmax(0, 1fr);
+    grid-template-columns: 140px minmax(0, 1fr);
     gap: 8px;
   }
   .request-trace__spans {
     gap: 8px;
+  }
+  .request-trace__waterfall {
+    display: none;
   }
   .request-trace__span-segment {
     height: 8px;

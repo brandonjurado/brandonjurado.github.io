@@ -12,7 +12,7 @@ export const overview = {
   location: site.location,
   headline: ["Backend systems,", "built to last."],
   description:
-    "I build services, data platforms, and customer-facing systems that stay reliable under heavy use. My work spans identity, billing, booking, and messaging.",
+    "Senior backend engineer. Java, Spring Boot, Kafka, and AWS across identity and access management, event-driven messaging, e-commerce, and payments.",
   contactLabel: "Get in touch",
   experienceLabel: "View experience",
   proofLabel: "Work across teams at",

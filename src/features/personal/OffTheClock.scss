@@ -4,100 +4,17 @@
   color: var(--ink);
 }
 
-.personal-photos {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  align-items: end;
-  gap: 32px 24px;
-}
-
-.personal-photo {
-  min-width: 0;
+.personal-interests {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 32px;
   margin: 0;
-
-  figcaption {
-    margin-top: 16px;
-    color: var(--ink);
-    font-size: 14px;
-    line-height: 1.5;
-  }
-}
-
-.personal-photo-placeholder {
-  display: grid;
-  place-items: center;
-  aspect-ratio: 1;
-  padding: 16px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-container);
-  background: var(--surface);
+  padding: 24px 0;
+  border-block: 1px solid var(--line);
+  list-style: none;
   color: var(--muted);
-  font-family: var(--font-mono);
-  font-size: 12px;
-  line-height: 1.5;
-  text-align: center;
-}
-
-.personal-photo--boxing .personal-photo-placeholder {
-  aspect-ratio: 4 / 5;
-}
-
-.personal-photo--travel .personal-photo-placeholder {
-  aspect-ratio: 4 / 3;
-}
-
-.personal-photo--fitness .personal-photo-placeholder {
-  aspect-ratio: 3 / 4;
-}
-
-.personal-photo--cars .personal-photo-placeholder {
-  aspect-ratio: 3 / 2;
-}
-
-@media (max-width: 900px) {
-  .personal-photos {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-  }
-
-  .personal-photo {
-    grid-column: span 2;
-  }
-
-  .personal-photo--fitness,
-  .personal-photo--cars {
-    grid-column: span 3;
-  }
-
-  .personal-photo--fitness .personal-photo-placeholder {
-    aspect-ratio: 4 / 3;
-  }
-}
-
-@media (max-width: 600px) {
-  .personal-photos {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 24px 16px;
-  }
-
-  .personal-photo {
-    grid-column: auto;
-  }
-
-  .personal-photo--fitness .personal-photo-placeholder {
-    aspect-ratio: 3 / 4;
-  }
-
-  .personal-photo--cars {
-    grid-column: 1 / -1;
-
-    .personal-photo-placeholder {
-      aspect-ratio: 2 / 1;
-    }
-  }
-
-  .personal-photo figcaption {
-    margin-top: 8px;
-  }
+  font-size: 1rem;
+  line-height: 1.6;
 }
 
 @media (max-width: 359px) {

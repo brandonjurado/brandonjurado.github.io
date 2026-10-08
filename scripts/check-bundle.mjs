@@ -21,7 +21,15 @@ const chunks = await Promise.all(
 const initialBytes = chunks
   .filter(chunk => chunk.initial)
   .reduce((sum, chunk) => sum + chunk.gzipBytes, 0);
-const report = {budgetBytes: 100_000, initialBytes, chunks};
+const consoleChunk = chunks.find(
+  chunk => chunk.file === manifest["src/console-easter-egg.ts"]?.file
+);
+const report = {
+  budgetBytes: 100_000,
+  initialBytes,
+  consoleBudgetBytes: 2_000,
+  chunks
+};
 await mkdir("reports", {recursive: true});
 await writeFile("reports/bundle.json", JSON.stringify(report, null, 2) + "\n");
 console.log(JSON.stringify(report, null, 2));
@@ -29,3 +37,7 @@ if (initialBytes >= report.budgetBytes)
   throw new Error(
     `Initial JS ${initialBytes} bytes exceeds the <100 KB gzip budget`
   );
+if (!consoleChunk || consoleChunk.initial)
+  throw new Error("Console easter egg must be a separate lazy chunk");
+if (consoleChunk.gzipBytes >= report.consoleBudgetBytes)
+  throw new Error("Console easter egg exceeds the <2 KB gzip budget");
