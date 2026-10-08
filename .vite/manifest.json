@@ -5,15 +5,17 @@
     "isDynamicEntry": true
   },
   "index.html": {
-    "file": "assets/index-D-aDLD7C.js",
+    "file": "assets/index-UzL6lJ2t.js",
     "name": "index",
     "src": "index.html",
     "isEntry": true,
     "dynamicImports": [
-      "_lottie_light-D0fqc_sI.js"
+      "src/components/rubberSegment/RubberSegment.tsx",
+      "_lottie_light-D0fqc_sI.js",
+      "src/console-easter-egg.ts"
     ],
     "css": [
-      "assets/index-BiwuWvE5.css"
+      "assets/index-BTtkrdry.css"
     ],
     "assets": [
       "assets/landingPerson-DKU4CXQq.json",
@@ -52,5 +54,20 @@
   "src/assets/lottie/splashAnimation.json": {
     "file": "assets/splashAnimation-Brlv9XkX.json",
     "src": "src/assets/lottie/splashAnimation.json"
+  },
+  "src/components/rubberSegment/RubberSegment.tsx": {
+    "file": "assets/RubberSegment-D0frK7Un.js",
+    "name": "RubberSegment",
+    "src": "src/components/rubberSegment/RubberSegment.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html"
+    ]
+  },
+  "src/console-easter-egg.ts": {
+    "file": "assets/console-easter-egg-ZHMAqW6d.js",
+    "name": "console-easter-egg",
+    "src": "src/console-easter-egg.ts",
+    "isDynamicEntry": true
   }
 }
