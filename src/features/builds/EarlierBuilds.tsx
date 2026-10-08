@@ -37,11 +37,22 @@ export default function EarlierBuilds() {
       <ol className="earlier-builds-list" role="list">
         {featuredBuilds.map(build => (
           <li key={build.name}>
-            <article className="earlier-build">
-              <header className="earlier-build-heading">
+            <details className="earlier-build earlier-build--archived">
+              <summary className="earlier-build-heading">
                 <h3>{build.name}</h3>
                 <p>{build.recognition}</p>
-              </header>
+                <svg
+                  viewBox="0 0 24 24"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  aria-hidden="true"
+                >
+                  <path d="m6 9 6 6 6-6" />
+                </svg>
+              </summary>
               <div className="earlier-build-body">
                 <p className="earlier-build-description">{build.description}</p>
                 <p className="earlier-build-technologies">
@@ -49,7 +60,7 @@ export default function EarlierBuilds() {
                 </p>
                 <BuildLinks build={build} />
               </div>
-            </article>
+            </details>
           </li>
         ))}
       </ol>

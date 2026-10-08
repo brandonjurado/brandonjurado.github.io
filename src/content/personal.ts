@@ -4,6 +4,7 @@ export type PersonalInterest = {
 };
 
 export const personalCopy = {
+  display: false, // Set true when the personal photos are ready.
   title: "Off the clock.",
   photoStatus: "Photo pending"
 } as const;

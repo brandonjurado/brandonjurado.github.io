@@ -1,8 +1,18 @@
 import {spawn} from "node:child_process";
-import {mkdir, writeFile} from "node:fs/promises";
+import {mkdir, readFile, writeFile} from "node:fs/promises";
 import assert from "node:assert/strict";
 import {chromium} from "playwright";
 import AxeBuilder from "@axe-core/playwright";
+import {transformWithEsbuild} from "vite";
+
+const {code: consoleContentCode} = await transformWithEsbuild(
+  await readFile("src/content/console-easter-egg.ts", "utf8"),
+  "console-easter-egg.ts",
+  {loader: "ts", format: "esm"}
+);
+const consoleContent = await import(
+  `data:text/javascript;base64,${Buffer.from(consoleContentCode).toString("base64")}`
+);
 
 async function assertNoOverflow(page, label) {
   assert.ok(
@@ -11,6 +21,86 @@ async function assertNoOverflow(page, label) {
     ),
     `document overflow: ${label}`
   );
+}
+
+async function assertNavigationState(page, id) {
+  await page.waitForURL(url => url.hash === `#${id}`);
+  await assertNavigationSelection(page, id);
+}
+
+async function assertNavigationSelection(page, id) {
+  const active = page.locator(`.navigation a[href="#${id}"]`);
+  await page.waitForFunction(
+    href =>
+      document
+        .querySelector(".navigation a[aria-current='location']")
+        ?.getAttribute("href") === href,
+    `#${id}`
+  );
+  assert.equal(
+    await page.locator(".navigation a[aria-current='location']").count(),
+    1
+  );
+  assert.equal(await active.getAttribute("role"), null);
+}
+
+async function assertNavigationThumb(page, id) {
+  await page.waitForFunction(target => {
+    const link = document.querySelector(`.navigation a[href="#${target}"]`);
+    const thumb = document.querySelector(".navigation .rubber-segment__thumb");
+    if (!link || !thumb) return false;
+    const clip = getComputedStyle(thumb).clipPath.match(
+      /^inset\(0(?:px)? ([\d.]+)px 0(?:px)? ([\d.]+)px/
+    );
+    if (!clip) return false;
+    const itemRect = link.getBoundingClientRect();
+    const thumbRect = thumb.getBoundingClientRect();
+    return (
+      Math.abs(thumbRect.left + Number(clip[2]) - itemRect.left) < 1.5 &&
+      Math.abs(thumbRect.right - Number(clip[1]) - itemRect.right) < 1.5
+    );
+  }, id);
+}
+
+async function observeNavigation(page) {
+  await page.evaluate(() => {
+    const nav = document.querySelector(".navigation");
+    const thumb = nav.querySelector(".rubber-segment__thumb");
+    const visibleWidth = () => {
+      const clip = getComputedStyle(thumb).clipPath.match(
+        /^inset\(0(?:px)? ([\d.]+)px 0(?:px)? ([\d.]+)px/
+      );
+      return (
+        thumb.getBoundingClientRect().width - Number(clip[1]) - Number(clip[2])
+      );
+    };
+    const observation = {
+      selections: [],
+      initialWidth: visibleWidth(),
+      maxWidth: visibleWidth(),
+      observer: new MutationObserver(() => {
+        observation.selections.push(
+          nav.querySelector("a[aria-current='location']").hash
+        );
+        observation.maxWidth = Math.max(observation.maxWidth, visibleWidth());
+      })
+    };
+    observation.observer.observe(nav, {
+      subtree: true,
+      attributes: true,
+      attributeFilter: ["aria-current", "style"]
+    });
+    window.navigationObservation = observation;
+  });
+}
+
+async function readNavigationObservation(page) {
+  return page.evaluate(() => {
+    const {observer, ...result} = window.navigationObservation;
+    observer.disconnect();
+    delete window.navigationObservation;
+    return result;
+  });
 }
 
 async function checkAccessibility(page, label) {
@@ -78,13 +168,100 @@ try {
   const page = await context.newPage();
   page.setDefaultTimeout(5000);
   const errors = [];
+  const consoleLogs = [];
   page.on("pageerror", error => errors.push(error.message));
   page.on("console", message => {
     if (message.type() === "error") errors.push(message.text());
+    if (message.type() === "log")
+      consoleLogs.push(
+        Promise.all(message.args().map(argument => argument.jsonValue()))
+      );
   });
-  await page.addInitScript(() => localStorage.setItem("theme", "light"));
+  await page.addInitScript(() => {
+    localStorage.setItem("theme", "light");
+    Object.defineProperty(window, "requestIdleCallback", {
+      value: undefined,
+      configurable: true
+    });
+  });
   await page.goto(url);
+  await page.locator(".navigation .rubber-segment[data-measured]").waitFor();
   await page.evaluate(() => document.fonts.ready);
+  await page.waitForFunction(() => typeof window.brandon?.help === "function");
+  const greetingLine = consoleContent.GREETING.split("\n")[0];
+  const greeting = `${consoleContent.ASCII_ART}\n\n${consoleContent.GREETING}`
+    .replace(greetingLine, `%c${greetingLine}%c`)
+    .replace(consoleContent.EMAIL, `%c${consoleContent.EMAIL}%c`);
+  assert.deepEqual(await Promise.all(consoleLogs), [
+    [
+      greeting,
+      consoleContent.GREETING_STYLE,
+      "",
+      consoleContent.EMAIL_STYLE,
+      ""
+    ]
+  ]);
+  const commandStart = consoleLogs.length;
+  const api = await page.evaluate(() => {
+    const descriptor = Object.getOwnPropertyDescriptor(window, "brandon");
+    return {
+      frozen: Object.isFrozen(window.brandon),
+      plain: Object.getPrototypeOf(window.brandon) === Object.prototype,
+      enumerable: descriptor.enumerable,
+      writable: descriptor.writable,
+      configurable: descriptor.configurable,
+      methods: Object.keys(window.brandon),
+      returnsUndefined: [
+        window.brandon.help(),
+        window.brandon.whoami(),
+        window.brandon.stack()
+      ].every(result => result === undefined)
+    };
+  });
+  assert.deepEqual(api, {
+    frozen: true,
+    plain: true,
+    enumerable: false,
+    writable: false,
+    configurable: false,
+    methods: ["help", "whoami", "stack", "email"],
+    returnsUndefined: true
+  });
+  assert.deepEqual(await Promise.all(consoleLogs.slice(commandStart)), [
+    [consoleContent.HELP],
+    [consoleContent.WHOAMI],
+    [consoleContent.STACK]
+  ]);
+  const clipboardFailure = page.waitForEvent("console", {
+    predicate: message =>
+      message.type() === "log" &&
+      message.text() === consoleContent.EMAIL_COPY_FAILED
+  });
+  assert.equal(
+    await page.evaluate(() => {
+      const descriptor = Object.getOwnPropertyDescriptor(
+        navigator,
+        "clipboard"
+      );
+      try {
+        Object.defineProperty(navigator, "clipboard", {
+          value: undefined,
+          configurable: true
+        });
+        return window.brandon.email() === undefined;
+      } finally {
+        if (descriptor)
+          Object.defineProperty(navigator, "clipboard", descriptor);
+        else delete navigator.clipboard;
+      }
+    }),
+    true
+  );
+  const fallbackLog = await clipboardFailure;
+  assert.deepEqual(
+    await Promise.all(fallbackLog.args().map(argument => argument.jsonValue())),
+    [consoleContent.EMAIL_COPY_FAILED]
+  );
   assert.equal(await page.locator("html").getAttribute("data-theme"), "dark");
   assert.equal(await page.locator(".theme-toggle").count(), 0);
   assert.equal(await page.locator("h1").count(), 1);
@@ -102,10 +279,69 @@ try {
   await page.waitForURL(new URL("#main-content", url).href);
   assert.equal(new URL(page.url()).hash, "#main-content");
 
+  await page.locator('.navigation a[href="#skills"]').focus();
+  await page.keyboard.press("Enter");
+  await assertNavigationState(page, "skills");
+  for (const [key, id] of [
+    ["ArrowRight", "systems"],
+    ["ArrowLeft", "skills"],
+    ["End", "contact"],
+    ["Home", "greeting"]
+  ]) {
+    await page.keyboard.press(key);
+    await assertNavigationState(page, id);
+    assert.ok(
+      await page
+        .locator(`.navigation a[href="#${id}"]`)
+        .evaluate(element => element === document.activeElement),
+      `${key}: navigation focus follows selection`
+    );
+    await assertNavigationThumb(page, id);
+  }
+  await page.evaluate(() => {
+    location.hash = "#experience";
+  });
+  await assertNavigationState(page, "experience");
+  await assertNavigationThumb(page, "experience");
+  await page.goBack();
+  await assertNavigationState(page, "greeting");
+  await assertNavigationThumb(page, "greeting");
+
+  const dragFrom = await page
+    .locator('.navigation a[href="#greeting"]')
+    .boundingBox();
+  const dragTo = await page
+    .locator('.navigation a[href="#skills"]')
+    .boundingBox();
+  const startX = dragFrom.x + dragFrom.width / 2;
+  const dragY = dragFrom.y + dragFrom.height / 2;
+  await page.mouse.move(startX, dragY);
+  await page.mouse.down();
+  await page.mouse.move(startX + 10, dragY);
+  await page.mouse.move(dragTo.x + dragTo.width / 2 + 10, dragY, {steps: 8});
+  await page.waitForTimeout(120);
+  await page.mouse.up();
+  await assertNavigationState(page, "skills");
+  await assertNavigationThumb(page, "skills");
+
   const results = [];
   for (const width of [320, 390, 768, 1440]) {
     await page.setViewportSize({width, height: 900});
     await assertNoOverflow(page, width);
+    const contributions = await page
+      .locator("#experience summary .career-trace__contribution")
+      .all();
+    assert.equal(contributions.length, 4);
+    for (const contribution of contributions)
+      assert.ok(
+        await contribution.isVisible(),
+        `${width}: visible contribution`
+      );
+    assert.equal(
+      await page.locator(".request-trace__waterfall").isVisible(),
+      width > 600,
+      `${width}: mobile trace omits the waterfall`
+    );
     const styles = await page.evaluate(() => {
       const heading = getComputedStyle(document.querySelector("h1"));
       return {
@@ -119,6 +355,40 @@ try {
     assert.match(styles.font, /Inter/);
     assert.equal(styles.weight, "400");
     assert.match(styles.signatureFont, /Agustina Regular/);
+    const hashBeforeScrolling = new URL(page.url()).hash;
+    const scrollSections = [
+      "greeting",
+      "skills",
+      "systems",
+      "experience",
+      "contact"
+    ];
+    for (const id of [...scrollSections, ...scrollSections.toReversed()]) {
+      await page.evaluate(target => {
+        const section = document.getElementById(target);
+        const offset = parseFloat(
+          getComputedStyle(document.documentElement).scrollPaddingTop
+        );
+        scrollTo({
+          top: scrollY + section.getBoundingClientRect().top - offset,
+          behavior: "instant"
+        });
+      }, id);
+      await assertNavigationSelection(page, id);
+      await assertNavigationThumb(page, id);
+      assert.equal(new URL(page.url()).hash, hashBeforeScrolling);
+    }
+    await page.evaluate(() =>
+      scrollTo({
+        top: document.documentElement.scrollHeight,
+        behavior: "instant"
+      })
+    );
+    await assertNavigationSelection(page, "contact");
+    await page.evaluate(() =>
+      document.getElementById("education").scrollIntoView({behavior: "instant"})
+    );
+    await assertNavigationSelection(page, "experience");
     for (const id of [
       "greeting",
       "skills",
@@ -127,7 +397,7 @@ try {
       "contact"
     ]) {
       await page.locator(`.navigation a[href="#${id}"]`).click();
-      assert.equal(new URL(page.url()).hash, `#${id}`);
+      await assertNavigationState(page, id);
       await page.waitForFunction(target => {
         const rect = document.getElementById(target).getBoundingClientRect();
         return rect.top >= -1 && rect.top < innerHeight;
@@ -250,6 +520,12 @@ try {
   assert.equal(resume.status, 404);
   assert.equal(await page.locator('a[href="/resume.pdf"]').count(), 0);
   assert.deepEqual(errors, [], "Hydration and console errors");
+  assert.equal(
+    (await Promise.all(consoleLogs)).filter(args => args[0] === greeting)
+      .length,
+    1,
+    "console greeting remains one entry after navigation"
+  );
   await page.close();
 
   const nojs = await browser.newPage({
@@ -263,17 +539,20 @@ try {
     "skills",
     "systems",
     "experience",
-    "off-the-clock",
     "achievements",
     "education",
     "contact"
   ])
     assert.ok(await nojs.locator(`#${id}`).isVisible());
+  assert.equal(await nojs.locator("#off-the-clock").count(), 0);
   assert.ok(
     await nojs
       .getByRole("navigation", {name: "Primary", exact: true})
       .isVisible()
   );
+  await nojs.locator('.navigation a[href="#systems"]').focus();
+  await nojs.keyboard.press("Enter");
+  await nojs.waitForURL(new URL("#systems", url).href);
   assert.equal(await nojs.getByRole("tabpanel").count(), 4);
   for (const panel of await nojs.getByRole("tabpanel").all())
     assert.ok(await panel.isVisible());
@@ -301,6 +580,10 @@ try {
       reducedMotion: preference === "reduce" ? "reduce" : "no-preference"
     });
     motion.setDefaultTimeout(5000);
+    motion.on("pageerror", error => errors.push(error.message));
+    motion.on("console", message => {
+      if (message.type() === "error") errors.push(message.text());
+    });
     if (preference === "save-data")
       await motion.addInitScript(() =>
         Object.defineProperty(navigator, "connection", {
@@ -316,6 +599,61 @@ try {
     if (preference === "normal") {
       for (const width of [1440, 390]) {
         await motion.setViewportSize({width, height: 900});
+        await motion.evaluate(() => scrollTo({top: 0, behavior: "instant"}));
+        await assertNavigationSelection(motion, "greeting");
+        await assertNavigationThumb(motion, "greeting");
+        await observeNavigation(motion);
+        await motion.locator('.navigation a[href="#contact"]').click();
+        await motion.waitForFunction(() => {
+          const page = document.documentElement;
+          const offset = parseFloat(getComputedStyle(page).scrollPaddingTop);
+          const top = document
+            .getElementById("contact")
+            .getBoundingClientRect().top;
+          return (
+            Math.abs(top - offset) <= 1 ||
+            scrollY + innerHeight >= page.scrollHeight - 1
+          );
+        });
+        await assertNavigationThumb(motion, "contact");
+        const clickObservation = await readNavigationObservation(motion);
+        assert.ok(clickObservation.selections.length > 0);
+        assert.ok(
+          clickObservation.selections.every(value => value === "#contact"),
+          `${width}: smooth scrolling preserves clicked selection`
+        );
+        assert.ok(
+          clickObservation.maxWidth > clickObservation.initialWidth + 20,
+          `${width}: click keeps elastic stretch`
+        );
+
+        await observeNavigation(motion);
+        await motion.mouse.move(width / 2, 450);
+        await motion.mouse.wheel(0, -10000);
+        await assertNavigationSelection(motion, "greeting");
+        await assertNavigationThumb(motion, "greeting");
+        const scrollObservation = await readNavigationObservation(motion);
+        assert.ok(
+          scrollObservation.maxWidth > scrollObservation.initialWidth + 20,
+          `${width}: manual scrolling keeps elastic stretch`
+        );
+
+        await motion.locator('.navigation a[href="#contact"]').click();
+        await motion.waitForFunction(() => scrollY > 300);
+        await motion.locator(":focus").evaluate(element => element.blur());
+        await motion.keyboard.press("Home");
+        await assertNavigationSelection(motion, "greeting");
+        await assertNavigationThumb(motion, "greeting");
+        if (process.env.CAPTURE_SCREENSHOTS === "1") {
+          await mkdir("reports", {recursive: true});
+          await motion.evaluate(() => document.fonts.ready);
+          await motion.evaluate(() => scrollTo({top: 0, behavior: "instant"}));
+          await motion.screenshot({
+            path: `reports/background-${width === 1440 ? "desktop" : "mobile"}-${width}.jpg`,
+            type: "jpeg",
+            quality: 90
+          });
+        }
         await motion.locator(".request-trace").scrollIntoViewIfNeeded();
         await motion.waitForFunction(
           () =>
@@ -333,6 +671,7 @@ try {
           });
           for (const [name, selector] of [
             ["header", ".header"],
+            ["navigation", ".navigation"],
             ["footer", ".footer-shell"]
           ])
             await motion.locator(selector).screenshot({
@@ -419,6 +758,7 @@ try {
     }
     await motion.close();
   }
+  assert.deepEqual(errors, [], "Hydration and motion console errors");
 
   const missing = await browser.newPage();
   const response = await missing.goto(`${url}/missing-page`);
@@ -436,6 +776,17 @@ try {
         noJS: true,
         noJSSystemPanels: 4,
         keyboardSystems: true,
+        rubberNavigation: true,
+        navigationHashSync: true,
+        navigationScrollSync: true,
+        elasticScrollNavigation: true,
+        navigationClickScrollIsolation: true,
+        navigationDrag: true,
+        reducedMotionNavigation: true,
+        productionConsoleGreeting: true,
+        consoleApi: true,
+        consoleClipboardFallback: true,
+        consoleIdleFallback: true,
         nativeCareerDisclosures: true,
         nativeMoreBuilds: true,
         staticPreferences: true,

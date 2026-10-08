@@ -24,13 +24,13 @@ test("crawler gets substantive content, semantic headings and working anchors", 
     "systems",
     "education",
     "experience",
-    "off-the-clock",
     "achievements",
     "additional-projects",
     "contact"
   ]) {
     assert.ok(document.getElementById(id)?.textContent.trim().length > 50, id);
   }
+  assert.equal(document.getElementById("off-the-clock"), null);
   assert.equal(
     document.querySelectorAll('a[href="mailto:hello@bjurado.com"]').length > 0,
     true
@@ -195,6 +195,19 @@ test("proof, capabilities, navigation, and illustrative systems remain available
     [...document.querySelectorAll(".navigation a")].map(link => link.hash),
     ["#greeting", "#skills", "#systems", "#experience", "#contact"]
   );
+  for (const link of document.querySelectorAll(".navigation a")) {
+    assert.equal(link.getAttribute("role"), null);
+    assert.notEqual(link.getAttribute("tabindex"), "-1");
+  }
+  assert.equal(
+    document.querySelector(".navigation .rubber-segment__thumb"),
+    null
+  );
+  assert.equal(
+    document.querySelector(".navigation a[aria-current='location']")?.hash,
+    "#greeting"
+  );
+  assert.equal(document.querySelector(".navigation [role='radiogroup']"), null);
   const tabs = [...document.querySelectorAll('[role="tab"]')];
   assert.deepEqual(
     tabs.map(tab => tab.textContent),

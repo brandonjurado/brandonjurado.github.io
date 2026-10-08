@@ -1,6 +1,10 @@
 .selected-systems {
   width: min(var(--content-width), calc(100% - 48px));
-  margin: var(--section-space) auto 0;
+  margin: 96px auto 0;
+
+  .section-heading {
+    margin-bottom: 32px;
+  }
   color: var(--ink);
 }
 
@@ -38,7 +42,7 @@
 .selected-systems-tabs {
   position: relative;
   display: flex;
-  gap: 8px;
+  gap: 24px;
   overflow-x: auto;
   padding: 4px 4px 12px;
   margin: -4px -4px -12px;
@@ -49,14 +53,15 @@
   button {
     flex: 0 0 auto;
     min-height: 44px;
-    padding: 8px 24px;
-    border: 1px solid var(--line);
-    border-radius: var(--radius-pill);
+    padding: 12px 0;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    border-radius: 0;
     background: transparent;
     color: var(--muted);
-    font-family: var(--font-mono);
-    font-size: 12px;
-    font-weight: 400;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 500;
     line-height: 1.5;
     cursor: pointer;
 
@@ -66,8 +71,7 @@
     }
 
     &[aria-selected="true"] {
-      border-color: var(--accent);
-      background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+      border-bottom-color: var(--accent);
       color: var(--accent);
     }
 
@@ -85,7 +89,7 @@
   gap: 48px;
   padding: 40px;
   border: 1px solid var(--halo-border);
-  border-radius: var(--radius-feature);
+  border-radius: 16px;
   background:
     radial-gradient(ellipse at 75% 0, var(--halo-surface), transparent 70%),
     var(--surface);
@@ -127,8 +131,8 @@
 
   dt {
     color: var(--ink);
-    font-family: var(--font-mono);
-    font-size: 12px;
+    font-family: var(--font-sans);
+    font-size: var(--text-metadata);
     line-height: 1.5;
   }
 
@@ -144,9 +148,9 @@
     padding: 0;
     list-style: none;
     color: var(--muted);
-    font-family: var(--font-mono);
-    font-size: 12px;
-    line-height: 1.5;
+    font-family: var(--font-sans);
+    font-size: var(--text-technology);
+    line-height: 1.6;
   }
 }
 
@@ -161,8 +165,8 @@
     gap: 16px;
     padding-bottom: 16px;
     border-bottom: 1px solid var(--line);
-    font-family: var(--font-mono);
-    font-size: 12px;
+    font-size: 1rem;
+    font-weight: 500;
     line-height: 1.5;
   }
 }
@@ -170,6 +174,8 @@
 .system-diagram-annotation {
   flex: 0 0 auto;
   color: var(--muted);
+  font-size: var(--text-metadata);
+  font-weight: 400;
 }
 
 .system-diagram-description {
@@ -198,11 +204,12 @@
   border-radius: var(--radius-container);
   background: var(--surface);
   color: var(--ink);
-  font-family: var(--font-mono);
-  font-size: 12px;
+  font-family: var(--font-sans);
+  font-size: var(--text-diagram);
+  font-weight: 500;
   line-height: 1.5;
   text-align: center;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
 }
 
 .system-flow-arrow,
@@ -294,8 +301,8 @@
 .system-diagram-scope {
   margin: 0 0 16px;
   color: var(--muted);
-  font-family: var(--font-mono);
-  font-size: 12px;
+  font-family: var(--font-sans);
+  font-size: var(--text-metadata);
   line-height: 1.5;
 }
 
@@ -309,8 +316,8 @@
   align-items: center;
   gap: 8px;
   color: var(--muted);
-  font-family: var(--font-mono);
-  font-size: 12px;
+  font-family: var(--font-sans);
+  font-size: var(--text-metadata);
   line-height: 1.5;
 }
 
@@ -335,6 +342,47 @@
   color: var(--muted);
   font-size: 14px;
   line-height: 1.6;
+}
+
+.selected-system-panel--featured {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 48px;
+  padding: 48px;
+
+  .selected-system-copy {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    column-gap: 64px;
+    align-items: start;
+
+    h3 {
+      grid-row: span 2;
+      max-width: 23ch;
+      font-size: var(--text-feature);
+      line-height: 1.12;
+    }
+
+    > p {
+      margin: 0;
+      font-size: 18px;
+    }
+  }
+
+  .selected-system-tools {
+    margin-top: 24px;
+  }
+
+  .selected-system-diagram figcaption {
+    font-size: 18px;
+  }
+
+  .system-diagram-node {
+    min-height: 88px;
+  }
+
+  .system-notification-channels .system-diagram-node {
+    min-height: 56px;
+  }
 }
 
 html:not(.js) {
@@ -371,11 +419,27 @@ html:not(.js) {
   .selected-system-tools {
     margin-top: 24px;
   }
+
+  .selected-system-panel--featured .selected-system-copy {
+    grid-template-columns: minmax(0, 1fr);
+
+    h3 {
+      grid-row: auto;
+    }
+
+    > p {
+      margin-top: 24px;
+    }
+  }
 }
 
 @media (max-width: 600px) {
-  .selected-systems-tabs button {
-    padding-inline: 16px;
+  .selected-systems {
+    margin-top: 64px;
+  }
+
+  .selected-systems-tabs {
+    gap: 24px;
   }
 
   .selected-system-panel {

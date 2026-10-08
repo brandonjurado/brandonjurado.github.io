@@ -291,7 +291,7 @@ export default function SelectedSystems() {
       </div>
       {selectedSystems.map(system => (
         <div
-          className="selected-system-panel"
+          className={`selected-system-panel${system.id === "notifications" ? " selected-system-panel--featured" : ""}`}
           role="tabpanel"
           id={`system-panel-${system.id}`}
           key={system.id}

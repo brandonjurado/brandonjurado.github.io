@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "lottie-web": "5.13.0",
+    "motion": "14.0.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4"
   },
@@ -26,7 +27,7 @@
     "prepare:assets": "node scripts/prepare-assets.mjs",
     "lint": "eslint .",
     "check:bundle": "node scripts/check-bundle.mjs",
-    "test:static": "node --test tests/static.test.mjs",
+    "test:static": "node --test tests/*.test.mjs",
     "test:browser": "node tests/browser.mjs",
     "lhci": "lhci autorun",
     "prepare:data": "bun run scripts/fetch-profile.mjs"

@@ -5,6 +5,7 @@ type RolePeriod = {
   id: string;
   startMonth: YearMonth;
   endMonth: YearMonth | null;
+  contribution?: string;
 };
 
 export type CareerRole = Pick<
@@ -17,22 +18,30 @@ const periods: Record<string, RolePeriod> = {
   "H-E-B|Sr. Software Engineer": {
     id: "heb",
     startMonth: "2023-07",
-    endMonth: null
+    endMonth: null,
+    contribution:
+      "Help build event-driven notifications for curbside and order communications."
   },
   "T-Mobile|Software Engineer": {
     id: "t-mobile",
     startMonth: "2021-07",
-    endMonth: "2023-07"
+    endMonth: "2023-07",
+    contribution:
+      "Delivered billing, payments, and invoicing capabilities for business customers."
   },
   "USAA|Software Engineer": {
     id: "usaa",
     startMonth: "2019-07",
-    endMonth: "2021-07"
+    endMonth: "2021-07",
+    contribution:
+      "Built real-time identity verification and tools to help prevent fraud."
   },
   "American Airlines|Software Engineer": {
     id: "american-airlines",
     startMonth: "2018-05",
-    endMonth: "2019-07"
+    endMonth: "2019-07",
+    contribution:
+      "Helped move flight booking from a monolith to cloud-hosted microservices."
   },
   "UTx @ The University of Texas System|Software Engineer Intern": {
     id: "ut-system",
