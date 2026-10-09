@@ -61,18 +61,22 @@ export default function Greeting() {
               </svg>
             </a>
           </div>
+          <div className="overview-proof" aria-label={overview.proofLabel}>
+            <p>{overview.proofLabel}</p>
+            <ul>
+              {overview.employers.map(employer => (
+                <li key={employer}>{employer}</li>
+              ))}
+            </ul>
+          </div>
         </div>
         <div className="overview-trace">
           <RequestTrace />
         </div>
-        <div className="overview-proof" aria-label={overview.proofLabel}>
-          <p>{overview.proofLabel}</p>
-          <ul>
-            {overview.employers.map(employer => (
-              <li key={employer}>{employer}</li>
-            ))}
-          </ul>
-        </div>
+      </div>
+      <div className="overview-context">
+        <h2>{overview.personalTitle}</h2>
+        <p>{overview.personalDescription}</p>
       </div>
     </section>
   );

@@ -1,4 +1,11 @@
-import {useEffect, useRef, useState, type KeyboardEvent} from "react";
+import {
+  lazy,
+  Suspense,
+  useEffect,
+  useRef,
+  useState,
+  type KeyboardEvent
+} from "react";
 import {
   selectedSystems,
   systemDiagramCopy,
@@ -7,7 +14,10 @@ import {
   type SystemId
 } from "../../content/systems";
 import SectionHeading from "../../components/sectionHeading/SectionHeading";
+import {NotificationsPreview} from "./NotificationsFlow";
 import "./SelectedSystems.scss";
+
+const NotificationDemo = lazy(() => import("./NotificationDemo"));
 
 function FlowArrow({className = ""}: {className?: string}) {
   return (
@@ -41,34 +51,33 @@ function LinearFlow({stages}: {stages: readonly string[]}) {
   );
 }
 
-function NotificationsDiagram() {
-  const copy = systemDiagramCopy.notifications;
+function NotificationsDiagram({active}: {active: boolean}) {
+  const [ready, setReady] = useState(false);
+  const target = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!target.current) return;
+    const observer = new IntersectionObserver(
+      entries => {
+        if (!entries[0].isIntersecting) return;
+        setReady(true);
+        observer.disconnect();
+      },
+      {rootMargin: "200px"}
+    );
+    observer.observe(target.current);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className="system-notifications-diagram">
-      <LinearFlow stages={copy.stages} />
-      <svg
-        className="system-diagram-connections system-diagram-connections--wide"
-        viewBox="0 0 300 48"
-        preserveAspectRatio="none"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <path d="M262.5 0v16H50v30m212.5-30H150v30m112.5-30H250v30M46 40l4 6 4-6m92 0 4 6 4-6m92 0 4 6 4-6" />
-      </svg>
-      <svg
-        className="system-diagram-connections system-diagram-connections--narrow"
-        viewBox="0 0 300 48"
-        preserveAspectRatio="none"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <path d="M150 0v16H50v30m100-30v30m0-30h100v30M46 40l4 6 4-6m92 0 4 6 4-6m92 0 4 6 4-6" />
-      </svg>
-      <div className="system-notification-channels">
-        {copy.channels.map(channel => (
-          <DiagramNode key={channel} label={channel} />
-        ))}
-      </div>
+    <div ref={target}>
+      {ready ? (
+        <Suspense fallback={<NotificationsPreview />}>
+          <NotificationDemo active={active} />
+        </Suspense>
+      ) : (
+        <NotificationsPreview />
+      )}
     </div>
   );
 }
@@ -148,9 +157,15 @@ function BookingDiagram() {
   );
 }
 
-function SystemDiagram({system}: {system: SelectedSystem}) {
+function SystemDiagram({
+  system,
+  active
+}: {
+  system: SelectedSystem;
+  active: boolean;
+}) {
   const diagram = {
-    notifications: <NotificationsDiagram />,
+    notifications: <NotificationsDiagram active={active} />,
     identity: <IdentityDiagram />,
     billing: <LinearFlow stages={systemDiagramCopy.billing.stages} />,
     booking: <BookingDiagram />
@@ -176,10 +191,15 @@ function SystemDiagram({system}: {system: SelectedSystem}) {
       >
         {system.diagramDescription}
       </p>
-      <div className="system-diagram-graph" aria-hidden="true">
+      <div
+        className="system-diagram-graph"
+        aria-hidden={system.id !== "notifications" ? true : undefined}
+      >
         {diagram}
       </div>
-      <p className="system-diagram-note">{systemsCopy.diagramNote}</p>
+      {system.id !== "notifications" && (
+        <p className="system-diagram-note">{systemsCopy.diagramNote}</p>
+      )}
     </figure>
   );
 }
@@ -289,33 +309,38 @@ export default function SelectedSystems() {
           ))}
         </div>
       </div>
-      {selectedSystems.map(system => (
-        <div
-          className={`selected-system-panel${system.id === "notifications" ? " selected-system-panel--featured" : ""}`}
-          role="tabpanel"
-          id={`system-panel-${system.id}`}
-          key={system.id}
-          aria-labelledby={`system-tab-${system.id}`}
-          hidden={activeSystem !== system.id}
-          tabIndex={0}
-        >
-          <div className="selected-system-copy">
-            <h3>{system.title}</h3>
-            <p>{system.summary}</p>
-            <dl className="selected-system-tools">
-              <dt>{systemsCopy.toolsLabel}</dt>
-              <dd>
-                <ul role="list">
-                  {system.technologies.map(technology => (
-                    <li key={technology}>{technology}</li>
-                  ))}
-                </ul>
-              </dd>
-            </dl>
+      <div className="selected-system-panels">
+        {selectedSystems.map(system => (
+          <div
+            className="selected-system-panel"
+            role="tabpanel"
+            id={`system-panel-${system.id}`}
+            key={system.id}
+            aria-labelledby={`system-tab-${system.id}`}
+            hidden={activeSystem !== system.id}
+            tabIndex={0}
+          >
+            <div className="selected-system-copy">
+              <h3>{system.title}</h3>
+              <p>{system.summary}</p>
+              <dl className="selected-system-tools">
+                <dt>{systemsCopy.toolsLabel}</dt>
+                <dd>
+                  <ul role="list">
+                    {system.technologies.map(technology => (
+                      <li key={technology}>{technology}</li>
+                    ))}
+                  </ul>
+                </dd>
+              </dl>
+            </div>
+            <SystemDiagram
+              system={system}
+              active={activeSystem === system.id}
+            />
           </div>
-          <SystemDiagram system={system} />
-        </div>
-      ))}
+        ))}
+      </div>
     </section>
   );
 }

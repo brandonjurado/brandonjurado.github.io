@@ -21,11 +21,6 @@ export default function Education() {
             <p className="education-degree">{school.subHeader}</p>
             <p className="education-period">{school.duration}</p>
           </div>
-          <ul className="education-activities">
-            {school.descBullets.map(activity => (
-              <li key={activity}>{activity}</li>
-            ))}
-          </ul>
         </article>
       ))}
     </section>

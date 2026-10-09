@@ -8,13 +8,15 @@ import OffTheClock from "../features/personal/OffTheClock";
 import EarlierBuilds from "../features/builds/EarlierBuilds";
 import Contact from "./contact/Contact";
 import Footer from "../components/footer/Footer";
+import {useSectionReveal} from "../motion/useSectionReveal";
 import "./Main.scss";
 
 export default function Main() {
+  const main = useSectionReveal();
   return (
     <div className="site">
       <Header />
-      <main id="main-content">
+      <main id="main-content" ref={main}>
         <div className="overview-region">
           <Greeting />
         </div>

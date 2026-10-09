@@ -1,7 +1,7 @@
 import Illustration from "../../components/illustration/Illustration";
 import "./Contact.scss";
-import SocialMedia from "../../components/socialMedia/SocialMedia";
-import {contactInfo} from "../../content/portfolio";
+import Icon from "../../components/icon/Icon";
+import {contactInfo, socialMediaLinks} from "../../content/portfolio";
 
 export default function Contact() {
   return (
@@ -24,7 +24,41 @@ export default function Contact() {
                   <br />
                 </>
               )}
-              <SocialMedia />
+              <div className="contact-email">
+                <a
+                  className="contact-email-action"
+                  href={`mailto:${contactInfo.email_address}`}
+                >
+                  <Icon name="email" />
+                  Email Brandon
+                </a>
+                <a
+                  className="contact-email-address"
+                  href={`mailto:${contactInfo.email_address}`}
+                >
+                  {contactInfo.email_address}
+                </a>
+              </div>
+              {socialMediaLinks.display && (
+                <div className="contact-profiles">
+                  <a
+                    href={socialMediaLinks.github}
+                    aria-label="GitHub"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Icon name="github" />
+                  </a>
+                  <a
+                    href={socialMediaLinks.linkedin}
+                    aria-label="LinkedIn"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Icon name="linkedin" />
+                  </a>
+                </div>
+              )}
             </div>
           </div>
           <div className="contact-image-div">
