@@ -4,6 +4,7 @@ import assert from "node:assert/strict";
 import {chromium} from "playwright";
 import AxeBuilder from "@axe-core/playwright";
 import {transformWithEsbuild} from "vite";
+import {checkNotificationDemo} from "./notifications-browser.mjs";
 
 const {code: consoleContentCode} = await transformWithEsbuild(
   await readFile("src/content/console-easter-egg.ts", "utf8"),
@@ -185,6 +186,20 @@ try {
     });
   });
   await page.goto(url);
+  await page.evaluate(() => document.fonts.ready);
+  for (const [width, height] of [
+    [1024, 768],
+    [1280, 720],
+    [1440, 900]
+  ]) {
+    await page.setViewportSize({width, height});
+    const proof = await page.locator(".overview-proof").boundingBox();
+    assert.ok(
+      proof.y >= 0 && proof.y + proof.height <= height,
+      `${width}×${height}: employer proof fits in the first viewport`
+    );
+  }
+  await page.setViewportSize({width: 390, height: 844});
   await page.locator(".navigation .rubber-segment[data-measured]").waitFor();
   await page.evaluate(() => document.fonts.ready);
   await page.waitForFunction(() => typeof window.brandon?.help === "function");
@@ -325,6 +340,12 @@ try {
   await assertNavigationThumb(page, "skills");
 
   const results = [];
+  const currentRole = page.locator("#experience details").first();
+  await assertDisclosureState(page, currentRole, true, true);
+  assert.ok(await currentRole.locator(".experience-text-desc").isVisible());
+  await currentRole.locator("summary").focus();
+  await page.keyboard.press("Enter");
+  await assertDisclosureState(page, currentRole, false, true);
   for (const width of [320, 390, 768, 1440]) {
     await page.setViewportSize({width, height: 900});
     await assertNoOverflow(page, width);
@@ -413,6 +434,12 @@ try {
     await notifications.click();
     await notifications.focus();
     const systemScrollY = await page.evaluate(() => scrollY);
+    const systemPanelHeight = await page
+      .getByRole("tabpanel")
+      .evaluate(panel => panel.getBoundingClientRect().height);
+    const experienceTop = await page
+      .locator("#experience")
+      .evaluate(section => section.getBoundingClientRect().top + scrollY);
     for (const [key, label] of [
       ["ArrowRight", "Identity"],
       ["ArrowRight", "Billing"],
@@ -445,6 +472,28 @@ try {
         await tab.getAttribute("id")
       );
       assert.equal(await page.getByRole("tabpanel").count(), 1);
+      assert.ok(
+        Math.abs(
+          (await panel.evaluate(
+            element => element.getBoundingClientRect().height
+          )) - systemPanelHeight
+        ) < 1,
+        `${width}, ${label}: stable panel height`
+      );
+      assert.ok(
+        Math.abs(
+          (await page
+            .locator("#experience")
+            .evaluate(
+              section => section.getBoundingClientRect().top + scrollY
+            )) - experienceTop
+        ) < 1,
+        `${width}, ${label}: following content stays in place`
+      );
+      assert.ok(
+        Math.abs((await page.evaluate(() => scrollY)) - systemScrollY) < 2,
+        `${width}, ${label}: keyboard tab changes preserve scroll position`
+      );
       await assertNoOverflow(page, `${width}, ${label}`);
       if (width <= 390) {
         assert.ok(
@@ -466,6 +515,28 @@ try {
       1440: "Notifications"
     }[width];
     await page.getByRole("tab", {name: representativeTab, exact: true}).click();
+    for (const label of [
+      "Notifications",
+      "Identity",
+      "Billing",
+      "Booking",
+      representativeTab
+    ]) {
+      await page.getByRole("tab", {name: label, exact: true}).click();
+      assert.ok(
+        Math.abs(
+          (await page
+            .getByRole("tabpanel")
+            .evaluate(panel => panel.getBoundingClientRect().height)) -
+            systemPanelHeight
+        ) < 1,
+        `${width}, ${label}: click preserves panel height`
+      );
+      assert.ok(
+        Math.abs((await page.evaluate(() => scrollY)) - systemScrollY) < 2,
+        `${width}, ${label}: click preserves scroll position`
+      );
+    }
 
     await page.locator('.navigation a[href="#experience"]').click();
     const careerRole = page.locator("#experience details").first();
@@ -516,6 +587,8 @@ try {
     await page.keyboard.press("Enter");
     await assertDisclosureState(page, moreBuilds, false);
   }
+  await checkNotificationDemo(page);
+  await checkAccessibility(page, "notification demo after delivery");
   const resume = await fetch(`${url}/resume.pdf`);
   assert.equal(resume.status, 404);
   assert.equal(await page.locator('a[href="/resume.pdf"]').count(), 0);
@@ -558,12 +631,13 @@ try {
     assert.ok(await panel.isVisible());
   assert.equal(await nojs.getByRole("tablist").isVisible(), false);
   const nojsCareer = nojs.locator("#experience details").first();
-  await nojsCareer.locator("summary").focus();
-  await nojs.keyboard.press("Enter");
   await assertDisclosureState(nojs, nojsCareer, true);
   assert.ok(await nojsCareer.locator(".experience-text-desc").isVisible());
-  await nojs.keyboard.press("Space");
+  await nojsCareer.locator("summary").focus();
+  await nojs.keyboard.press("Enter");
   await assertDisclosureState(nojs, nojsCareer, false);
+  await nojs.keyboard.press("Space");
+  await assertDisclosureState(nojs, nojsCareer, true);
   const nojsMore = nojs.locator("#additional-projects");
   await nojsMore.locator("summary").focus();
   await nojs.keyboard.press("Enter");
@@ -599,7 +673,152 @@ try {
     if (preference === "normal") {
       for (const width of [1440, 390]) {
         await motion.setViewportSize({width, height: 900});
+        await motion.goto(url);
+        await motion.reload();
+        await motion.waitForFunction(
+          () =>
+            document.getElementById("systems")?.dataset.sectionReveal ===
+            "pending"
+        );
+        const sectionStates = await motion
+          .locator("#main-content section[id], #contact")
+          .evaluateAll(sections =>
+            sections.map(section => ({
+              id: section.id,
+              state: section.dataset.sectionReveal,
+              top: section.getBoundingClientRect().top,
+              bottom: section.getBoundingClientRect().bottom
+            }))
+          );
+        assert.equal(sectionStates.length, 7);
+        for (const section of sectionStates) {
+          assert.ok(
+            section.state === "pending" ||
+              section.state === "revealed" ||
+              (section.top < 900 && section.bottom > 0),
+            `${width}, ${section.id}: offscreen content has reveal state; visible content stays readable`
+          );
+        }
+        const systems = motion.locator("#systems");
+        const systemGeometry = await systems.evaluate(section => ({
+          top: section.getBoundingClientRect().top + scrollY,
+          height: section.getBoundingClientRect().height
+        }));
+        assert.equal(
+          await systems.evaluate(
+            section => getComputedStyle(section.firstElementChild).opacity
+          ),
+          "0",
+          `${width}: unvisited section waits for viewport entry`
+        );
+        await motion.evaluate(() =>
+          document.getElementById("systems").scrollIntoView({
+            behavior: "instant",
+            block: "start"
+          })
+        );
+        await motion.waitForFunction(() => {
+          const section = document.getElementById("systems");
+          const opacity = Number(
+            getComputedStyle(section.firstElementChild).opacity
+          );
+          return (
+            section.dataset.sectionReveal === "revealed" &&
+            opacity > 0 &&
+            opacity < 1 &&
+            section
+              .getAnimations({subtree: true})
+              .some(animation => animation.id === "section-reveal")
+          );
+        });
+        assert.deepEqual(
+          await systems.evaluate(section => ({
+            top: section.getBoundingClientRect().top + scrollY,
+            height: section.getBoundingClientRect().height
+          })),
+          systemGeometry,
+          `${width}: reveal preserves section geometry`
+        );
+        await systems.evaluate(section =>
+          Promise.all(
+            section
+              .getAnimations({subtree: true})
+              .filter(animation => animation.id === "section-reveal")
+              .map(animation => animation.finished)
+          )
+        );
+        assert.ok(
+          await systems.evaluate(section =>
+            [...section.children].every(
+              child =>
+                getComputedStyle(child).opacity === "1" &&
+                getComputedStyle(child).transform === "none"
+            )
+          ),
+          `${width}: section finishes fully visible`
+        );
         await motion.evaluate(() => scrollTo({top: 0, behavior: "instant"}));
+        await motion.waitForFunction(
+          () =>
+            document.getElementById("systems").getBoundingClientRect().top >=
+            innerHeight
+        );
+        await motion.evaluate(() =>
+          document
+            .getElementById("systems")
+            .scrollIntoView({behavior: "instant"})
+        );
+        await motion.waitForFunction(
+          () =>
+            document.getElementById("systems").getBoundingClientRect().top <
+            innerHeight
+        );
+        await motion.evaluate(
+          () =>
+            new Promise(resolve =>
+              requestAnimationFrame(() => requestAnimationFrame(resolve))
+            )
+        );
+        assert.equal(
+          await systems.evaluate(
+            section =>
+              section
+                .getAnimations({subtree: true})
+                .filter(animation => animation.id === "section-reveal").length
+          ),
+          0,
+          `${width}: revisiting a section does not replay its reveal`
+        );
+        assert.equal(
+          await motion.locator("#contact").getAttribute("data-section-reveal"),
+          "pending"
+        );
+        await motion
+          .locator(".contact-email-action")
+          .evaluate(action => action.focus({preventScroll: true}));
+        assert.ok(
+          await motion
+            .locator("#contact")
+            .evaluate(
+              section =>
+                getComputedStyle(section.firstElementChild).opacity === "1" &&
+                !section
+                  .getAnimations({subtree: true})
+                  .some(animation => animation.id === "section-reveal")
+            ),
+          `${width}: focused contact action reveals immediately`
+        );
+        await motion.evaluate(() => {
+          document.activeElement.blur();
+          scrollTo({top: 0, behavior: "instant"});
+        });
+        // Start navigation sampling without a prior scroll-driven spring still settling.
+        await motion.reload();
+        await motion.waitForFunction(
+          () =>
+            document.querySelector(".request-trace")?.dataset.motion ===
+            "running"
+        );
         await assertNavigationSelection(motion, "greeting");
         await assertNavigationThumb(motion, "greeting");
         await observeNavigation(motion);
@@ -741,7 +960,99 @@ try {
           .evaluate(dot => getComputedStyle(dot, "::after").animationPlayState),
         "running"
       );
+      await motion.goto(`${url}/#contact`);
+      await motion.reload();
+      await motion.waitForFunction(
+        () =>
+          document.getElementById("contact")?.dataset.sectionReveal ===
+          "revealed"
+      );
+      await motion.locator("#contact").evaluate(section =>
+        Promise.all(
+          section
+            .getAnimations({subtree: true})
+            .filter(animation => animation.id === "section-reveal")
+            .map(animation => animation.finished)
+        )
+      );
+      assert.equal(
+        await motion
+          .locator("#contact")
+          .evaluate(
+            section => getComputedStyle(section.firstElementChild).opacity
+          ),
+        "1",
+        "direct contact hash reveals its content"
+      );
+      await motion.goto(url);
+      await motion.reload();
+      await motion.waitForFunction(
+        () =>
+          document.getElementById("systems")?.dataset.sectionReveal ===
+          "pending"
+      );
+      await motion.evaluate(() =>
+        document.getElementById("systems").scrollIntoView({behavior: "instant"})
+      );
+      await motion.waitForFunction(() => {
+        const section = document.getElementById("systems");
+        const opacity = Number(
+          getComputedStyle(section.firstElementChild).opacity
+        );
+        return (
+          opacity > 0 &&
+          opacity < 1 &&
+          section
+            .getAnimations({subtree: true})
+            .some(
+              animation =>
+                animation.id === "section-reveal" &&
+                animation.playState === "running"
+            )
+        );
+      });
+      await motion.emulateMedia({reducedMotion: "reduce"});
+      await motion.waitForFunction(
+        () => document.querySelectorAll("[data-section-reveal]").length === 0
+      );
+      assert.equal(
+        await motion.evaluate(
+          () =>
+            document
+              .getAnimations()
+              .filter(animation => animation.id === "section-reveal").length
+        ),
+        0,
+        "runtime reduced-motion preference cancels section reveals"
+      );
+      assert.ok(
+        await motion.evaluate(() =>
+          [...document.querySelectorAll("main section[id], #contact")].every(
+            section =>
+              [...section.children].every(
+                child => getComputedStyle(child).opacity === "1"
+              )
+          )
+        ),
+        "runtime reduced-motion preference reveals all pending and animating content"
+      );
     } else {
+      assert.equal(await motion.locator("[data-section-reveal]").count(), 0);
+      assert.ok(
+        await motion.evaluate(
+          () =>
+            [...document.querySelectorAll("main section[id], #contact")].every(
+              section =>
+                [...section.children].every(
+                  child => getComputedStyle(child).opacity === "1"
+                )
+            ) &&
+            !document
+              .getAnimations()
+              .some(animation => animation.id === "section-reveal")
+        ),
+        `${preference}: all section content stays visible without reveals`
+      );
       assert.equal(
         await motion
           .locator(".request-trace__packet")
@@ -776,6 +1087,7 @@ try {
         noJS: true,
         noJSSystemPanels: 4,
         keyboardSystems: true,
+        stableSystemPanels: true,
         rubberNavigation: true,
         navigationHashSync: true,
         navigationScrollSync: true,

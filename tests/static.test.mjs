@@ -110,7 +110,7 @@ test("cache rules never combine an immutable asset policy with HTML revalidation
   );
 });
 
-test("all seven roles retain their complete descriptions, dates, and technology lists", () => {
+test("current role opens; career descriptions, dates, and technologies remain complete", () => {
   const descriptions = [
     ...document.querySelectorAll(".experience-text-desc")
   ].map(node => node.textContent);
@@ -125,6 +125,15 @@ test("all seven roles retain their complete descriptions, dates, and technology 
   ]);
   const roles = [...document.querySelectorAll("#experience details")];
   assert.equal(roles.length, 7);
+  assert.equal(roles[0].open, true);
+  assert.ok(roles.slice(1).every(role => !role.open));
+  const description = roles[0].querySelector(".experience-text-desc");
+  assert.ok(
+    description.compareDocumentPosition(
+      roles[0].querySelector(".career-trace__technology-label")
+    ) & 4,
+    "current description precedes technology inventory"
+  );
   for (const [index, expected] of workExperiences.experience.entries()) {
     const role = roles[index];
     const summary = role.querySelector("summary");
@@ -135,7 +144,9 @@ test("all seven roles retain their complete descriptions, dates, and technology 
       expected.date
     );
     assert.deepEqual(
-      [...role.querySelectorAll("ul li")].map(item => item.textContent),
+      [...role.querySelectorAll(".career-trace__technologies li")].map(
+        item => item.textContent
+      ),
       expected.descBullets,
       `${expected.company}: complete technology coverage`
     );
@@ -149,7 +160,7 @@ test("all seven roles retain their complete descriptions, dates, and technology 
   }
 });
 
-test("earlier builds retain all original external links and education content", () => {
+test("earlier builds retain external links and education shows only credentials", () => {
   const featuredLinks = achievementSection.achievementsCards.flatMap(build =>
     build.footerLink.map(link => link.url)
   );
@@ -171,13 +182,11 @@ test("earlier builds retain all original external links and education content", 
   );
   const education = document.getElementById("education");
   for (const school of educationInfo.schools) {
-    for (const value of [
-      school.schoolName,
-      school.subHeader,
-      school.duration,
-      ...school.descBullets
-    ])
+    for (const value of [school.schoolName, school.subHeader, school.duration])
       assert.ok(education.textContent.includes(value), value);
+    for (const activity of school.descBullets) {
+      assert.equal(education.textContent.includes(activity), false, activity);
+    }
   }
 });
 

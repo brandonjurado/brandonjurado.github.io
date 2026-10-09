@@ -129,7 +129,7 @@ const educationInfo = {
       schoolName: "Tarleton State University",
       logo: img("tarletonLogo.webp"),
       subHeader: "Bachelor of Science in Computer Science",
-      duration: "August 2014 - May 2018 | Cum Laude",
+      duration: "2018 · Cum Laude",
       desc: "Graduated Cum Laude.",
       descBullets: [
         "Computer Science Club Member",

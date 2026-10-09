@@ -10,13 +10,16 @@ export const overview = {
   name: site.name,
   role: site.role,
   location: site.location,
-  headline: ["Backend systems,", "built to last."],
+  headline: ["Event-driven", "backend systems."],
   description:
-    "Senior backend engineer. Java, Spring Boot, Kafka, and AWS across identity and access management, event-driven messaging, e-commerce, and payments.",
+    "Senior software engineer. Java, Spring Boot, Kafka, and AWS across identity and access management, event-driven messaging, e-commerce, and payments.",
   contactLabel: "Get in touch",
   experienceLabel: "View experience",
   proofLabel: "Work across teams at",
   employers: ["H-E-B", "T-Mobile", "USAA", "American Airlines"],
+  personalTitle: "Always curious.",
+  personalDescription:
+    "My interest in engineering started with taking apart game consoles to understand how they worked. Before building software professionally, I was repairing handhelds, replacing friends’ phone screens, and experimenting with custom software. That curiosity still drives me: I enjoy understanding what happens under the hood and using that knowledge to build something useful.",
   capabilitiesTitle: "What I do.",
   capabilitiesDescription:
     "Services, data, infrastructure, and the work that keeps them running.",

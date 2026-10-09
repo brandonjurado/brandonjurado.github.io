@@ -1,6 +1,18 @@
 .site {
   overflow: clip;
 }
+
+[data-section-reveal="pending"] > * {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce), (prefers-reduced-data: reduce), print {
+  [data-section-reveal] > * {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
 .overview-region {
   background:
     radial-gradient(ellipse at 85% 20%, #1a163b66, transparent 55%),

@@ -1,5 +1,41 @@
 import sharp from "sharp";
-import {mkdir, readdir} from "node:fs/promises";
+import {mkdir, readdir, writeFile} from "node:fs/promises";
+
+// Keep browser and home-screen icons in sync with the vector brand mark.
+for (const size of [16, 32, 96, 180]) {
+  await sharp("public/favicon.svg")
+    .resize(size, size)
+    .png()
+    .toFile(
+      size === 180
+        ? "public/apple-touch-icon.png"
+        : `public/favicon-${size}x${size}.png`
+    );
+}
+const iconSizes = [16, 24, 32, 64];
+const iconImages = await Promise.all(
+  iconSizes.map(size =>
+    sharp("public/favicon.svg").resize(size, size).png().toBuffer()
+  )
+);
+const iconDirectory = Buffer.alloc(6 + iconSizes.length * 16);
+iconDirectory.writeUInt16LE(1, 2);
+iconDirectory.writeUInt16LE(iconSizes.length, 4);
+let iconOffset = iconDirectory.length;
+iconImages.forEach((image, index) => {
+  const entry = 6 + index * 16;
+  iconDirectory[entry] = iconDirectory[entry + 1] = iconSizes[index];
+  iconDirectory.writeUInt16LE(1, entry + 4);
+  iconDirectory.writeUInt16LE(32, entry + 6);
+  iconDirectory.writeUInt32LE(image.length, entry + 8);
+  iconDirectory.writeUInt32LE(iconOffset, entry + 12);
+  iconOffset += image.length;
+});
+await writeFile(
+  "public/favicon.ico",
+  Buffer.concat([iconDirectory, ...iconImages])
+);
+
 await mkdir("public/media", {recursive: true});
 for (const name of (await readdir("src/assets/images")).filter(name =>
   name.endsWith(".webp")

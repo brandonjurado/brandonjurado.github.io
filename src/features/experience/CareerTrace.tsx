@@ -10,7 +10,7 @@ import SectionHeading from "../../components/sectionHeading/SectionHeading";
 import "./CareerTrace.scss";
 
 function CareerRow({role, hydrated}: {role: CareerRole; hydrated: boolean}) {
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(role.endMonth === null);
   const disclosure = useRef<HTMLDetailsElement>(null);
   useEffect(() => {
     if (hydrated) setExpanded(disclosure.current?.open ?? false);
@@ -32,6 +32,7 @@ function CareerRow({role, hydrated}: {role: CareerRole; hydrated: boolean}) {
       <details
         ref={disclosure}
         className="career-trace__role"
+        open={role.endMonth === null}
         onToggle={event => setExpanded(event.currentTarget.open)}
       >
         <summary
