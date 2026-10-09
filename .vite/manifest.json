@@ -4,18 +4,26 @@
     "name": "lottie_light",
     "isDynamicEntry": true
   },
+  "_react-Br26XD24.js": {
+    "file": "assets/react-Br26XD24.js",
+    "name": "react",
+    "imports": [
+      "index.html"
+    ]
+  },
   "index.html": {
-    "file": "assets/index-UzL6lJ2t.js",
+    "file": "assets/index-DwWmlan1.js",
     "name": "index",
     "src": "index.html",
     "isEntry": true,
     "dynamicImports": [
       "src/components/rubberSegment/RubberSegment.tsx",
+      "src/features/systems/NotificationDemo.tsx",
       "_lottie_light-D0fqc_sI.js",
       "src/console-easter-egg.ts"
     ],
     "css": [
-      "assets/index-BTtkrdry.css"
+      "assets/index-RWsoIVlE.css"
     ],
     "assets": [
       "assets/landingPerson-DKU4CXQq.json",
@@ -56,12 +64,13 @@
     "src": "src/assets/lottie/splashAnimation.json"
   },
   "src/components/rubberSegment/RubberSegment.tsx": {
-    "file": "assets/RubberSegment-D0frK7Un.js",
+    "file": "assets/RubberSegment-Dp_KvfOv.js",
     "name": "RubberSegment",
     "src": "src/components/rubberSegment/RubberSegment.tsx",
     "isDynamicEntry": true,
     "imports": [
-      "index.html"
+      "index.html",
+      "_react-Br26XD24.js"
     ]
   },
   "src/console-easter-egg.ts": {
@@ -69,5 +78,18 @@
     "name": "console-easter-egg",
     "src": "src/console-easter-egg.ts",
     "isDynamicEntry": true
+  },
+  "src/features/systems/NotificationDemo.tsx": {
+    "file": "assets/NotificationDemo-C1MxL_CN.js",
+    "name": "NotificationDemo",
+    "src": "src/features/systems/NotificationDemo.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_react-Br26XD24.js"
+    ],
+    "css": [
+      "assets/NotificationDemo-CboKjqw2.css"
+    ]
   }
 }
