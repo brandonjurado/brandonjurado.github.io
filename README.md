@@ -1,15 +1,19 @@
 # Brandon Jurado Portfolio
 
-Personal portfolio site for [bjurado.com](https://bjurado.com), built with React and Vite and now configured to run with Bun by default.
+My personal portfolio at [bjurado.com](https://bjurado.com), built with React, TypeScript, Vite, and Sass.
 
 ## Stack
 
-- Bun for package management and task execution
-- Vite for local development and production builds
-- React 19 for the UI
-- Sass for component styling
+- **React 19** and **TypeScript** for the interface and application code.
+- **Vite** for the development server and production builds.
+- **Sass** for styles and responsive layouts.
+- **Motion** and **Lottie** for animations.
+- **Bun** for dependency management and running scripts.
+- **ESLint**, **Prettier**, and **Playwright** for code checks, formatting, and browser tests.
 
-## Quick Start
+## Local Development
+
+Use Bun 1.3.6 and Node.js 22.12 or newer.
 
 ```bash
 git clone https://github.com/brandonjurado/brandonjurado.github.io.git
@@ -18,67 +22,32 @@ bun install
 bun run dev
 ```
 
-The app runs at the Vite default local URL shown in the terminal.
+Open the local URL printed in the terminal. Changes to the source update the page as you work.
 
-## Available Commands
+## Build
 
 ```bash
-bun run dev
 bun run build
 bun run preview
-bun run format
-bun run check-format
-bun run test
 ```
 
-## GitHub Profile Sync
+The build writes to `dist/`. The preview server runs at `http://127.0.0.1:4173` by default.
 
-To generate optional GitHub profile data:
+## Common Commands
 
-```bash
-cp env.example .env
-```
+| Command | Purpose |
+| --- | --- |
+| `bun run dev` | Start the development server. |
+| `bun run build` | Create a production build. |
+| `bun run preview` | Preview the built site locally. |
+| `bun run lint` | Check code with ESLint. |
+| `bun run typecheck` | Check TypeScript types. |
+| `bun run format` | Format source files with Prettier. |
+| `bun run check-format` | Check formatting without changing files. |
+| `bun run test` | Run static and browser tests. |
 
-Set the following values in `.env`:
-
-```env
-GITHUB_TOKEN="your-token"
-GITHUB_USERNAME="your-username"
-USE_GITHUB_DATA="true"
-```
-
-Run `bun run prepare:data` to write `public/profile.json`. If `USE_GITHUB_DATA` is not `"true"`, the command skips the request. Normal builds use the portfolio content in `src/content/portfolio.ts` and do not fetch profile data.
-
-## Performance Notes
-
-This repo is tuned to keep first paint responsive without changing the visual design:
-
-- Bun is the primary runtime for installs and scripts.
-- GitHub profile generation runs through a native `fetch`-based script.
-- Below-the-fold sections are revealed progressively after the hero loads.
-- Splash animation only runs once per session and respects reduced-motion preferences.
-- Lottie animations are lazy loaded and use a lighter player build.
-- Experience card banner colors are static, so the app no longer computes image colors in the browser.
-
-## Deployment
-
-### GitHub Pages
-
-The included GitHub Actions workflow installs dependencies with Bun, builds the site, and deploys `dist/` to `gh-pages`.
-
-Required repository secrets and env:
-
-- `GITHUB_TOKEN`
-- `GITHUB_USERNAME`
-- GitHub profile generation is optional and runs separately with `bun run prepare:data`.
-
-### Docker
-
-```bash
-docker build -t portfolio:latest .
-docker run -p 3000:3000 portfolio:latest
-```
+Before running tests, build the site and install Playwright's Chromium browser with `bunx playwright install chromium`.
 
 ## Customization
 
-Portfolio content lives in `src/content/portfolio.ts`. Update that file to change copy, links, employers, achievements, and section visibility.
+Edit `src/content/portfolio.ts` to update portfolio text, experience, education, and section visibility. UI components live in `src/components/`, shared styles in `src/styles/`, and static files in `public/`.
