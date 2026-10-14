@@ -110,6 +110,33 @@ test("cache rules never combine an immutable asset policy with HTML revalidation
   );
 });
 
+test("analytics is production-only and has narrowly scoped CSP permissions", async () => {
+  const production = process.env.CONTEXT === "production";
+  const headers = await readFile("dist/_headers", "utf8");
+  for (const page of ["dist/index.html", "dist/404.html"]) {
+    const doc = new JSDOM(await readFile(page, "utf8")).window.document;
+    const beacons = doc.querySelectorAll("script[data-cf-beacon]");
+    assert.equal(beacons.length, production ? 1 : 0);
+    if (production) {
+      assert.equal(
+        beacons[0].src,
+        "https://static.cloudflareinsights.com/beacon.min.js"
+      );
+      assert.equal(beacons[0].defer, true);
+      assert.equal(
+        JSON.parse(beacons[0].dataset.cfBeacon).token,
+        "5721686a027d4cb793f8c344227c9a56"
+      );
+    }
+  }
+  assert.equal(
+    headers.includes("https://static.cloudflareinsights.com"),
+    production
+  );
+  assert.equal(headers.includes("https://cloudflareinsights.com"), production);
+  assert.doesNotMatch(headers, /script-src[^;]*(?:https:;|\*|unsafe-)/);
+});
+
 test("current role opens; career descriptions, dates, and technologies remain complete", () => {
   const descriptions = [
     ...document.querySelectorAll(".experience-text-desc")
