@@ -175,7 +175,7 @@ test("current role opens; career descriptions, dates, and technologies remain co
     "Led full-stack development of a web-based nutrient tracking platform from concept through delivery. I owned the frontend, backend services, databases, Linux infrastructure, and hosting footprint, while also bringing UX considerations into the product and mentoring junior developers on MVC-based application design.",
     "Helped improve web application quality through a mix of exploratory testing, automated test development, debugging, and frontend support work. The role combined hands-on QA with practical engineering tasks so issues were identified early, corrected efficiently, and aligned with what the client actually needed."
   ]);
-  const roles = [...document.querySelectorAll("#experience details")];
+  const roles = [...document.querySelectorAll(".career-trace__role")];
   assert.equal(roles.length, 7);
   assert.equal(roles[0].open, true);
   assert.ok(roles.slice(1).every(role => !role.open));
@@ -188,6 +188,16 @@ test("current role opens; career descriptions, dates, and technologies remain co
   );
   for (const [index, expected] of workExperiences.experience.entries()) {
     const role = roles[index];
+    const technologies = role.querySelector(".career-trace__tools");
+    assert.equal(
+      technologies.open,
+      false,
+      `${expected.company}: tools start closed`
+    );
+    assert.equal(
+      technologies.querySelector("summary").textContent,
+      "Technology and tools"
+    );
     const summary = role.querySelector("summary");
     assert.ok(summary.textContent.includes(expected.company), expected.company);
     assert.ok(summary.textContent.includes(expected.role), expected.role);

@@ -331,10 +331,14 @@ try {
   await assertNavigationThumb(page, "skills");
 
   const results = [];
-  const currentRole = page.locator("#experience details").first();
+  const currentRole = page.locator(".career-trace__role").first();
   await assertDisclosureState(page, currentRole, true, true);
   assert.ok(await currentRole.locator(".experience-text-desc").isVisible());
-  await currentRole.locator("summary").focus();
+  assert.equal(
+    await currentRole.locator(".career-trace__technologies").isVisible(),
+    false
+  );
+  await currentRole.locator(":scope > summary").focus();
   await page.keyboard.press("Enter");
   await assertDisclosureState(page, currentRole, false, true);
   for (const width of [320, 390, 768, 1440]) {
@@ -530,8 +534,8 @@ try {
     }
 
     await page.locator('.navigation a[href="#experience"]').click();
-    const careerRole = page.locator("#experience details").first();
-    const careerSummary = careerRole.locator("summary");
+    const careerRole = page.locator(".career-trace__role").first();
+    const careerSummary = careerRole.locator(":scope > summary");
     const careerPanel = page.locator(
       `#${await careerSummary.getAttribute("aria-controls")}`
     );
@@ -545,6 +549,20 @@ try {
       await page.keyboard.press(key);
       await assertDisclosureState(page, careerRole, open, true);
       assert.equal(await careerPanel.isVisible(), open);
+    }
+
+    const tools = careerRole.locator(".career-trace__tools");
+    await assertDisclosureState(page, tools, false);
+    for (const [key, open] of [
+      ["Enter", true],
+      ["Space", false],
+      ["Enter", true]
+    ]) {
+      await tools.locator("summary").focus();
+      await page.keyboard.press(key);
+      await assertDisclosureState(page, tools, open);
+      assert.equal(await tools.locator("ul").isVisible(), open);
+      await assertDisclosureState(page, careerRole, true, true);
     }
 
     const moreBuilds = page.locator("#additional-projects");
@@ -571,6 +589,9 @@ try {
       expandedAxeViolations,
       representativeTab
     });
+    await tools.locator("summary").focus();
+    await page.keyboard.press("Space");
+    await assertDisclosureState(page, tools, false);
     await careerSummary.focus();
     await page.keyboard.press("Enter");
     await assertDisclosureState(page, careerRole, false, true);
@@ -621,10 +642,19 @@ try {
   for (const panel of await nojs.getByRole("tabpanel").all())
     assert.ok(await panel.isVisible());
   assert.equal(await nojs.getByRole("tablist").isVisible(), false);
-  const nojsCareer = nojs.locator("#experience details").first();
+  const nojsCareer = nojs.locator(".career-trace__role").first();
   await assertDisclosureState(nojs, nojsCareer, true);
   assert.ok(await nojsCareer.locator(".experience-text-desc").isVisible());
-  await nojsCareer.locator("summary").focus();
+  const nojsTools = nojsCareer.locator(".career-trace__tools");
+  await assertDisclosureState(nojs, nojsTools, false);
+  assert.equal(await nojsTools.locator("ul").isVisible(), false);
+  await nojsTools.locator("summary").focus();
+  await nojs.keyboard.press("Enter");
+  await assertDisclosureState(nojs, nojsTools, true);
+  assert.ok(await nojsTools.locator("ul").isVisible());
+  await nojs.keyboard.press("Space");
+  await assertDisclosureState(nojs, nojsTools, false);
+  await nojsCareer.locator(":scope > summary").focus();
   await nojs.keyboard.press("Enter");
   await assertDisclosureState(nojs, nojsCareer, false);
   await nojs.keyboard.press("Space");
