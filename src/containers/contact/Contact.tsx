@@ -32,12 +32,6 @@ export default function Contact() {
                   <Icon name="email" />
                   Email Brandon
                 </a>
-                <a
-                  className="contact-email-address"
-                  href={`mailto:${contactInfo.email_address}`}
-                >
-                  {contactInfo.email_address}
-                </a>
               </div>
               {socialMediaLinks.display && (
                 <div className="contact-profiles">

@@ -69,20 +69,6 @@
   }
 }
 
-.contact-email-address {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  color: var(--ink);
-  font-size: 16px;
-  overflow-wrap: anywhere;
-  text-decoration: none;
-
-  &:hover {
-    text-decoration: underline;
-  }
-}
-
 .contact-profiles {
   display: flex;
   gap: 12px;
