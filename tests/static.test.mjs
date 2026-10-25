@@ -39,7 +39,7 @@ test("crawler gets substantive content, semantic headings and working anchors", 
     assert.ok(document.getElementById(a.hash.slice(1)), a.href);
   assert.doesNotMatch(html, /enable JavaScript to run|opacity:0[;"]|<!--app-/);
 });
-test("metadata is unique, canonical and present in head; schema is valid", () => {
+test("metadata is unique, canonical and present in head; schema is valid", async () => {
   assert.equal(document.head.querySelectorAll("title").length, 1);
   assert.equal(
     document.head.querySelectorAll('meta[name="description"]').length,
@@ -62,6 +62,36 @@ test("metadata is unique, canonical and present in head; schema is valid", () =>
     ["Person", "WebSite"]
   );
   assert.equal(schema["@graph"][0].sameAs.length, 2);
+  const person = schema["@graph"][0];
+  assert.equal(person.name, "Brandon Jurado");
+  assert.equal(person.jobTitle, "Senior Software Engineer");
+  assert.deepEqual(person.worksFor, {
+    "@type": "Organization",
+    name: "H-E-B"
+  });
+  assert.deepEqual(person.address, {
+    "@type": "PostalAddress",
+    addressLocality: "Austin",
+    addressRegion: "TX",
+    addressCountry: "US"
+  });
+  assert.deepEqual(person.sameAs, [
+    "https://github.com/brandonjurado",
+    "https://www.linkedin.com/in/brandonjurado/"
+  ]);
+  assert.equal(
+    document.querySelector(".career-trace__title").textContent,
+    person.jobTitle
+  );
+  for (const selector of [".overview-role", ".footer-topline p"])
+    assert.ok(
+      document.querySelector(selector).textContent.startsWith(person.jobTitle)
+    );
+  assert.ok(
+    (await readFile("dist/llms.txt", "utf8")).includes(
+      `- Role: ${person.jobTitle}`
+    )
+  );
 });
 test("share card has real 1200×630 pixels and complete metadata", async () => {
   const {width, height} = await sharp("dist/share-card.png").metadata();

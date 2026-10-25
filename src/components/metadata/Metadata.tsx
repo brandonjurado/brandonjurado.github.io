@@ -1,6 +1,6 @@
 import {site} from "../../content/site";
 import {skills} from "../../content/skills";
-import {socialMediaLinks} from "../../content/portfolio";
+import {socialMediaLinks, workExperiences} from "../../content/portfolio";
 export default function Metadata({notFound = false}: {notFound?: boolean}) {
   const title = notFound ? "Page not found | Brandon Jurado" : site.title;
   const description = notFound
@@ -15,6 +15,11 @@ export default function Metadata({notFound = false}: {notFound?: boolean}) {
         "@id": `${site.url}/#person`,
         name: site.name,
         jobTitle: site.role,
+        worksFor: {
+          "@type": "Organization",
+          name: workExperiences.experience[0].company
+        },
+        address: {"@type": "PostalAddress", ...site.address},
         url: `${site.url}/`,
         sameAs: [socialMediaLinks.github, socialMediaLinks.linkedin],
         knowsAbout: skills

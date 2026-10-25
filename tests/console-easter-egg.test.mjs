@@ -77,7 +77,7 @@ reliable systems, say hello:
   stack()    what I work with
   email()    copy my email address`,
       WHOAMI: `Brandon Jurado
-Senior software engineer, Austin TX. Backend, mostly Java.`,
+Senior Software Engineer, Austin TX. Backend, mostly Java.`,
       STACK: `Java, Kotlin, TypeScript
 Spring Boot, Kafka, MySQL, DynamoDB
 AWS, Terraform, Docker, Kubernetes, Datadog`,

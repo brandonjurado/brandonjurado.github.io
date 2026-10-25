@@ -146,7 +146,7 @@ const workExperiences = {
   display: true, //Set it to true to show workExperiences Section
   experience: [
     {
-      role: "Sr. Software Engineer",
+      role: "Senior Software Engineer",
       company: "H-E-B",
       companylogo: img("hebLogo.webp"),
       accentColor: "#d71920",

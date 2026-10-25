@@ -11,7 +11,7 @@ export default function Footer() {
             {site.name}
           </a>
           <p>
-            {site.footerRole} · {site.location}
+            {site.role} · {site.location}
           </p>
         </div>
         <div className="footer-links">

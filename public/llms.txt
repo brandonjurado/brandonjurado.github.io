@@ -1,11 +1,12 @@
 # Brandon Jurado
 
-This website is the professional portfolio of Brandon Jurado, a software engineer focused on scalable backend systems.
+This website is the professional portfolio of Brandon Jurado, a Senior Software Engineer focused on scalable backend systems.
 
 ## Summary
 
 - Name: Brandon Jurado
-- Role: Software Engineer
+- Role: Senior Software Engineer
+- Employer: H-E-B
 - Location: Austin, Texas, United States
 - Core Skills: Java, Spring Boot, AWS, microservices, distributed systems
 - Contact: hello@bjurado.com

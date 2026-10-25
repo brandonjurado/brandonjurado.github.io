@@ -15,7 +15,7 @@ export type CareerRole = Pick<
   RolePeriod;
 
 const periods: Record<string, RolePeriod> = {
-  "H-E-B|Sr. Software Engineer": {
+  "H-E-B|Senior Software Engineer": {
     id: "heb",
     startMonth: "2023-07",
     endMonth: null,
