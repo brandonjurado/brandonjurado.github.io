@@ -145,7 +145,7 @@ async function assertNoOverflow(page, label) {
   );
 }
 
-async function assertOrderRow(page, label, showProgress) {
+async function assertOrderControls(page, label, showProgress) {
   const demo = page.locator(".notification-demo");
   const thought = demo.locator(".thought-line");
   const layout = await demo.evaluate(element => {
@@ -157,6 +157,7 @@ async function assertOrderRow(page, label, showProgress) {
     const hint = element.querySelector(".notification-demo-place > p");
     return {
       track: bounds(element.querySelector(".slide-commit__track")),
+      actionLabel: bounds(element.querySelector(".slide-commit__label")),
       scenarios: bounds(element.querySelector(".notification-demo-scenarios")),
       hint: bounds(hint),
       hintAlign: hint && getComputedStyle(hint).textAlign,
@@ -181,17 +182,38 @@ async function assertOrderRow(page, label, showProgress) {
     Math.abs(hint.x + hint.width / 2 - (track.x + track.width / 2)) < 1,
     `${label}: hint is centered beneath the slider`
   );
+  if (layout.mobile) {
+    assert.ok(
+      track.y >= scenarios.y + scenarios.height,
+      `${label}: delivery choices sit above the slider`
+    );
+    assert.ok(
+      Math.abs(track.width - controls.width) < 1 &&
+        Math.abs(track.x - controls.x) < 1,
+      `${label}: mobile slider fills the controls width`
+    );
+    assert.ok(
+      layout.actionLabel &&
+        layout.actionLabel.y + layout.actionLabel.height <= track.y - 4,
+      `${label}: action instruction stays above the handle travel area`
+    );
+    assert.ok(
+      hint.y >= track.y + track.height + 4,
+      `${label}: keyboard hint stays below the handle travel area`
+    );
+  } else {
+    assert.ok(
+      track.x >= scenarios.x + scenarios.width - 1,
+      `${label}: slider is to the right of delivery choices`
+    );
+    assert.ok(
+      Math.min(scenarios.y + scenarios.height, track.y + track.height) >
+        Math.max(scenarios.y, track.y),
+      `${label}: delivery choices and slider share a row`
+    );
+  }
   assert.ok(
-    track.x >= scenarios.x + scenarios.width - 1,
-    `${label}: slider is to the right of delivery choices`
-  );
-  assert.ok(
-    Math.min(scenarios.y + scenarios.height, track.y + track.height) >
-      Math.max(scenarios.y, track.y),
-    `${label}: delivery choices and slider share a row`
-  );
-  assert.ok(
-    controls.height <= (layout.mobile ? 150 : 110),
+    controls.height <= (layout.mobile ? 240 : 110),
     `${label}: compact controls height (${controls.height}px)`
   );
   const graphGap = flow.y - (controls.y + controls.height);
@@ -225,8 +247,10 @@ async function assertOrderRow(page, label, showProgress) {
     `${label}: progress is beneath delivery choices`
   );
   assert.ok(
-    progress.x + progress.width <= track.x + 1,
-    `${label}: progress stays in the left column`
+    layout.mobile
+      ? progress.y + progress.height <= track.y
+      : progress.x + progress.width <= track.x + 1,
+    `${label}: progress stays with the delivery choices`
   );
 }
 
@@ -272,7 +296,7 @@ export async function checkNotificationDemo(page) {
     if (await reset.isEnabled()) await reset.click();
     await waitForPhase(page, "idle");
     await direct.check();
-    await assertOrderRow(page, "1440, idle", false);
+    await assertOrderControls(page, "1440, idle", false);
     assert.equal(await demo.getAttribute("data-order-id"), "");
     assert.equal(await slider.getAttribute("aria-valuenow"), "0");
     assert.equal(await stages.count(), 4);
@@ -312,7 +336,7 @@ export async function checkNotificationDemo(page) {
     await slider.focus();
     await page.keyboard.press("Enter");
     await waitForPhase(page, "processing");
-    await assertOrderRow(page, "1440, processing", true);
+    await assertOrderControls(page, "1440, processing", true);
     const directOrder = await demo.getAttribute("data-order-id");
     assert.ok(directOrder, "confirmed order exposes an event identifier");
     assert.equal(await slider.getAttribute("aria-disabled"), "true");
@@ -336,7 +360,7 @@ export async function checkNotificationDemo(page) {
     await page.mouse.up();
     assert.equal(await demo.getAttribute("data-order-id"), directOrder);
     await waitForPhase(page, "delivered");
-    await assertOrderRow(page, "1440, delivered", true);
+    await assertOrderControls(page, "1440, delivered", true);
     await confirmation.waitFor({state: "visible"});
     assert.match(await confirmation.textContent(), /Order confirmed/);
     assert.equal(await confirmation.getByRole("button").count(), 0);
@@ -383,7 +407,7 @@ export async function checkNotificationDemo(page) {
     // A drag starts the retry path; the second attempt retains its order ID.
     await reset.click();
     await waitForPhase(page, "idle");
-    await assertOrderRow(page, "1440, reset", false);
+    await assertOrderControls(page, "1440, reset", false);
     await retry.check();
     await observeDemo(page);
     await dragSlider(page);
@@ -464,16 +488,16 @@ export async function checkNotificationDemo(page) {
       await prepareSlider(page, slider);
       await assertNoOverflow(page, `${width}, idle`);
       assert.ok(await slider.isVisible());
-      await assertOrderRow(page, `${width}, idle`, false);
+      await assertOrderControls(page, `${width}, idle`, false);
       if (width === 320) {
         await slider.focus();
         await page.keyboard.press("Enter");
         await waitForPhase(page, "processing");
-        await assertOrderRow(page, "320, processing", true);
+        await assertOrderControls(page, "320, processing", true);
         await assertNoOverflow(page, "320, processing");
         await reset.click();
         await waitForPhase(page, "idle");
-        await assertOrderRow(page, "320, reset", false);
+        await assertOrderControls(page, "320, reset", false);
       }
     }
     await direct.check();
@@ -481,7 +505,7 @@ export async function checkNotificationDemo(page) {
     await slider.focus();
     await page.keyboard.press("End");
     await waitForPhase(page, "processing");
-    await assertOrderRow(page, "390, processing", true);
+    await assertOrderControls(page, "390, processing", true);
     await waitForPhase(page, "sending");
     await assertNoOverflow(page, "390, sending, reduced motion");
     assert.equal(await stages.nth(3).getAttribute("data-node-state"), "active");
@@ -496,7 +520,7 @@ export async function checkNotificationDemo(page) {
       "reduced motion keeps stage feedback without moving packets"
     );
     await waitForPhase(page, "delivered");
-    await assertOrderRow(page, "390, delivered", true);
+    await assertOrderControls(page, "390, delivered", true);
     await confirmation.waitFor({state: "visible"});
     assert.match(await confirmation.textContent(), /Order confirmed/);
     await assertNoOverflow(page, "390, delivered, reduced motion");

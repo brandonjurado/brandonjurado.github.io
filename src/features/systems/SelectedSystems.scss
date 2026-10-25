@@ -696,32 +696,35 @@ html:not(.js) {
 
 @media (max-width: 600px) {
   .notification-demo-controls {
+    grid-template-columns: minmax(0, 1fr);
     gap: 12px;
   }
 
   .notification-demo-scenarios {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0;
-    min-height: 88px;
+    min-height: 44px;
   }
 
   .notification-demo-place {
-    margin-top: 18px;
+    padding-top: 28px;
+
+    .slide-commit__track {
+      touch-action: pan-y;
+    }
 
     .slide-commit__label {
-      box-sizing: border-box;
-      padding-inline: 44px 8px;
+      inset: auto 0 calc(100% + 8px);
+      min-height: 20px;
+      place-items: start;
     }
 
     .slide-commit__text {
-      line-height: 1.2;
+      line-height: 1.4;
       white-space: normal;
     }
+  }
 
-    .slide-commit[data-phase="pending"] .slide-commit__label {
-      padding-inline: 8px 48px;
-    }
+  .notification-demo-placeholder .notification-demo-loading {
+    width: 100%;
   }
 
   .notification-demo-flow .system-linear-flow {
