@@ -12,12 +12,7 @@ import {animate, motion, useMotionValue, useReducedMotion} from "motion/react";
 import "./SwipeToast.css";
 
 export type SwipeToastCloseReason =
-  | "timeout"
-  | "swipe"
-  | "action"
-  | "close"
-  | "escape"
-  | "programmatic";
+  "timeout" | "swipe" | "action" | "close" | "escape" | "programmatic";
 
 export interface SwipeToastProps {
   title?: ReactNode;

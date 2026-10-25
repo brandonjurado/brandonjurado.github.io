@@ -4,7 +4,7 @@ git:
 node_js:
   - "26.12.1"
 before_install:
-  - curl -fsSL https://bun.sh/install | bash -s "bun-v1.3.6"
+  - curl -fsSL https://bun.sh/install | bash -s "bun-v1.4.4"
   - export BUN_INSTALL="$HOME/.bun"
   - export PATH="$BUN_INSTALL/bin:$PATH"
 install: bun install --frozen-lockfile

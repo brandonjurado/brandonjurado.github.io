@@ -13,7 +13,7 @@ export default defineConfig(({isSsrBuild}) => ({
     manifest: !isSsrBuild,
     cssMinify: "lightningcss",
     reportCompressedSize: true,
-    rollupOptions: {
+    rolldownOptions: {
       output: {
         entryFileNames: isSsrBuild ? "[name].mjs" : "assets/[name]-[hash].js"
       }
