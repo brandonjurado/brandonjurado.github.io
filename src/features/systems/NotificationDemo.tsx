@@ -60,7 +60,7 @@ export default function NotificationDemo({active}: {active: boolean}) {
   useEffect(() => {
     const target = control.current;
     if (!target) return;
-    const resize = () => setWidth(Math.min(280, target.clientWidth));
+    const resize = () => setWidth(target.clientWidth);
     resize();
     const observer = new ResizeObserver(resize);
     observer.observe(target);
