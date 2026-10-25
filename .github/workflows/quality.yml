@@ -14,14 +14,14 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-node@v7.1.0
         with:
           node-version-file: .nvmrc
-      - uses: oven-sh/setup-bun@v2
+      - uses: oven-sh/setup-bun@v2.2.0
         with:
-          bun-version: 1.3.6
-      - uses: actions/cache@v4
+          bun-version: 1.4.4
+      - uses: actions/cache@v6.1.0
         with:
           path: ~/.bun/install/cache
           key: bun-${{ runner.os }}-${{ hashFiles('bun.lock') }}
@@ -31,15 +31,15 @@ jobs:
       - name: Check design patterns
         run: |
           mkdir -p reports
-          curl --fail --silent --show-error --location https://github.com/pbakaus/impeccable/releases/download/engine-v0.1.11/impeccable-linux-x64 --output "$RUNNER_TEMP/impeccable"
-          printf '0221607e1f535af937ea267c347b1f90233b85dc2563cbd2eeefdf42e0e5c594  %s\n' "$RUNNER_TEMP/impeccable" | sha256sum --check
+          curl --fail --silent --show-error --location https://github.com/pbakaus/impeccable/releases/download/engine-v0.1.17/impeccable-linux-x64 --output "$RUNNER_TEMP/impeccable"
+          printf '44c0d601e985980a9c39718fee15b48a8f7cbe67779f6ae05efe9124817ab629  %s\n' "$RUNNER_TEMP/impeccable" | sha256sum --check
           chmod +x "$RUNNER_TEMP/impeccable"
           "$RUNNER_TEMP/impeccable" detect --json index.html src/index.scss src/styles src/containers/Main.tsx src/containers/Main.scss src/components/header src/components/footer src/components/requestTrace src/containers/greeting src/containers/skills src/components/sectionHeading src/features src/containers/education > reports/design.json
       - run: bun run build && bun run check:bundle && bun run test:static
       - run: bunx playwright install --with-deps chromium
       - run: bun run test:browser
       - run: bun run lhci
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7.0.2
         if: always()
         with:
           name: quality-reports

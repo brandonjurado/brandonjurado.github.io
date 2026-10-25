@@ -1,30 +1,19 @@
 import {test} from "node:test";
 import assert from "node:assert/strict";
-import {readFile} from "node:fs/promises";
 import {runInNewContext} from "node:vm";
-import {build} from "esbuild";
-import {transformWithEsbuild} from "vite";
-
-const {code} = await transformWithEsbuild(
-  await readFile("src/content/console-easter-egg.ts", "utf8"),
-  "console-easter-egg.ts",
-  {loader: "ts", format: "esm"}
-);
-const content = await import(
-  `data:text/javascript;base64,${Buffer.from(code).toString("base64")}`
-);
+import {build} from "rolldown";
+import * as content from "../src/content/console-easter-egg.ts";
 const bundles = new Map();
 async function runtime({production = true, browser = true, clipboard} = {}) {
   if (!bundles.has(production)) {
     const result = await build({
-      entryPoints: ["src/console-easter-egg.ts"],
-      bundle: true,
+      input: "src/console-easter-egg.ts",
       write: false,
-      format: "cjs",
+      output: {format: "cjs"},
       platform: "browser",
-      define: {"import.meta.env.PROD": String(production)}
+      transform: {define: {"import.meta.env.PROD": String(production)}}
     });
-    bundles.set(production, result.outputFiles[0].text);
+    bundles.set(production, result.output[0].code);
   }
   const logs = [];
   const window = {};

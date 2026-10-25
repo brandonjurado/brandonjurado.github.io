@@ -1,4 +1,4 @@
-FROM oven/bun:1.3.6 AS bun
+FROM oven/bun:1.4.4 AS bun
 FROM node:26.12.1-bookworm-slim
 COPY --from=bun /usr/local/bin/bun /usr/local/bin/bun
 WORKDIR /app

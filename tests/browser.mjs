@@ -1,19 +1,10 @@
 import {spawn} from "node:child_process";
-import {mkdir, readFile, writeFile} from "node:fs/promises";
+import {mkdir, writeFile} from "node:fs/promises";
 import assert from "node:assert/strict";
 import {chromium} from "playwright";
 import AxeBuilder from "@axe-core/playwright";
-import {transformWithEsbuild} from "vite";
 import {checkNotificationDemo} from "./notifications-browser.mjs";
-
-const {code: consoleContentCode} = await transformWithEsbuild(
-  await readFile("src/content/console-easter-egg.ts", "utf8"),
-  "console-easter-egg.ts",
-  {loader: "ts", format: "esm"}
-);
-const consoleContent = await import(
-  `data:text/javascript;base64,${Buffer.from(consoleContentCode).toString("base64")}`
-);
+import * as consoleContent from "../src/content/console-easter-egg.ts";
 
 async function assertNoOverflow(page, label) {
   assert.ok(
@@ -961,6 +952,19 @@ try {
         "running"
       );
       await motion.goto(`${url}/#contact`);
+      // Reload after native anchor scrolling settles, rather than restoring its
+      // intermediate top-of-page position on faster navigation implementations.
+      await motion.waitForFunction(() => {
+        const page = document.documentElement;
+        const offset = parseFloat(getComputedStyle(page).scrollPaddingTop);
+        const top = document
+          .getElementById("contact")
+          .getBoundingClientRect().top;
+        return (
+          Math.abs(top - offset) <= 1 ||
+          scrollY + innerHeight >= page.scrollHeight - 1
+        );
+      });
       await motion.reload();
       await motion.waitForFunction(
         () =>

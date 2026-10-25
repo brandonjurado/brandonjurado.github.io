@@ -4,17 +4,12 @@ import {readFile, access} from "node:fs/promises";
 import {createHash} from "node:crypto";
 import {JSDOM} from "jsdom";
 import sharp from "sharp";
-import {transformWithEsbuild} from "vite";
-
-const {code: portfolioCode} = await transformWithEsbuild(
-  await readFile("src/content/portfolio.ts", "utf8"),
-  "portfolio.ts",
-  {loader: "ts", format: "esm"}
-);
-const {workExperiences, achievementSection, additionalProjects, educationInfo} =
-  await import(
-    `data:text/javascript;base64,${Buffer.from(portfolioCode).toString("base64")}`
-  );
+import {
+  workExperiences,
+  achievementSection,
+  additionalProjects,
+  educationInfo
+} from "../src/content/portfolio.ts";
 const html = await readFile("dist/index.html", "utf8");
 const document = new JSDOM(html, {url: "https://bjurado.com/"}).window.document;
 test("crawler gets substantive content, semantic headings and working anchors", () => {
