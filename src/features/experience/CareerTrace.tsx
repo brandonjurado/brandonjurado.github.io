@@ -87,14 +87,16 @@ function CareerRow({role, hydrated}: {role: CareerRole; hydrated: boolean}) {
           aria-labelledby={summaryId}
         >
           <p className="experience-text-desc">{role.desc}</p>
-          <p className="career-trace__technology-label">
-            {experienceCopy.technologyLabel}
-          </p>
-          <ul className="career-trace__technologies">
-            {role.descBullets.map(technology => (
-              <li key={technology}>{technology}</li>
-            ))}
-          </ul>
+          <details className="career-trace__tools">
+            <summary className="career-trace__technology-label">
+              {experienceCopy.technologyLabel}
+            </summary>
+            <ul className="career-trace__technologies">
+              {role.descBullets.map(technology => (
+                <li key={technology}>{technology}</li>
+              ))}
+            </ul>
+          </details>
         </div>
       </details>
     </li>

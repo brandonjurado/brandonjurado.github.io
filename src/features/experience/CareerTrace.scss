@@ -175,17 +175,39 @@
   }
 }
 
+.career-trace__tools {
+  margin-top: 12px;
+}
+
 .career-trace__technology-label {
-  margin: 24px 0 16px;
+  width: fit-content;
+  padding-block: 12px;
   color: var(--ink);
   font-size: var(--text-metadata);
   line-height: 1.5;
+  cursor: pointer;
+
+  &::marker {
+    color: var(--accent);
+  }
+
+  &:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-underline-offset: 5px;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: var(--radius-container);
+  }
 }
 
 .career-trace__technologies {
   display: grid;
   gap: 8px;
-  margin: 0;
+  margin: 8px 0 0;
   padding-left: 18px;
   color: var(--muted);
   font-size: var(--text-technology);
