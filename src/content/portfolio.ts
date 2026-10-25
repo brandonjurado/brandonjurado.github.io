@@ -424,7 +424,7 @@ const footerSection = {
 };
 
 const contactInfo = {
-  title: "Get In Touch",
+  title: "Get in touch.",
   subtitle:
     "Let's connect. I'm always open to new opportunities, collaborations, or just talking shop.",
   number: "",
