@@ -29,7 +29,7 @@ export const HELP = `brandon.help()
   email()    copy my email address`;
 
 export const WHOAMI = `Brandon Jurado
-Senior software engineer, Austin TX. Backend, mostly Java.`;
+Senior Software Engineer, Austin TX. Backend, mostly Java.`;
 
 export const STACK = `Java, Kotlin, TypeScript
 Spring Boot, Kafka, MySQL, DynamoDB
